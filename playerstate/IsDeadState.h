@@ -1,0 +1,21 @@
+
+//
+// Created by niels on 5/12/21.
+//
+
+#ifndef INC_2DSIDESCROLLER_ISDEADSTATE_H
+#define INC_2DSIDESCROLLER_ISDEADSTATE_H
+
+
+#include "../entity/Player.h"
+#include "../command/StandStillCommand.h"
+#include "PlayerState.h"
+
+class IsDeadState : public PlayerState {
+public:
+    void update(Player * player) override;
+    PState getState() override;
+};
+
+
+#endif //INC_2DSIDESCROLLER_ISDEADSTATE_H
