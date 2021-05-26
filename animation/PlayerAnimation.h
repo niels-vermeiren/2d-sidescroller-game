@@ -4,7 +4,7 @@
 
 #ifndef INC_2DSIDESCROLLER_PLAYERANIMATION_H
 #define INC_2DSIDESCROLLER_PLAYERANIMATION_H
-#include "PlayerAnimation.h"
+
 #include "AnimationData.h"
 #include "Animation.h"
 #include <vector>
@@ -12,7 +12,7 @@
 class PlayerAnimation : public Animation {
 public:
     PlayerAnimation();
-    SDL_Surface * getNextAnimationImage(int animation) override;
+    SDL_Surface * getNextAnimationImage(int animation = 0) override;
     void reset() override;
     static const int IDLE = 0;
     static const int WALKING = 1;

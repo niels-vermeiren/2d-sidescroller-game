@@ -21,6 +21,7 @@ Game::Game(Renderer * renderer) {
     spikes = spikesMap->mapToEntities();
     auto * sawMap = new SawMapParser();
     saws = sawMap->mapToEntities();
+    coin = new Coin();
     playerWallCollisionHandler = new PlayerWallCollisionHandler();
     playerSawCollisionHandler = new PlayerSawCollisionHandler();
     playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
@@ -40,6 +41,7 @@ void Game::draw(Renderer renderer) {
     this->spikes->draw(renderer);
     this->saws->draw(renderer);
     this->tileMap->draw(renderer);
+    this->coin->draw(renderer);
     this->player->draw(renderer);
 }
 

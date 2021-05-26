@@ -17,6 +17,7 @@
 #include "../collision/PlayerSawCollisionHandler.h"
 #include "../collision/PlayerSpikeCollisionHandler.h"
 #include "../map/tilemap/SpikeMapParser.h"
+#include "../entity/Coin.h"
 
 class Game {
 public:
@@ -32,6 +33,7 @@ private:
     EntityManager * saws;
     EntityManager * spikes;
     EntityManager * tileMap;
+    Coin * coin;
     CollisionHandler * playerWallCollisionHandler;
     CollisionHandler * playerSawCollisionHandler;
     CollisionHandler * playerSpikeCollisionHandler;
