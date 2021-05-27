@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
-#include "../../game/renderer.h"
+#include "../../game/Renderer.h"
 
 class TilesetTextureHolder {
 public:

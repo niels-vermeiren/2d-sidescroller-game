@@ -8,7 +8,7 @@
 
 #include <SDL2/SDL.h>
 #include "../math/Vector.h"
-#include "../game/renderer.h"
+#include "../game/Renderer.h"
 #include "../defs.h"
 #include "FallingEntity.h"
 #include "../sprite/Sprite.h"

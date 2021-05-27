@@ -14,7 +14,10 @@ Engine::~Engine() {}
 void Engine::run() {
     bool quit = false;
     Game game(&renderer);
+    int tick = 0;
+    int fpsCount = 0;
     while(!quit) {
+        tick ++;
         Uint64 start = SDL_GetPerformanceCounter();
         Window::wait();
         quit = Window::handleInput();
@@ -26,7 +29,11 @@ void Engine::run() {
         Window::setLastUpdatedTime();
         Uint64 end = SDL_GetPerformanceCounter();
         float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
-        std::cout << "Current FPS: " << std::to_string(1.0f / elapsed) << std::endl;
+        fpsCount += 1.0f / elapsed;
+        if (tick % 120 == 0) {
+            std::cout << "Current FPS: " << std::to_string(fpsCount/120) << std::endl;
+            fpsCount = 0;
+        }
     }
     SDL_DestroyWindow(renderer.sdlWindow);
     SDL_Quit();

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
-#include "game/renderer.h"
+#include "game/Renderer.h"
 #include "game/Engine.h"
 #include "defs.h"
 
@@ -27,7 +27,7 @@ int main() {
     SDL_Renderer* sdlRenderer = nullptr;
     sdlRenderer =  SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
 
-    Renderer renderer;
+    Renderer & renderer = Renderer::getInstance();
     renderer.sdlRenderer = sdlRenderer;
     renderer.sdlWindow = window;
 

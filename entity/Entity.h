@@ -7,7 +7,7 @@
 
 #include <SDL2/SDL.h>
 #include "../math/Vector.h"
-#include "../game/renderer.h"
+#include "../game/Renderer.h"
 #include "../observer/Observable.h"
 
 class Entity : public Observable, public EntityObserver {

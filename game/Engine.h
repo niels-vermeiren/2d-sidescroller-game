@@ -4,7 +4,7 @@
 
 #ifndef INC_2DSIDESCROLLER_ENGINE_H
 #define INC_2DSIDESCROLLER_ENGINE_H
-#include "renderer.h"
+#include "Renderer.h"
 #include <SDL2/SDL.h>
 #include <iostream>
 #include "../math/Vector.h"

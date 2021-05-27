@@ -5,7 +5,7 @@
 #ifndef INC_2DSIDESCROLLER_SPRITE_H
 #define INC_2DSIDESCROLLER_SPRITE_H
 #include <SDL2/SDL.h>
-#include "../game/renderer.h"
+#include "../game/Renderer.h"
 #include "../animation/AnimationData.h"
 #include "../animation/PlayerAnimation.h"
 

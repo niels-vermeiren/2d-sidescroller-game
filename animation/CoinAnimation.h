@@ -13,7 +13,7 @@ class CoinAnimation : public Animation {
 public:
     CoinAnimation();
     virtual ~CoinAnimation();
-    SDL_Surface * getNextAnimationImage(int animation = 0) override;
+    SDL_Texture * getNextAnimationImage(int animation = 0) override;
     void reset() override;
 private:
     AnimationData * animationData;

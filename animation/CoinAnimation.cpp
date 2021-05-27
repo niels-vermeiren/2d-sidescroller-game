@@ -8,7 +8,7 @@ CoinAnimation::CoinAnimation() {
     animationData = new AnimationData("/home/niels/Projects/2dSideScroller/resources/coin/coin", 10, 4);
 }
 
-SDL_Surface *CoinAnimation::getNextAnimationImage(int animation) {
+SDL_Texture *CoinAnimation::getNextAnimationImage(int animation) {
     return animationData->getNextFrame();
 }
 

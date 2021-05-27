@@ -35,7 +35,7 @@ PlayerAnimation::PlayerAnimation() : Animation() {
     this->animationData.push_back(hurtData);
 }
 
-SDL_Surface * PlayerAnimation::getNextAnimationImage(int animation) {
+SDL_Texture * PlayerAnimation::getNextAnimationImage(int animation) {
     return this->animationData[animation]->getNextFrame();
 }
 

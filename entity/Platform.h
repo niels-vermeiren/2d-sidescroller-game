@@ -7,7 +7,7 @@
 
 
 #include "Entity.h"
-#include "../game/renderer.h"
+#include "../game/Renderer.h"
 #include "../sprite/PlatformSprite.h"
 #include "../defs.h"
 

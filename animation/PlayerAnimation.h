@@ -12,7 +12,7 @@
 class PlayerAnimation : public Animation {
 public:
     PlayerAnimation();
-    SDL_Surface * getNextAnimationImage(int animation = 0) override;
+    SDL_Texture * getNextAnimationImage(int animation = 0) override;
     void reset() override;
     static const int IDLE = 0;
     static const int WALKING = 1;

@@ -9,7 +9,7 @@
 
 class Animation {
 public:
-    virtual SDL_Surface * getNextAnimationImage(int animation = 0) = 0;
+    virtual SDL_Texture * getNextAnimationImage(int animation = 0) = 0;
     virtual void reset() = 0;
 };
 
