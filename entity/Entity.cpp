@@ -36,3 +36,11 @@ int Entity::minX() const {
 int Entity::minY() const {
     return this->rect->y;
 }
+
+void Entity::setVisible(const bool visible) {
+    this->visible = visible;
+}
+
+void Entity::reset() {
+    this->visible = true;
+}

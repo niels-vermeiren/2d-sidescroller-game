@@ -37,3 +37,9 @@ void EntityManager::addEntity(Entity * entity) {
 EntityManager::EntityManager() {
 
 }
+
+void EntityManager::reset() {
+    for(Entity * entity: entities) {
+        entity->reset();
+    }
+}

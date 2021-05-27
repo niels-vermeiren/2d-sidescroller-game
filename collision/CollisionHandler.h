@@ -12,8 +12,7 @@
 class CollisionHandler {
 public:
     virtual void handleCollision(Player * p, Entity * entity) = 0;
-    virtual ~CollisionHandler();
-    void handleCollisions(Player * p, const EntityManager * entities);
+    virtual void handleCollisions(Player * p, const EntityManager * entities);
 };
 
 

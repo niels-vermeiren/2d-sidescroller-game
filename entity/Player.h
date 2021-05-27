@@ -26,7 +26,7 @@ public:
     void setState(PlayerState * state);
     PlayerState * getState() const;
     void notifyObservers() override;
-    void reset();
+    void reset() override;
     ~Player() override;
 
 private:

@@ -33,10 +33,11 @@ private:
     EntityManager * saws;
     EntityManager * spikes;
     EntityManager * tileMap;
-    Coin * coin;
+    EntityManager * coins;
     CollisionHandler * playerWallCollisionHandler;
     CollisionHandler * playerSawCollisionHandler;
     CollisionHandler * playerSpikeCollisionHandler;
+    CollisionHandler * playerCoinCollisionHandler;
     void reset();
 };
 

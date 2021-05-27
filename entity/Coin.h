@@ -9,13 +9,12 @@
 
 class Coin : public Entity {
 public:
-    Coin();
+    Coin(SDL_Rect * rect);
     virtual ~Coin();
     void update() override;
     void draw(Renderer renderer) override;
 
 private:
-    SDL_Rect * rect;
     CoinSprite * sprite;
 };
 

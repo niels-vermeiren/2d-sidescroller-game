@@ -16,6 +16,7 @@ public:
     ~EntityManager();
     void addEntity(Entity * entity);
     void update();
+    void reset();
     void draw(Renderer renderer);
     std::list<Entity *> getEntities() const;
 

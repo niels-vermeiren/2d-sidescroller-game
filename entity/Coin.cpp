@@ -4,9 +4,9 @@
 
 #include "Coin.h"
 
-Coin::Coin() {
+Coin::Coin(SDL_Rect * rect) {
     this->sprite = new CoinSprite();
-    this->rect = new SDL_Rect {400, 600, 16, 16};
+    this->rect = rect;
 }
 
 void Coin::update() {
@@ -14,6 +14,7 @@ void Coin::update() {
 }
 
 void Coin::draw(Renderer renderer) {
+    if(!this->visible) return;
     this->sprite->draw(renderer, rect, NULL, SDL_FLIP_NONE);
 }
 

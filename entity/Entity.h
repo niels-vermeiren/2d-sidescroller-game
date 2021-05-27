@@ -18,11 +18,14 @@ public:
     virtual void draw(Renderer renderer) = 0;
     Vector &getDirection();
     SDL_Rect * getRect();
+    void setVisible(const bool visible);
+    virtual void reset();
     int minX() const;
     int minY() const;
     int maxX() const;
     int maxY() const;
 protected:
+    bool visible = true;
     SDL_Rect * rect;
     Vector direction;
 };

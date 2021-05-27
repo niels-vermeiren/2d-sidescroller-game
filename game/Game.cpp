@@ -4,6 +4,8 @@
 
 #include "Game.h"
 #include "../map/tilemap/SawMapParser.h"
+#include "../collision/PlayerCoinCollisionHandler.h"
+#include "../map/tilemap/CoinMapParser.h"
 
 Game::Game(Renderer * renderer) {
     SDL_Rect rect = {10, 400, 44, 127};
@@ -21,10 +23,12 @@ Game::Game(Renderer * renderer) {
     spikes = spikesMap->mapToEntities();
     auto * sawMap = new SawMapParser();
     saws = sawMap->mapToEntities();
-    coin = new Coin();
+    auto * coinMap = new CoinMapParser();
+    coins = coinMap->mapToEntities();
     playerWallCollisionHandler = new PlayerWallCollisionHandler();
     playerSawCollisionHandler = new PlayerSawCollisionHandler();
     playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
+    playerCoinCollisionHandler = new PlayerCoinCollisionHandler();
 }
 
 void Game::update() {
@@ -41,26 +45,30 @@ void Game::draw(Renderer renderer) {
     this->spikes->draw(renderer);
     this->saws->draw(renderer);
     this->tileMap->draw(renderer);
-    this->coin->draw(renderer);
+    this->coins->draw(renderer);
     this->player->draw(renderer);
 }
 
 void Game::reset() {
     this->player->reset();
+    this->coins->reset();
 }
 
 void Game::handleCollisions() {
     playerWallCollisionHandler->handleCollisions(player, tileMap);
     playerSawCollisionHandler->handleCollisions(player, saws);
     playerSpikeCollisionHandler->handleCollisions(player, spikes);
+    playerCoinCollisionHandler->handleCollisions(player, coins);
 }
 
 Game::~Game() {
     delete background;
     delete player;
     delete tileMap;
+    delete coins;
     delete playerWallCollisionHandler;
     delete playerSawCollisionHandler;
     delete playerSpikeCollisionHandler;
+    delete playerCoinCollisionHandler;
 }
 

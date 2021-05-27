@@ -10,7 +10,3 @@ void CollisionHandler::handleCollisions(Player *p, const EntityManager *entities
     }
 }
 
-CollisionHandler::~CollisionHandler() {
-
-}
-

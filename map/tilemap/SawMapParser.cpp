@@ -3,7 +3,6 @@
 //
 
 #include "SawMapParser.h"
-#include "../../entity/Spike.h"
 #include "../MapReader.h"
 #include "../../entity/Saw.h"
 
