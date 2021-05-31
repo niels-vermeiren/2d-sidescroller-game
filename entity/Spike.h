@@ -14,8 +14,10 @@ public:
     Spike(SDL_Rect * rect);
     void update() override;
     void draw(Renderer renderer) override;
+    void updatePlayerPos(int playerX, int playerY) override;
 
 private:
+    bool shouldDraw = true;
     SpikesSprite * sprite;
 
 };

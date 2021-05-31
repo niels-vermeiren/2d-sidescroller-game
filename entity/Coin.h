@@ -13,8 +13,10 @@ public:
     virtual ~Coin();
     void update() override;
     void draw(Renderer renderer) override;
+    void updatePlayerPos(int playerX, int playerY) override;
 
 private:
+    bool shouldDraw = true;
     CoinSprite * sprite;
 };
 

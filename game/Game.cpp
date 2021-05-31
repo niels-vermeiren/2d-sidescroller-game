@@ -21,10 +21,19 @@ Game::Game(Renderer * renderer) {
     playerObservable->addObserver(background);
     auto * spikesMap = new SpikeMapParser();
     spikes = spikesMap->mapToEntities();
+    for(auto * obs:this->spikes->getEntities()) {
+        playerObservable->addObserver(obs);
+    }
     auto * sawMap = new SawMapParser();
     saws = sawMap->mapToEntities();
+    for(auto * obs:this->saws->getEntities()) {
+        playerObservable->addObserver(obs);
+    }
     auto * coinMap = new CoinMapParser();
     coins = coinMap->mapToEntities();
+    for(auto * obs:this->coins->getEntities()) {
+        playerObservable->addObserver(obs);
+    }
     playerWallCollisionHandler = new PlayerWallCollisionHandler();
     playerSawCollisionHandler = new PlayerSawCollisionHandler();
     playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
@@ -55,9 +64,9 @@ void Game::reset() {
 }
 
 void Game::handleCollisions() {
-    playerWallCollisionHandler->handleCollisions(player, tileMap);
     playerSawCollisionHandler->handleCollisions(player, saws);
     playerSpikeCollisionHandler->handleCollisions(player, spikes);
+    playerWallCollisionHandler->handleCollisions(player, tileMap);
     playerCoinCollisionHandler->handleCollisions(player, coins);
 }
 

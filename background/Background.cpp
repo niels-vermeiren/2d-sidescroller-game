@@ -9,7 +9,7 @@ void Background::draw(Renderer renderer) {
 
     if(playerPos->x > SCREEN_WIDTH/2-playerPos->w/2) vpX = -playerPos->x + SCREEN_WIDTH/2 - playerPos->w/2;
     if(playerPos->y < LEVEL_HEIGHT-SCREEN_HEIGHT/2-playerPos->h/2) vpY = -playerPos->y + SCREEN_HEIGHT/2 - playerPos->h/2;
-    else vpY = -LEVEL_HEIGHT/2 ;
+    else vpY = -LEVEL_HEIGHT + SCREEN_HEIGHT ;
 
     SDL_Rect vp = {vpX, vpY, LEVEL_WIDTH, LEVEL_HEIGHT};
     SDL_RenderSetViewport(renderer.sdlRenderer, &vp);

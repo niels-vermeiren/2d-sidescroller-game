@@ -14,10 +14,12 @@ public:
     Saw(SDL_Rect * rect);
     void update() override;
     void draw(Renderer renderer) override;
+    void updatePlayerPos(int playerX, int playerY) override;
 
 private:
     void drawCircle(SDL_Renderer * renderer, int32_t centreX, int32_t centreY, int32_t radius);
     SawSprite * sprite;
+    bool shouldDraw = true;
 };
 
 
