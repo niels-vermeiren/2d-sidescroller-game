@@ -6,8 +6,8 @@
 #define INC_2DSIDESCROLLER_CROUCHMOVERIGHTCOMMAND_H
 
 
-#include "Command.h"
-#include "../entity/Player.h"
+#include "../Command.h"
+#include "../../entity/Player.h"
 
 class CrouchMoveRightCommand : public Command {
 public:

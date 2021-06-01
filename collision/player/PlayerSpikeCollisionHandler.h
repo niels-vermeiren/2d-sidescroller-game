@@ -6,10 +6,10 @@
 #define INC_2DSIDESCROLLER_PLAYERSPIKECOLLISIONHANDLER_H
 
 
-#include "CollisionHandler.h"
-#include "../playerstate/IsDeadState.h"
+#include "PlayerCollisionHandler.h"
+#include "../../playerstate/IsDeadState.h"
 
-class PlayerSpikeCollisionHandler : public CollisionHandler {
+class PlayerSpikeCollisionHandler : public PlayerCollisionHandler {
 public:
     void handleCollision(Player * p, Entity * entity) override;
 };

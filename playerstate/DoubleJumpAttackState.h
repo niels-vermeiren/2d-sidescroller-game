@@ -8,9 +8,9 @@
 #include "PlayerState.h"
 #include "DoubleJumpState.h"
 #include "../entity/Player.h"
-#include "../command/MoveLeftCommand.h"
-#include "../command/MoveRightCommand.h"
-#include "../command/StandStillCommand.h"
+#include "../command/player/MoveLeftCommand.h"
+#include "../command/player/MoveRightCommand.h"
+#include "../command/player/StandStillCommand.h"
 
 class DoubleJumpAttackState : public PlayerState {
 public:

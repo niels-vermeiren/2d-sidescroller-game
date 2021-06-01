@@ -3,7 +3,7 @@
 //
 
 #include "IsHurtState.h"
-#include "../command/SlowDownCommand.h"
+#include "../command/player/SlowDownCommand.h"
 
 void IsHurtState::update(Player *player) {
     player->getSprite()->setActiveAnimation(PlayerAnimation::HURT);

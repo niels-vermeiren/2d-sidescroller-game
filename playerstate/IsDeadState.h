@@ -8,7 +8,7 @@
 
 
 #include "../entity/Player.h"
-#include "../command/StandStillCommand.h"
+#include "../command/player/StandStillCommand.h"
 #include "PlayerState.h"
 
 class IsDeadState : public PlayerState {

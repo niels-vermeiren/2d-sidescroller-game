@@ -6,9 +6,9 @@
 #define INC_2DSIDESCROLLER_MOVERIGHTCOMMAND_H
 
 
-#include "Command.h"
-#include "../physics/PhysicsManager.h"
-#include "../entity/Player.h"
+#include "../Command.h"
+#include "../../physics/PhysicsManager.h"
+#include "../../entity/Player.h"
 
 class MoveRightCommand : public Command {
 public:

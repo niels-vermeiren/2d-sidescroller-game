@@ -8,7 +8,7 @@
 #include "DoubleJumpState.h"
 #include "JumpState.h"
 #include "../entity/Player.h"
-#include "../command/DoubleJumpCommand.h"
+#include "../command/player/DoubleJumpCommand.h"
 
 class JumpAttackState : public PlayerState {
 public:

@@ -5,8 +5,10 @@
 #include <iostream>
 #include "Game.h"
 #include "../map/tilemap/SawMapParser.h"
-#include "../collision/PlayerCoinCollisionHandler.h"
+#include "../collision/player/PlayerCoinCollisionHandler.h"
 #include "../map/tilemap/CoinMapParser.h"
+#include "../animation/BlobEnemyAnimation.h"
+#include "../collision/blob/BlobWallCollisionHandler.h"
 
 Game::Game(Renderer * renderer) {
     SDL_Rect rect = {10, 400, 44, 127};
@@ -39,17 +41,18 @@ Game::Game(Renderer * renderer) {
     playerSawCollisionHandler = new PlayerSawCollisionHandler();
     playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
     playerCoinCollisionHandler = new PlayerCoinCollisionHandler();
-
-    auto * r1 = new Rotated_Rect({1,6}, {3,8}, {5,6}, {3,4});
-    auto * r2 = new Rotated_Rect({5,5}, {8,5}, {8,2}, {5,2});
-    bool collides = CollisionDetection::rotatedRectanglesIntersect(r1, r2);
-    std::cout << collides <<std::endl;
+    blobWallCollisionHandler = new BlobWallCollisionHandler();
+    SDL_Rect * blobRect = new SDL_Rect {10, 10, 179, 119};
+    Vector blobVector (0,0);
+    blob = new BlobEnemy(blobVector, blobRect);
+    blob->getSprite()->setActiveAnimation(BlobEnemyAnimation::WALKING);
 }
 
 void Game::update() {
     this->player->update();
     this->spikes->update();
     this->saws->update();
+    this->blob->update();
     if(InputManager::keyPressed(SDL_SCANCODE_R)) {
         reset();
     }
@@ -61,6 +64,7 @@ void Game::draw(Renderer renderer) {
     this->saws->draw(renderer);
     this->tileMap->draw(renderer);
     this->coins->draw(renderer);
+    this->blob->draw(renderer);
     this->player->draw(renderer);
 }
 
@@ -74,6 +78,7 @@ void Game::handleCollisions() {
     playerSpikeCollisionHandler->handleCollisions(player, spikes);
     playerWallCollisionHandler->handleCollisions(player, tileMap);
     playerCoinCollisionHandler->handleCollisions(player, coins);
+    blobWallCollisionHandler->handleCollisions(blob, tileMap);
 }
 
 Game::~Game() {

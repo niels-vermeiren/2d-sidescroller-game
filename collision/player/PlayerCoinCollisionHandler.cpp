@@ -3,7 +3,7 @@
 //
 
 #include "PlayerCoinCollisionHandler.h"
-#include "CollisionDetection.h"
+#include "../CollisionDetection.h"
 
 void PlayerCoinCollisionHandler::handleCollision(Player *p, Entity *entity) {
     if(CollisionDetection::rectangleCircleIntersect(p->getRect(), entity->getRect())) {

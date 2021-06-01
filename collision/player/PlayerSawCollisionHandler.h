@@ -6,11 +6,11 @@
 #define INC_2DSIDESCROLLER_PLAYERSAWCOLLISIONHANDLER_H
 
 
-#include "CollisionHandler.h"
-#include "CollisionDetection.h"
-#include "../playerstate/IsHurtState.h"
+#include "PlayerCollisionHandler.h"
+#include "../CollisionDetection.h"
+#include "../../playerstate/IsHurtState.h"
 
-class PlayerSawCollisionHandler : public CollisionHandler {
+class PlayerSawCollisionHandler : public PlayerCollisionHandler {
 public:
     void handleCollision(Player * p, Entity * entity) override;
 };

@@ -8,9 +8,9 @@
 #include "PlayerState.h"
 #include "OnGroundState.h"
 #include "../entity/Player.h"
-#include "../command/CrouchMoveLeftCommand.h"
-#include "../command/CrouchMoveRightCommand.h"
-#include "../command/StandStillCommand.h"
+#include "../command/player/CrouchMoveLeftCommand.h"
+#include "../command/player/CrouchMoveRightCommand.h"
+#include "../command/player/StandStillCommand.h"
 
 class CrouchState : public PlayerState{
 public:

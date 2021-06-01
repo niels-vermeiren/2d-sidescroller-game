@@ -9,10 +9,10 @@
 #include "JumpState.h"
 #include "CrouchState.h"
 #include "AttackState.h"
-#include "../command/JumpCommand.h"
-#include "../command/AttackCommand.h"
-#include "../command/MoveRightCommand.h"
-#include "../command/MoveLeftCommand.h"
+#include "../command/player/JumpCommand.h"
+#include "../command/player/AttackCommand.h"
+#include "../command/player/MoveRightCommand.h"
+#include "../command/player/MoveLeftCommand.h"
 
 class OnGroundState : public PlayerState {
 public:

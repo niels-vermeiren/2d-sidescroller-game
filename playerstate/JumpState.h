@@ -8,10 +8,10 @@
 #include "PlayerState.h"
 #include "DoubleJumpState.h"
 #include "JumpAttackState.h"
-#include "../command/DoubleJumpCommand.h"
-#include "../command/MoveLeftCommand.h"
-#include "../command/MoveRightCommand.h"
-#include "../command/StandStillCommand.h"
+#include "../command/player/DoubleJumpCommand.h"
+#include "../command/player/MoveLeftCommand.h"
+#include "../command/player/MoveRightCommand.h"
+#include "../command/player/StandStillCommand.h"
 
 class JumpState : public PlayerState {
 public:

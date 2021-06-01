@@ -5,10 +5,10 @@
 #ifndef INC_2DSIDESCROLLER_PLAYERWALLCOLLISIONHANDLER_H
 #define INC_2DSIDESCROLLER_PLAYERWALLCOLLISIONHANDLER_H
 
-#include "CollisionHandler.h"
-#include "../playerstate/OnGroundState.h"
+#include "PlayerCollisionHandler.h"
+#include "../../playerstate/OnGroundState.h"
 
-class PlayerWallCollisionHandler : public CollisionHandler {
+class PlayerWallCollisionHandler : public PlayerCollisionHandler {
 public:
     void handleCollision(Player * p, Entity * entity) override;
 };

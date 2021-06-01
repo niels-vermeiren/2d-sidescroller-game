@@ -6,11 +6,11 @@
 #define INC_2DSIDESCROLLER_PLAYERCOINCOLLISIONHANDLER_H
 
 
-#include "CollisionHandler.h"
-#include "../entity/Player.h"
-#include "../entity/Entity.h"
+#include "PlayerCollisionHandler.h"
+#include "../../entity/Player.h"
+#include "../../entity/Entity.h"
 
-class PlayerCoinCollisionHandler : public CollisionHandler {
+class PlayerCoinCollisionHandler : public PlayerCollisionHandler {
 public:
     void handleCollision(Player * p, Entity * entity) override;
 

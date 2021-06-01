@@ -8,8 +8,8 @@
 #include "JumpState.h"
 #include "OnGroundState.h"
 #include "CrouchState.h"
-#include "../command/JumpCommand.h"
-#include "../command/StandStillCommand.h"
+#include "../command/player/JumpCommand.h"
+#include "../command/player/StandStillCommand.h"
 #include "../entity/Player.h"
 
 class AttackState : public PlayerState {
