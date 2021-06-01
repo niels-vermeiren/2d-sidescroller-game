@@ -12,9 +12,6 @@ StaticSprite::StaticSprite() {
 
 }
 
-void StaticSprite::resetAnimation() {
-
-}
 
 StaticSprite::~StaticSprite() {
     delete surface;

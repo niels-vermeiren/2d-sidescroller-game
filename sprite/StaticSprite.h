@@ -12,7 +12,6 @@
 class StaticSprite : public Sprite{
 public:
     StaticSprite();
-    void resetAnimation() override;
     explicit StaticSprite(SDL_Surface * surface);
     virtual ~StaticSprite();
 protected:
