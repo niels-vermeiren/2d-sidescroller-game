@@ -2,6 +2,7 @@
 // Created by niels on 4/17/21.
 //
 
+#include <iostream>
 #include "Game.h"
 #include "../map/tilemap/SawMapParser.h"
 #include "../collision/PlayerCoinCollisionHandler.h"
@@ -38,6 +39,11 @@ Game::Game(Renderer * renderer) {
     playerSawCollisionHandler = new PlayerSawCollisionHandler();
     playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
     playerCoinCollisionHandler = new PlayerCoinCollisionHandler();
+
+    auto * r1 = new Rotated_Rect({1,6}, {3,8}, {5,6}, {3,4});
+    auto * r2 = new Rotated_Rect({5,5}, {8,5}, {8,2}, {5,2});
+    bool collides = CollisionDetection::rotatedRectanglesIntersect(r1, r2);
+    std::cout << collides <<std::endl;
 }
 
 void Game::update() {

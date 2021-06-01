@@ -7,7 +7,6 @@
 #include "Renderer.h"
 #include <SDL2/SDL.h>
 #include <iostream>
-#include "../math/Vector.h"
 #include "../entity/Player.h"
 #include "../entity/Platform.h"
 #include "../entity/EntityManager.h"
