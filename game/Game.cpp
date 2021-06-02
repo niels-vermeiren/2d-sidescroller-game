@@ -2,13 +2,14 @@
 // Created by niels on 4/17/21.
 //
 
-#include <iostream>
 #include "Game.h"
 #include "../map/tilemap/SawMapParser.h"
 #include "../collision/player/PlayerCoinCollisionHandler.h"
 #include "../map/tilemap/CoinMapParser.h"
-#include "../animation/BlobEnemyAnimation.h"
-#include "../collision/blob/BlobWallCollisionHandler.h"
+#include "../animation/Skeleton1Animation.h"
+#include "../collision/player/PlayerSkeletonCollisionHandler.h"
+#include "../collision/skeleton1/Skeleton1WallCollisionHandler.h"
+#include "../skeletonstate/AttackingState.h"
 
 Game::Game(Renderer * renderer) {
     SDL_Rect rect = {10, 400, 44, 127};
@@ -41,18 +42,20 @@ Game::Game(Renderer * renderer) {
     playerSawCollisionHandler = new PlayerSawCollisionHandler();
     playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
     playerCoinCollisionHandler = new PlayerCoinCollisionHandler();
-    blobWallCollisionHandler = new BlobWallCollisionHandler();
-    SDL_Rect * blobRect = new SDL_Rect {10, 10, 179, 119};
-    Vector blobVector (0,0);
-    blob = new BlobEnemy(blobVector, blobRect);
-    blob->getSprite()->setActiveAnimation(BlobEnemyAnimation::WALKING);
+    skeletonWallCollisionHandler = new Skeleton1WallCollisionHandler();
+    playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
+
+    SDL_Rect * skeletonRect = new SDL_Rect {10, 10, 155, 149};
+    Vector skeletonDirection (0, 0);
+    skeleton1 = new Skeleton1(skeletonDirection, skeletonRect);
+    skeleton1->setState(new AttackingState());
 }
 
 void Game::update() {
     this->player->update();
     this->spikes->update();
     this->saws->update();
-    this->blob->update();
+    this->skeleton1->update();
     if(InputManager::keyPressed(SDL_SCANCODE_R)) {
         reset();
     }
@@ -64,13 +67,14 @@ void Game::draw(Renderer renderer) {
     this->saws->draw(renderer);
     this->tileMap->draw(renderer);
     this->coins->draw(renderer);
-    this->blob->draw(renderer);
+    this->skeleton1->draw(renderer);
     this->player->draw(renderer);
 }
 
 void Game::reset() {
     this->player->reset();
     this->coins->reset();
+    this->skeleton1->reset();
 }
 
 void Game::handleCollisions() {
@@ -78,7 +82,8 @@ void Game::handleCollisions() {
     playerSpikeCollisionHandler->handleCollisions(player, spikes);
     playerWallCollisionHandler->handleCollisions(player, tileMap);
     playerCoinCollisionHandler->handleCollisions(player, coins);
-    blobWallCollisionHandler->handleCollisions(blob, tileMap);
+    skeletonWallCollisionHandler->handleCollisions(skeleton1, tileMap);
+    playerSkeletonAttackCollisionHandler->handleCollision(player, skeleton1);
 }
 
 Game::~Game() {

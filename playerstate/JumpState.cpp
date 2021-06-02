@@ -23,13 +23,10 @@ void JumpState::update(Player *player) {
     }
 
     if(InputManager::keyPressed(SDL_SCANCODE_UP)) {
+        player->getSprite()->resetAnimation();
         player->setState(new DoubleJumpState());
         DoubleJumpCommand doubleJumpCmd(player);
         doubleJumpCmd.execute();
-    }
-
-    if(InputManager::keyDown(SDL_SCANCODE_SPACE)) {
-        player->setState(new JumpAttackState());
     }
 }
 

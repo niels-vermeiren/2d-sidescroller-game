@@ -44,7 +44,7 @@ AnimationData::~AnimationData() {
     }
 }
 
-void AnimationData::reset() {
-    this->currentFrame = 0;
+void AnimationData::reset(int startFrame) {
+    this->currentFrame = startFrame;
 }
 

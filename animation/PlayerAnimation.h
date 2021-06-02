@@ -18,7 +18,7 @@ public:
     static const int WALKING = 1;
     static const int JUMPING = 2;
     static const int CROUCHING = 3;
-    static const int CROUCH_WALKING = 4;
+    static const int SLIDING = 4;
     static const int ATTACK = 5;
     static const int JUMP_ATTACK = 6;
     static const int DEAD = 7;

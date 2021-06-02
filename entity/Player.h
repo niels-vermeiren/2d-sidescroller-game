@@ -27,6 +27,7 @@ public:
     PlayerState * getState() const;
     void notifyObservers() override;
     void reset() override;
+    SDL_Rect * getSwordRect();
     ~Player() override;
 
 private:

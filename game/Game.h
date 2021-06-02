@@ -18,8 +18,8 @@
 #include "../collision/player/PlayerSpikeCollisionHandler.h"
 #include "../map/tilemap/SpikeMapParser.h"
 #include "../entity/Coin.h"
-#include "../entity/BlobEnemy.h"
-#include "../collision/blob/BlobCollisionHandler.h"
+#include "../entity/Skeleton1.h"
+#include "../collision/skeleton1/Skeleton1CollisionHandler.h"
 
 class Game {
 public:
@@ -32,7 +32,7 @@ public:
 private:
     Background * background;
     Player * player;
-    BlobEnemy * blob;
+    Skeleton1 * skeleton1;
     EntityManager * saws;
     EntityManager * spikes;
     EntityManager * tileMap;
@@ -41,7 +41,8 @@ private:
     PlayerCollisionHandler * playerSawCollisionHandler;
     PlayerCollisionHandler * playerSpikeCollisionHandler;
     PlayerCollisionHandler * playerCoinCollisionHandler;
-    BlobCollisionHandler * blobWallCollisionHandler;
+    Skeleton1CollisionHandler * skeletonWallCollisionHandler;
+    PlayerCollisionHandler * playerSkeletonAttackCollisionHandler;
     void reset();
 };
 

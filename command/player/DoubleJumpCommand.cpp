@@ -9,5 +9,5 @@ DoubleJumpCommand::DoubleJumpCommand(Player *player) {
 }
 
 void DoubleJumpCommand::execute() {
-    player->getDirection() = Vector(player->getDirection().x, -DOUBLE_JUMP_SPEED);
+    player->getDirection() = Vector(player->getDirection().x, -DOUBLE_JUMP_SPEED - player->getDirection().y/3);
 }

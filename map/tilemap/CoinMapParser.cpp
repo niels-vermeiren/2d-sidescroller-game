@@ -51,31 +51,31 @@ EntityManager *CoinMapParser::mapToEntities() {
 }
 
 SDL_Rect *CoinMapParser::getRectCenterCoin(int row, int col) {
-    int coinX = (64 * row) + 32 - 9;
-    int coinY = (64 * col) + 32 - 9;
-    return new SDL_Rect {coinX, coinY, 18, 18};
+    int coinX = (64 * row) + 32 - 12.5;
+    int coinY = (64 * col) + 32 - 12.5;
+    return new SDL_Rect {coinX, coinY, 25, 25};
 }
 
 SDL_Rect *CoinMapParser::getRectUpperLeftCoin(int row, int col) {
-    int coinX = (64 * row) + 64/4 - 9;
-    int coinY = (64 * col) + 64/4 - 9;
-    return new SDL_Rect {coinX, coinY, 18, 18};
+    int coinX = (64 * row) + 64/4 - 12.5;
+    int coinY = (64 * col) + 64/4 - 12.5;
+    return new SDL_Rect {coinX, coinY, 25, 25};
 }
 
 SDL_Rect *CoinMapParser::getRectUpperRightCoin(int row, int col) {
-    int coinX = (64 * row) + 32 + 64/4 - 9;
-    int coinY = (64 * col) + 64/4 - 9;
-    return new SDL_Rect {coinX, coinY, 18, 18};
+    int coinX = (64 * row) + 32 + 64/4 - 12.5;
+    int coinY = (64 * col) + 64/4 - 12.5;
+    return new SDL_Rect {coinX, coinY, 25, 25};
 }
 
 SDL_Rect *CoinMapParser::getRectBottomLeftCoin(int row, int col) {
-    int coinX = (64 * row) + 64/4 - 9;
-    int coinY = (64 * col) + 32 + 64/4 - 9;
-    return new SDL_Rect {coinX, coinY, 18, 18};
+    int coinX = (64 * row) + 64/4 - 12.5;
+    int coinY = (64 * col) + 32 + 64/4 - 12.5;
+    return new SDL_Rect {coinX, coinY, 25, 25};
 }
 
 SDL_Rect *CoinMapParser::getRectBottomRightCoin(int row, int col) {
-    int coinX = (64 * row) + 32 + 64/4 - 9;
-    int coinY = (64 * col) + 32 + 64/4 - 9;
-    return new SDL_Rect {coinX, coinY, 18, 18};
+    int coinX = (64 * row) + 32 + 64/4 - 12.5;
+    int coinY = (64 * col) + 32 + 64/4 - 12.5;
+    return new SDL_Rect {coinX, coinY, 25, 25};
 }

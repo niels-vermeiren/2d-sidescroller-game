@@ -7,7 +7,6 @@
 
 #include "PlayerState.h"
 #include "DoubleJumpState.h"
-#include "JumpAttackState.h"
 #include "../command/player/DoubleJumpCommand.h"
 #include "../command/player/MoveLeftCommand.h"
 #include "../command/player/MoveRightCommand.h"

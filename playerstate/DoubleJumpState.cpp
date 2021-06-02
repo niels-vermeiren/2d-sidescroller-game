@@ -3,6 +3,9 @@
 //
 
 #include "DoubleJumpState.h"
+#include "../command/player/MoveLeftCommand.h"
+#include "../command/player/StandStillCommand.h"
+#include "../command/player/MoveRightCommand.h"
 
 void DoubleJumpState::update(Player *player) {
     player->getSprite()->setActiveAnimation(PlayerAnimation::JUMPING);
@@ -20,10 +23,6 @@ void DoubleJumpState::update(Player *player) {
     if(InputManager::keyUp(SDL_SCANCODE_LEFT) && InputManager::keyUp(SDL_SCANCODE_RIGHT)) {
         StandStillCommand idle(player);
         idle.execute();
-    }
-
-    if(InputManager::keyDown(SDL_SCANCODE_SPACE)) {
-        player->setState(new DoubleJumpAttackState());
     }
 }
 

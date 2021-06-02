@@ -3,24 +3,26 @@
 //
 
 #include "CrouchState.h"
+#include "../command/player/SlowDownCommand.h"
 
 void CrouchState::update(Player *player) {
     player->getSprite()->setActiveAnimation(PlayerAnimation::CROUCHING);
-
+    SlowDownCommand command(player);
+    command.execute();
     if(InputManager::keyUp(SDL_SCANCODE_DOWN)) {
         player->setState(new OnGroundState());
     }
 
-    if(InputManager::keyDown(SDL_SCANCODE_LEFT)) {
+    if(InputManager::keyPressed(SDL_SCANCODE_LEFT)) {
         CrouchMoveLeftCommand command(player);
         command.execute();
-        player->getSprite()->setActiveAnimation(PlayerAnimation::CROUCH_WALKING);
+        player->getSprite()->setActiveAnimation(PlayerAnimation::SLIDING);
     }
 
-    if(InputManager::keyDown(SDL_SCANCODE_RIGHT)) {
+    if(InputManager::keyPressed(SDL_SCANCODE_RIGHT)) {
         CrouchMoveRightCommand command(player);
         command.execute();
-        player->getSprite()->setActiveAnimation(PlayerAnimation::CROUCH_WALKING);
+        player->getSprite()->setActiveAnimation(PlayerAnimation::SLIDING);
     }
 
     if(InputManager::keyUp(SDL_SCANCODE_RIGHT) && InputManager::keyUp(SDL_SCANCODE_LEFT)) {
