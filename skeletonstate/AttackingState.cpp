@@ -3,12 +3,21 @@
 //
 
 #include "AttackingState.h"
-#include "../entity/Skeleton1.h"
-#include "../animation/Skeleton1Animation.h"
+#include "../entity/Skeleton.h"
+#include "../animation/SkeletonAnimation.h"
+#include "IdleState.h"
+#include "../command/skeleton/SkeletonStandStillCommand.h"
+
 SState AttackingState::getState() {
     return ATTACK;
 }
 
-void AttackingState::update(Skeleton1 *skeleton1) {
-    skeleton1->getSprite()->setActiveAnimation(Skeleton1Animation::ATTACK);
+void AttackingState::update(Skeleton *skeleton) {
+    auto * cmd = new SkeletonStandStillCommand(skeleton);
+    cmd->execute();
+    tick++;
+    if (tick % 30 == 0) {
+        skeleton->setState(new IdleState());
+    }
+    skeleton->getSprite()->setActiveAnimation(SkeletonAnimation::ATTACK);
 }

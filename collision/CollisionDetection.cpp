@@ -5,8 +5,7 @@
 #include "CollisionDetection.h"
 
 bool CollisionDetection::rectanglesIntersect(SDL_Rect * r1, SDL_Rect * r2) {
-    bool intersects = (r1->x + r1->w < r2->x) || (r2->x + r2->w < r1->x) || (r1->y + r1->h < r2->y)  || (r2->y + r2->h < r1->y);
-    return !intersects;
+    return !(r1->x + r1->w < r2->x || r1->y + r1->h < r2->y || r1->x > r2->x + r2->w || r1->y > r2->y + r2->h);
 }
 
 bool CollisionDetection::rectangleCircleIntersect(SDL_Rect * r, SDL_Rect * c) {

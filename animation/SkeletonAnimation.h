@@ -2,16 +2,16 @@
 // Created by niels on 6/1/21.
 //
 
-#ifndef INC_2DSIDESCROLLER_SKELETON1ANIMATION_H
-#define INC_2DSIDESCROLLER_SKELETON1ANIMATION_H
+#ifndef INC_2DSIDESCROLLER_SKELETONANIMATION_H
+#define INC_2DSIDESCROLLER_SKELETONANIMATION_H
 #include "SDL2/SDL_image.h"
 #include "AnimationData.h"
 #include "Animation.h"
 
-class Skeleton1Animation : public Animation{
+class SkeletonAnimation : public Animation{
 public:
-    Skeleton1Animation();
-    virtual ~Skeleton1Animation();
+    SkeletonAnimation();
+    virtual ~SkeletonAnimation();
     SDL_Texture * getNextAnimationImage(int animation = 0) override;
     void reset() override;
 
@@ -24,4 +24,4 @@ private:
 };
 
 
-#endif //INC_2DSIDESCROLLER_SKELETON1ANIMATION_H
+#endif //INC_2DSIDESCROLLER_SKELETONANIMATION_H

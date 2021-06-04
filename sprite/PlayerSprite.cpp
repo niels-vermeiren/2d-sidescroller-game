@@ -9,6 +9,7 @@ void PlayerSprite::draw(Renderer renderer, SDL_Rect *pRect,SDL_Rect *clipRect, S
     IMG_Init(IMG_INIT_PNG);
     SDL_Texture  * texture = animation->getNextAnimationImage(activeAnimation);
     SDL_Point p = {0,0};
+    SDL_SetRenderDrawColor( renderer.sdlRenderer, 0, 0, 255, 255 );
     SDL_RenderCopyEx(renderer.sdlRenderer, texture, clipRect, &rect, 0.0, &p, flip);
 }
 

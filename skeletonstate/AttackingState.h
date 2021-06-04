@@ -10,9 +10,11 @@
 
 class AttackingState : public SkeletonState {
 public:
-    void update(Skeleton1 * skeleton1) override;
+    void update(Skeleton * skeleton) override;
     SState getState() override;
 
+private:
+    int tick = 0;
 };
 
 

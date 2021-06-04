@@ -18,12 +18,14 @@
 #include "../collision/player/PlayerSpikeCollisionHandler.h"
 #include "../map/tilemap/SpikeMapParser.h"
 #include "../entity/Coin.h"
-#include "../entity/Skeleton1.h"
-#include "../collision/skeleton1/Skeleton1CollisionHandler.h"
+#include "../entity/Skeleton.h"
+#include "../collision/player/PlayerSkeletonCollisionHandler.h"
+#include "../collision/skeleton/SkeletonCollisionHandler.h"
+#include "../entityai/EntityAI.h"
 
 class Game {
 public:
-    Game(Renderer * renderer);
+    explicit Game(Renderer * renderer);
     virtual ~Game();
     void update();
     void draw(Renderer renderer);
@@ -32,7 +34,7 @@ public:
 private:
     Background * background;
     Player * player;
-    Skeleton1 * skeleton1;
+    Skeleton * skeleton;
     EntityManager * saws;
     EntityManager * spikes;
     EntityManager * tileMap;
@@ -41,8 +43,9 @@ private:
     PlayerCollisionHandler * playerSawCollisionHandler;
     PlayerCollisionHandler * playerSpikeCollisionHandler;
     PlayerCollisionHandler * playerCoinCollisionHandler;
-    Skeleton1CollisionHandler * skeletonWallCollisionHandler;
-    PlayerCollisionHandler * playerSkeletonAttackCollisionHandler;
+    SkeletonCollisionHandler * skeletonWallCollisionHandler;
+    PlayerSkeletonCollisionHandler * playerSkeletonAttackCollisionHandler;
+    EntityAI * skeletonAI;
     void reset();
 };
 

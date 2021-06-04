@@ -3,11 +3,11 @@
 //
 
 #include "IdleState.h"
-#include "../animation/Skeleton1Animation.h"
+#include "../animation/SkeletonAnimation.h"
 SState IdleState::getState() {
     return IDLE;
 }
 
-void IdleState::update(Skeleton1 *skeleton) {
-    skeleton->getSprite()->setActiveAnimation(Skeleton1Animation::IDLE);
+void IdleState::update(Skeleton *skeleton) {
+    skeleton->getSprite()->setActiveAnimation(SkeletonAnimation::IDLE);
 }

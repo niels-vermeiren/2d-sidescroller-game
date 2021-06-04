@@ -2,8 +2,8 @@
 // Created by niels on 6/1/21.
 //
 
-#ifndef INC_2DSIDESCROLLER_SKELETON1_H
-#define INC_2DSIDESCROLLER_SKELETON1_H
+#ifndef INC_2DSIDESCROLLER_SKELETON_H
+#define INC_2DSIDESCROLLER_SKELETON_H
 
 
 #include "../math/Vector.h"
@@ -12,18 +12,20 @@
 #include "../sprite/AnimatedSprite.h"
 #include "../skeletonstate/SkeletonState.h"
 
-class Skeleton1 : public FallingEntity {
+class Skeleton : public FallingEntity {
 public:
-    Skeleton1(Vector direction, SDL_Rect * rect);
+    Skeleton(Vector direction, SDL_Rect * rect);
     void draw(Renderer renderer) override;
     void update() override;
     AnimatedSprite * getSprite();
     void setFacingLeft(bool facingLeft);
+    bool facingLeft() const;
     void setState(SkeletonState * state);
     SDL_Rect * getBoundingRect();
+    SDL_Rect * getReverseBoundingRect();
     SkeletonState * getState() const;
     void reset() override;
-    ~Skeleton1() override;
+    ~Skeleton() override;
 
 private:
     SkeletonState * state;
@@ -32,4 +34,4 @@ private:
 };
 
 
-#endif //INC_2DSIDESCROLLER_SKELETON1_H
+#endif //INC_2DSIDESCROLLER_SKELETON_H

@@ -7,11 +7,11 @@
 
 
 #include "SkeletonState.h"
-#include "../entity/Skeleton1.h"
+#include "../entity/Skeleton.h"
 
 class DyingState : public SkeletonState {
 public:
-    void update(Skeleton1 * blob) override;
+    void update(Skeleton * blob) override;
     SState getState() override;
 
 };

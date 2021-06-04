@@ -3,6 +3,8 @@
 //
 
 #include "StandStillCommand.h"
+#include "../skeleton/SkeletonStandStillCommand.h"
+
 
 StandStillCommand::StandStillCommand(Player *entity) {
     this->entity = entity;

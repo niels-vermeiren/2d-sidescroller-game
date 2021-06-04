@@ -7,10 +7,10 @@
 
 
 #include "SkeletonState.h"
-#include "../entity/Skeleton1.h"
+#include "../entity/Skeleton.h"
 class IdleState : public SkeletonState {
 public:
-    void update(Skeleton1 * skeleton) override;
+    void update(Skeleton * skeleton) override;
     SState getState() override;
 
 };

@@ -12,23 +12,6 @@ void CrouchState::update(Player *player) {
     if(InputManager::keyUp(SDL_SCANCODE_DOWN)) {
         player->setState(new OnGroundState());
     }
-
-    if(InputManager::keyPressed(SDL_SCANCODE_LEFT)) {
-        CrouchMoveLeftCommand command(player);
-        command.execute();
-        player->getSprite()->setActiveAnimation(PlayerAnimation::SLIDING);
-    }
-
-    if(InputManager::keyPressed(SDL_SCANCODE_RIGHT)) {
-        CrouchMoveRightCommand command(player);
-        command.execute();
-        player->getSprite()->setActiveAnimation(PlayerAnimation::SLIDING);
-    }
-
-    if(InputManager::keyUp(SDL_SCANCODE_RIGHT) && InputManager::keyUp(SDL_SCANCODE_LEFT)) {
-        StandStillCommand command(player);
-        command.execute();
-    }
 }
 
 PState CrouchState::getState() {

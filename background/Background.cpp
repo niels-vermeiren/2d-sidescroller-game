@@ -16,7 +16,7 @@ void Background::draw(Renderer renderer) {
 
     if(this->bgTexture == nullptr) this->bgTexture = SDL_CreateTextureFromSurface(renderer.sdlRenderer, this->surface);
 
-    SDL_Rect bgRect = {-vpX,LEVEL_HEIGHT - SCREEN_HEIGHT, 1008, SCREEN_HEIGHT};
+    SDL_Rect bgRect = {-vpX,LEVEL_HEIGHT - SCREEN_HEIGHT, BACKGROUND_WIDTH, SCREEN_HEIGHT};
     SDL_RenderCopy(renderer.sdlRenderer, this->bgTexture, NULL, &bgRect);
 }
 

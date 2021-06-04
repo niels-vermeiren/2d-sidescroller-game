@@ -62,7 +62,6 @@ PlayerState *Player::getState() const {
 }
 
 SDL_Rect *Player::getSwordRect() {
-    if (isFacingLeft)
-        return new SDL_Rect {rect->x-53, rect->y+78, 50, 12};
+    if (isFacingLeft)return new SDL_Rect {rect->x-53, rect->y+78, 50, 12};
     else return new SDL_Rect {rect->x+45, rect->y+78, 50, 12};
 }

@@ -10,7 +10,7 @@
 
 class PlayerSkeletonCollisionHandler : public PlayerCollisionHandler {
 public:
-    void handleCollision(Player * p, Skeleton1 * skeleton) override;
+    void handleCollision(Player * p, Skeleton * skeleton);
 
 };
 

@@ -3,6 +3,7 @@
 //
 
 #include "OnGroundState.h"
+#include "../command/skeleton/SkeletonStandStillCommand.h"
 
 void OnGroundState::update(Player *player) {
     player->getSprite()->setActiveAnimation(PlayerAnimation::IDLE);

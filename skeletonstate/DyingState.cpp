@@ -3,10 +3,14 @@
 //
 
 #include "DyingState.h"
-#include "../animation/Skeleton1Animation.h"
+#include "../animation/SkeletonAnimation.h"
+#include "../command/Command.h"
+#include "../command/skeleton/SkeletonSlowDownCommand.h"
 
-void DyingState::update(Skeleton1 * skeleton) {
-    skeleton->getSprite()->setActiveAnimation(Skeleton1Animation::DEAD);
+void DyingState::update(Skeleton * skeleton) {
+    skeleton->getSprite()->setActiveAnimation(SkeletonAnimation::DEAD);
+    Command * slowDown = new SkeletonSlowDownCommand(skeleton);
+    slowDown->execute();
 }
 
 SState DyingState::getState() {

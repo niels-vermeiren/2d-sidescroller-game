@@ -6,18 +6,19 @@
 #define INC_2DSIDESCROLLER_SKELETONSTATE_H
 
 
-class Skeleton1;
+class Skeleton;
 
 enum SState {
     IDLE,
     DEAD,
-    MOVING,
+    MOVE_LEFT,
+    MOVE_RIGHT,
     ATTACK
 };
 
 class SkeletonState {
 public:
-    virtual void update(Skeleton1 * player) = 0;
+    virtual void update(Skeleton * player) = 0;
     virtual SState getState() = 0;
 };
 

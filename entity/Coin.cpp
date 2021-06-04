@@ -16,7 +16,7 @@ void Coin::update() {
 
 void Coin::draw(Renderer renderer) {
     if(!this->visible || !this->shouldDraw) return;
-    this->sprite->draw(renderer, rect, NULL, SDL_FLIP_NONE);
+    this->sprite->draw(renderer, rect, nullptr, SDL_FLIP_NONE);
 }
 
 Coin::~Coin() {
