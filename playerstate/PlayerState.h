@@ -15,6 +15,7 @@ enum PState {
     DOUBLE_JUMPING,
     DYING,
     HURTING,
+    JUMPING,
     WALKING
 };
 

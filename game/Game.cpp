@@ -19,7 +19,9 @@ void Game::update() {
     this->spikes->update();
     this->saws->update();
     this->skeleton->update();
+    this->skeleton2->update();
     this->skeletonAI->update();
+    this->skeletonAI2->update();
     if(InputManager::keyPressed(SDL_SCANCODE_R)) {
         reset();
     }
@@ -32,6 +34,7 @@ void Game::draw(Renderer renderer) {
     this->tileMap->draw(renderer);
     this->coins->draw(renderer);
     this->skeleton->draw(renderer);
+    this->skeleton2->draw(renderer);
     this->player->draw(renderer);
 }
 
@@ -39,6 +42,7 @@ void Game::reset() {
     this->player->reset();
     this->coins->reset();
     this->skeleton->reset();
+    this->skeleton2->reset();
 }
 
 void Game::handleCollisions() {
@@ -47,7 +51,9 @@ void Game::handleCollisions() {
     playerWallCollisionHandler->handleCollisions(player, tileMap);
     playerCoinCollisionHandler->handleCollisions(player, coins);
     playerSkeletonAttackCollisionHandler->handleCollision(player, skeleton);
+    playerSkeletonAttackCollisionHandler->handleCollision(player, skeleton2);
     skeletonWallCollisionHandler->handleCollisions(skeleton, tileMap);
+    skeletonWallCollisionHandler->handleCollisions(skeleton2, tileMap);
 
 }
 
@@ -93,12 +99,16 @@ void Game::load(Renderer *renderer) {
     playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
     playerCoinCollisionHandler = new PlayerCoinCollisionHandler();
     skeletonWallCollisionHandler = new SkeletonWallCollisionHandler();
-    playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
-
-    SDL_Rect * skeletonRect = new SDL_Rect {1200, 10, 155, 149};
+    SDL_Rect * skeletonRect = new SDL_Rect {2000, 10, 155, 149};
     Vector skeletonDirection (0, 0);
     skeleton = new Skeleton(skeletonDirection, skeletonRect);
-    this->skeletonAI = new SkeletonAI(skeleton, tileMap);
-    playerObservable->addObserver(skeletonAI);
+    this->skeletonAI = new SkeletonAI(skeleton, tileMap);playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
+
+    SDL_Rect * skeletonRect2 = new SDL_Rect {1000, 10, 155, 149};
+    Vector skeletonDirection2 (0, 0);
+    skeleton2 = new Skeleton(skeletonDirection2, skeletonRect2);
+    this->skeletonAI2 = new SkeletonAI(skeleton2, tileMap);
+
+    playerObservable->addObserver(skeletonAI2);
 }
 

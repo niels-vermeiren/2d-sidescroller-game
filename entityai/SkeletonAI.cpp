@@ -37,7 +37,7 @@ void SkeletonAI::attackClosePlayer() {
 
     //If player is not on same height as enemy, skeleton is not attacking or skeleton has already attacked, do nothing
     if(skeleton->getBoundingRect()->y > playerY && skeleton->getBoundingRect()->y + skeleton->getBoundingRect()->h < playerY
-    || (skeleton->getState()->getState() != ATTACK || hasAttacked)) return;
+    || (skeleton->getState()->getState() == ATTACK || hasAttacked)) return;
 
     bool playerCloseOnLeft = playerX > skeleton->getBoundingRect()->x + skeleton->getBoundingRect()->w - SKELETON_ATTACK_MIN_PLAYER_DISTANCE
             && playerX <skeleton->getBoundingRect()->x;

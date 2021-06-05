@@ -37,6 +37,7 @@ private:
     Background * background;
     Player * player;
     Skeleton * skeleton;
+    Skeleton * skeleton2;
     EntityManager * saws;
     EntityManager * spikes;
     EntityManager * tileMap;
@@ -48,6 +49,7 @@ private:
     SkeletonCollisionHandler * skeletonWallCollisionHandler;
     PlayerSkeletonCollisionHandler * playerSkeletonAttackCollisionHandler;
     EntityAI * skeletonAI;
+    EntityAI * skeletonAI2;
     void reset();
 };
 
