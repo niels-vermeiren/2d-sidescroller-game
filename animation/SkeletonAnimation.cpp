@@ -6,16 +6,16 @@
 
 SkeletonAnimation::SkeletonAnimation() {
     //Idle
-    auto * idleData = new AnimationData("/home/niels/Projects/2dSideScroller/resources/skeleton/idle/idle", 1, 1);
+    auto * idleData = new AnimationData("../resources/skeleton/idle/idle", 1, 1);
     this->animationData.push_back(idleData);
     //Walk
-    auto * walkingData = new AnimationData("/home/niels/Projects/2dSideScroller/resources/skeleton/walking/walk", 12, 4);
+    auto * walkingData = new AnimationData("../resources/skeleton/walking/walk", 12, 4);
     this->animationData.push_back(walkingData);
     //Die
-    auto * dyingData = new AnimationData("/home/niels/Projects/2dSideScroller/resources/skeleton/dying/dead", 4, 8, false);
+    auto * dyingData = new AnimationData("../resources/skeleton/dying/dead", 4, 8, false);
     this->animationData.push_back(dyingData);
     //Attack
-    auto * attackData = new AnimationData("/home/niels/Projects/2dSideScroller/resources/skeleton/attack/attack", 8, 4);
+    auto * attackData = new AnimationData("../resources/skeleton/attack/attack", 8, 4);
     this->animationData.push_back(attackData);
 }
 

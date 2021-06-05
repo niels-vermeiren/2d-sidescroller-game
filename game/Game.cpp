@@ -11,43 +11,7 @@
 #include "../entityai//SkeletonAI.h"
 
 Game::Game(Renderer * renderer) {
-    SDL_Rect rect = {10, 400, 44, 127};
-    this->player = new Player({0, 0}, &rect);
-    auto * tilemapParser = new TileMapParser(new TilesetTextureHolder(renderer));
-    this->tileMap = tilemapParser->mapToEntities();
-    Observable * playerObservable = player;
-    this->background = new Background();
-    for(auto * obs:this->tileMap->getEntities()) {
-        playerObservable->addObserver(obs);
-    }
-    playerObservable->addObserver(background);
-    auto * spikesMap = new SpikeMapParser();
-    spikes = spikesMap->mapToEntities();
-    for(auto * obs:this->spikes->getEntities()) {
-        playerObservable->addObserver(obs);
-    }
-    auto * sawMap = new SawMapParser();
-    saws = sawMap->mapToEntities();
-    for(auto * obs:this->saws->getEntities()) {
-        playerObservable->addObserver(obs);
-    }
-    auto * coinMap = new CoinMapParser();
-    coins = coinMap->mapToEntities();
-    for(auto * obs:this->coins->getEntities()) {
-        playerObservable->addObserver(obs);
-    }
-    playerWallCollisionHandler = new PlayerWallCollisionHandler();
-    playerSawCollisionHandler = new PlayerSawCollisionHandler();
-    playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
-    playerCoinCollisionHandler = new PlayerCoinCollisionHandler();
-    skeletonWallCollisionHandler = new SkeletonWallCollisionHandler();
-    playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
-
-    SDL_Rect * skeletonRect = new SDL_Rect {1200, 10, 155, 149};
-    Vector skeletonDirection (0, 0);
-    skeleton = new Skeleton(skeletonDirection, skeletonRect);
-    this->skeletonAI = new SkeletonAI(skeleton, tileMap);
-    playerObservable->addObserver(skeletonAI);
+    this->renderer = renderer;
 }
 
 void Game::update() {
@@ -96,5 +60,45 @@ Game::~Game() {
     delete playerSawCollisionHandler;
     delete playerSpikeCollisionHandler;
     delete playerCoinCollisionHandler;
+}
+
+void Game::load(Renderer *renderer) {
+    SDL_Rect rect = {10, 400, 44, 127};
+    this->player = new Player({0, 0}, &rect);
+    auto * tilemapParser = new TileMapParser(new TilesetTextureHolder(renderer));
+    this->tileMap = tilemapParser->mapToEntities();
+    Observable * playerObservable = player;
+    this->background = new Background();
+    for(auto * obs:this->tileMap->getEntities()) {
+        playerObservable->addObserver(obs);
+    }
+    playerObservable->addObserver(background);
+    auto * spikesMap = new SpikeMapParser();
+    spikes = spikesMap->mapToEntities();
+    for(auto * obs:this->spikes->getEntities()) {
+        playerObservable->addObserver(obs);
+    }
+    auto * sawMap = new SawMapParser();
+    saws = sawMap->mapToEntities();
+    for(auto * obs:this->saws->getEntities()) {
+        playerObservable->addObserver(obs);
+    }
+    auto * coinMap = new CoinMapParser();
+    coins = coinMap->mapToEntities();
+    for(auto * obs:this->coins->getEntities()) {
+        playerObservable->addObserver(obs);
+    }
+    playerWallCollisionHandler = new PlayerWallCollisionHandler();
+    playerSawCollisionHandler = new PlayerSawCollisionHandler();
+    playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
+    playerCoinCollisionHandler = new PlayerCoinCollisionHandler();
+    skeletonWallCollisionHandler = new SkeletonWallCollisionHandler();
+    playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
+
+    SDL_Rect * skeletonRect = new SDL_Rect {1200, 10, 155, 149};
+    Vector skeletonDirection (0, 0);
+    skeleton = new Skeleton(skeletonDirection, skeletonRect);
+    this->skeletonAI = new SkeletonAI(skeleton, tileMap);
+    playerObservable->addObserver(skeletonAI);
 }
 

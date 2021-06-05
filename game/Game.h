@@ -26,12 +26,14 @@
 class Game {
 public:
     explicit Game(Renderer * renderer);
+    void load(Renderer * renderer);
     virtual ~Game();
     void update();
     void draw(Renderer renderer);
     void handleCollisions();
 
 private:
+    Renderer * renderer;
     Background * background;
     Player * player;
     Skeleton * skeleton;

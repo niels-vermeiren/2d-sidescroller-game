@@ -7,7 +7,7 @@
 #include "../../entity/Coin.h"
 
 std::string CoinMapParser::getMapFilePath() {
-    return std::string("/home/niels/Projects/2dSideScroller/resources/coinmap/level1.txt");
+    return std::string("../resources/coinmap/level1.txt");
 }
 
 EntityManager *CoinMapParser::mapToEntities() {

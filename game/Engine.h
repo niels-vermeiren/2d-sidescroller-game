@@ -15,9 +15,9 @@
 
 class Engine {
 private:
-    Renderer renderer;
+    Renderer * renderer;
 public:
-    Engine(Renderer renderer);
+    Engine(Renderer * renderer);
     ~Engine();
     void run();
 };

@@ -5,7 +5,7 @@
 #include "SpikeMapParser.h"
 
 std::string SpikeMapParser::getMapFilePath() {
-    return std::string("/home/niels/Projects/2dSideScroller/resources/spikemap/level1.txt");
+    return std::string("../resources/spikemap/level1.txt");
 }
 
 EntityManager * SpikeMapParser::mapToEntities() {

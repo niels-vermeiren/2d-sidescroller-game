@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <thread>
 #include "game/Renderer.h"
 #include "game/Engine.h"
 #include "defs.h"
@@ -27,11 +28,14 @@ int main() {
     SDL_Renderer* sdlRenderer = nullptr;
     sdlRenderer =  SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
 
-    Renderer & renderer = Renderer::getInstance();
-    renderer.sdlRenderer = sdlRenderer;
-    renderer.sdlWindow = window;
+    Renderer * renderer = &Renderer::getInstance();
+    renderer->sdlRenderer = sdlRenderer;
+    renderer->sdlWindow = window;
 
     Engine game(renderer);
+
+
+
     game.run();
 
     return EXIT_SUCCESS;

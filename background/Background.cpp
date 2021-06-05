@@ -21,7 +21,7 @@ void Background::draw(Renderer renderer) {
 }
 
 Background::Background() {
-    this->surface = IMG_Load("/home/niels/Projects/2dSideScroller/resources/BG1.jpg");
+    this->surface = IMG_Load("../resources/BG2-small.jpg");
     this->bgTexture = nullptr;
     this->playerPos = new SDL_Rect();
 }

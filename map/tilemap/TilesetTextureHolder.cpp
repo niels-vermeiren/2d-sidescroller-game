@@ -6,7 +6,7 @@
 
 TilesetTextureHolder::TilesetTextureHolder(Renderer * renderer) {
     this->tilesetTexture =  SDL_CreateTextureFromSurface(renderer->sdlRenderer,
-                     IMG_Load("/home/niels/Projects/2dSideScroller/resources/tiles/tileset.png"));
+                     IMG_Load("../resources/tiles/tileset.png"));
 }
 
 SDL_Texture * TilesetTextureHolder::getTilesetTexture() {

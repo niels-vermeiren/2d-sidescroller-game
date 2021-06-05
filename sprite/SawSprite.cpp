@@ -6,7 +6,7 @@
 
 SawSprite::SawSprite() {
     this->angle = 0.0;
-    this->surface = IMG_Load("/home/niels/Projects/2dSideScroller/resources/saw/saw.png");
+    this->surface = IMG_Load("../resources/saw/saw.png");
 }
 
 void SawSprite::draw(Renderer renderer, SDL_Rect *eRect, SDL_Rect * clipRect, SDL_RendererFlip flip) {
