@@ -48,3 +48,7 @@ void AnimationData::reset(int startFrame) {
     this->currentFrame = startFrame;
 }
 
+int AnimationData::getCurrentFrame() {
+    return currentFrame;
+}
+

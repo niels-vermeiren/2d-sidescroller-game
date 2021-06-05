@@ -10,7 +10,11 @@
 class Animation {
 public:
     virtual SDL_Texture * getNextAnimationImage(int animation = 0) = 0;
+    virtual int getCurrentFrameNumber() = 0;
     virtual void reset() = 0;
+
+protected:
+    int currentAnimation;
 };
 
 #endif //INC_2DSIDESCROLLER_ANIMATION_H

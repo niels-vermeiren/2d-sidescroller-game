@@ -16,7 +16,7 @@ void AttackingState::update(Skeleton *skeleton) {
     auto * cmd = new SkeletonStandStillCommand(skeleton);
     cmd->execute();
     tick++;
-    if (tick % 30 == 0) {
+    if (tick % SKELETON_ATTACK_DURATION == 0) {
         skeleton->setState(new IdleState());
     }
     skeleton->getSprite()->setActiveAnimation(SkeletonAnimation::ATTACK);

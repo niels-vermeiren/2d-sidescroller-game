@@ -45,8 +45,8 @@ SkeletonState *Skeleton::getState() const {
 }
 
 SDL_Rect *Skeleton::getBoundingRect() {
-    if(!this->facingLeft()) return new SDL_Rect {rect->x+40, rect->y+41, 47, 106};
-    else return new SDL_Rect {rect->x+70, rect->y+41, 47, 106};
+   return new SDL_Rect {rect->x+53, rect->y+43, 47, 106};
+
 }
 
 Skeleton::~Skeleton() {
@@ -57,7 +57,10 @@ bool Skeleton::facingLeft() const {
     return this->isFacingLeft;
 }
 
-SDL_Rect *Skeleton::getReverseBoundingRect() {
-    if(this->facingLeft()) return new SDL_Rect {rect->x+40, rect->y+41, 47, 106};
-    else return new SDL_Rect {rect->x+70, rect->y+41, 47, 106};
+SDL_Rect *Skeleton::getAxeAttackBoundingBox() {
+    if (isFacingLeft) {
+        return new SDL_Rect {rect->x+10,rect->y+85,30,40};
+    } else {
+        return new SDL_Rect {rect->x+113,rect->y+85,30,40};
+    }
 }

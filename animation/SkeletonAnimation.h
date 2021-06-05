@@ -13,6 +13,7 @@ public:
     SkeletonAnimation();
     virtual ~SkeletonAnimation();
     SDL_Texture * getNextAnimationImage(int animation = 0) override;
+    int getCurrentFrameNumber() override;
     void reset() override;
 
     static const int IDLE = 0;

@@ -14,6 +14,7 @@ public:
     AnimationData();
     AnimationData(std::string filePath, int totalFrames, int delay);
     AnimationData(std::string filePath, int totalFrames, int delay, bool repeat);
+    int getCurrentFrame ();
     void reset(int startFrame);
     SDL_Texture * getNextFrame();
     virtual ~AnimationData();

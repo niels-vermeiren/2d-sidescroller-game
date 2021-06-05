@@ -17,13 +17,13 @@ void SkeletonWallCollisionHandler::handleCollision(Skeleton * skeleton, Entity *
 
     //If p is located on the left of the entity, and moving against it
     if(skeleton->minY() < entity->maxY() && skeleton->maxY() > entity->minY() &&
-       skeleton->getReverseBoundingRect()->x + skeleton->getReverseBoundingRect()->w  - skeleton->getDirection().x <= entity->minX() && skeleton->getReverseBoundingRect()->x + skeleton->getReverseBoundingRect()->w  > entity->minX()) {
-        skeleton->getRect()->x = entity->minX() - skeleton->getReverseBoundingRect()->w * 2;
+       skeleton->getBoundingRect()->x + skeleton->getBoundingRect()->w  - skeleton->getDirection().x <= entity->minX() && skeleton->getBoundingRect()->x + skeleton->getBoundingRect()->w  > entity->minX()) {
+        skeleton->getRect()->x = entity->minX() - skeleton->getBoundingRect()->w * 2;
         if(skeleton->getState()->getState() != DEAD) skeleton->setState(new MoveLeftState());
     }
     //If skeleton is located on the right of the entity, and moving against it
     if(skeleton->minY() < entity->maxY() && skeleton->maxY() > entity->minY() &&
-       skeleton->getReverseBoundingRect()->x + skeleton->getDirection().x <= entity->maxX() && skeleton->getReverseBoundingRect()->x + 50 > entity->maxX()) {
+       skeleton->getBoundingRect()->x + skeleton->getDirection().x <= entity->maxX() && skeleton->getBoundingRect()->x + 50 > entity->maxX()) {
         skeleton->getRect()->x = entity->maxX();
         if(skeleton->getState()->getState() != DEAD) skeleton->setState(new MoveRightState());
     }

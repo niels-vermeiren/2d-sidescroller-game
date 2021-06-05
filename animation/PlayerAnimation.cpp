@@ -36,6 +36,7 @@ PlayerAnimation::PlayerAnimation() : Animation() {
 }
 
 SDL_Texture * PlayerAnimation::getNextAnimationImage(int animation) {
+    currentAnimation = animation;
     return this->animationData[animation]->getNextFrame();
 }
 
@@ -48,4 +49,8 @@ PlayerAnimation::~PlayerAnimation() {
 void PlayerAnimation::reset() {
     this->animationData[DEAD]->reset(0);
     this->animationData[JUMPING]->reset(1);
+}
+
+int PlayerAnimation::getCurrentFrameNumber() {
+    this->animationData[currentAnimation]->getCurrentFrame();
 }

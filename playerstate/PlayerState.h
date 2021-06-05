@@ -12,12 +12,9 @@ class Player;
 enum PState {
     ATTACKING,
     CROUCHING,
-    DOUBLE_JUMP_ATTACKING,
     DOUBLE_JUMPING,
     DYING,
     HURTING,
-    JUMPING,
-    JUMP_ATTACKING,
     WALKING
 };
 

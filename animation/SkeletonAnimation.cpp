@@ -26,10 +26,15 @@ SkeletonAnimation::~SkeletonAnimation() {
 }
 
 SDL_Texture *SkeletonAnimation::getNextAnimationImage(int animation) {
+    this->currentAnimation = animation;
     return this->animationData[animation]->getNextFrame();
 }
 
 void SkeletonAnimation::reset() {
     this->animationData[DEAD]->reset(0);
     this->animationData[ATTACK]->reset(0);
+}
+
+int SkeletonAnimation::getCurrentFrameNumber() {
+    return this->animationData[currentAnimation]->getCurrentFrame();
 }

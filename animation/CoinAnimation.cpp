@@ -9,6 +9,7 @@ CoinAnimation::CoinAnimation() {
 }
 
 SDL_Texture *CoinAnimation::getNextAnimationImage(int animation) {
+    currentAnimation = animation;
     return animationData->getNextFrame();
 }
 
@@ -18,4 +19,8 @@ CoinAnimation::~CoinAnimation() {
 
 void CoinAnimation::reset() {
     this->animationData->reset(0);
+}
+
+int CoinAnimation::getCurrentFrameNumber() {
+    this->animationData[currentAnimation].getCurrentFrame();
 }

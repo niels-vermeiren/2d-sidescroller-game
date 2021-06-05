@@ -22,8 +22,8 @@ public:
     bool facingLeft() const;
     void setState(SkeletonState * state);
     SDL_Rect * getBoundingRect();
-    SDL_Rect * getReverseBoundingRect();
     SkeletonState * getState() const;
+    SDL_Rect * getAxeAttackBoundingBox();
     void reset() override;
     ~Skeleton() override;
 

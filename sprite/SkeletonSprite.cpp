@@ -19,3 +19,7 @@ void SkeletonSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *clipRect
 void SkeletonSprite::resetAnimation() {
     this->animation->reset();
 }
+
+int SkeletonSprite::getCurrentFrame() {
+    return animation->getCurrentFrameNumber();
+}
