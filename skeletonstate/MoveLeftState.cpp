@@ -5,10 +5,12 @@
 #include "MoveLeftState.h"
 #include "../animation/SkeletonAnimation.h"
 #include "../command/skeleton/SkeletonMoveLeftCommand.h"
+#include "../magestate/MageMoveLeftState.h"
 
-void MoveLeftState::update(Skeleton *skeleton1) {
-    skeleton1->getSprite()->setActiveAnimation(SkeletonAnimation::WALKING);
-    SkeletonMoveLeftCommand cmd(skeleton1);
+
+void MoveLeftState::update(Skeleton *skeleton) {
+    skeleton->getSprite()->setActiveAnimation(SkeletonAnimation::WALKING);
+    SkeletonMoveLeftCommand cmd(skeleton);
     cmd.execute();
 }
 

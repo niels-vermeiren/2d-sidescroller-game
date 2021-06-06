@@ -10,8 +10,8 @@ SState MoveRightState::getState() {
     return MOVE_RIGHT;
 }
 
-void MoveRightState::update(Skeleton *skeleton1) {
-    skeleton1->getSprite()->setActiveAnimation(SkeletonAnimation::WALKING);
-    SkeletonMoveRightCommand cmd(skeleton1);
+void MoveRightState::update(Skeleton *skeleton) {
+    skeleton->getSprite()->setActiveAnimation(SkeletonAnimation::WALKING);
+    SkeletonMoveRightCommand cmd(skeleton);
     cmd.execute();
 }

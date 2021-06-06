@@ -11,7 +11,7 @@
 
 class DyingState : public SkeletonState {
 public:
-    void update(Skeleton * blob) override;
+    void update(Skeleton * skeleton) override;
     SState getState() override;
 
 };

@@ -2,7 +2,7 @@
 // Created by niels on 6/3/21.
 //
 
-#ifndef INC_2DSIDESCROLLER_MOVELEFTSTATE_H
+#ifndef INC_2DSIDESCROLLER_MAGEMOVELEFTSTATE_H
 #define INC_2DSIDESCROLLER_MOVELEFTSTATE_H
 
 
@@ -10,9 +10,9 @@
 #include "../entity/Skeleton.h"
 class MoveLeftState : public SkeletonState {
 public:
-    void update(Skeleton * skeleton1) override;
+    void update(Skeleton * skeleton) override;
     SState getState() override;
 };
 
 
-#endif //INC_2DSIDESCROLLER_MOVELEFTSTATE_H
+#endif //INC_2DSIDESCROLLER_MAGEMOVELEFTSTATE_H

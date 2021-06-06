@@ -21,9 +21,7 @@ void PlayerSkeletonCollisionHandler::handleCollision(Player *p, Skeleton *skelet
 
     //Player hits skeleton with knife
     if(CollisionDetection::rectanglesIntersect(pKnifeBox, sCollisionBox) && pState == ATTACKING) {
-        Vector newDirection = Vector(skeleton->minX(), 0) - Vector(p->minX(), 0);
-        sDirection = &newDirection;
-        sDirection->x /= sDirection->x * PLAYER_SKELETON_HIT_PUSH ;
+        sDirection->x += skeleton->minX() < p->minX() ? -PLAYER_SKELETON_HIT_PUSH : PLAYER_SKELETON_HIT_PUSH ;
         skeleton->setState(new DyingState());
     }
 

@@ -9,7 +9,7 @@
 #include "../entity/Skeleton.h"
 class MoveRightState : public SkeletonState {
 public:
-    void update(Skeleton * skeleton1) override;
+    void update(Skeleton * skeleton) override;
     SState getState() override;
 };
 

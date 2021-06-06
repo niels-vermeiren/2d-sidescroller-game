@@ -10,7 +10,7 @@
 
 class SkeletonWallCollisionHandler : public SkeletonCollisionHandler {
 public:
-    void handleCollision(Skeleton * blob, Entity * entity) override;
+    void handleCollision(Skeleton * skeleton, Entity * entity) override;
 
 };
 

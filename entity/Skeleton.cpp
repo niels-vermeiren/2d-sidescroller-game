@@ -14,8 +14,6 @@ Skeleton::Skeleton(Vector direction, SDL_Rect *rect) : FallingEntity(direction, 
 
 void Skeleton::draw(Renderer renderer) {
     this->sprite->draw(renderer, this->rect, NULL, isFacingLeft? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
-    SDL_SetRenderDrawColor(renderer.sdlRenderer, 255, 0,0,255);
-    SDL_RenderDrawRect(renderer.sdlRenderer, getCollisionBox());
 }
 
 void Skeleton::update() {

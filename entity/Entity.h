@@ -16,18 +16,18 @@ public:
     Entity(Vector direction, SDL_Rect * rect);
     virtual void update() = 0;
     virtual void draw(Renderer renderer) = 0;
-    Vector &getDirection();
     SDL_Rect * getRect();
-    void setVisible(const bool visible);
-    virtual void reset();
     int minX() const;
     int minY() const;
     int maxX() const;
     int maxY() const;
+    Vector &getDirection();
+    void setVisible(bool visible);
+    virtual void reset();
 protected:
-    bool visible = true;
     SDL_Rect * rect;
     Vector direction;
+    bool visible = true;
 };
 
 

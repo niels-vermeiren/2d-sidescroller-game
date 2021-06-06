@@ -22,6 +22,9 @@
 #include "../collision/player/PlayerSkeletonCollisionHandler.h"
 #include "../collision/skeleton/SkeletonCollisionHandler.h"
 #include "../entityai/EntityAI.h"
+#include "../entity/Mage.h"
+#include "../collision/mage/MageCollisionHandler.h"
+#include "../collision/player/PlayerMageCollisionHandler.h"
 
 class Game {
 public:
@@ -38,6 +41,7 @@ private:
     Player * player;
     Skeleton * skeleton;
     Skeleton * skeleton2;
+    Mage * mage;
     EntityManager * saws;
     EntityManager * spikes;
     EntityManager * tileMap;
@@ -46,10 +50,13 @@ private:
     PlayerCollisionHandler * playerSawCollisionHandler;
     PlayerCollisionHandler * playerSpikeCollisionHandler;
     PlayerCollisionHandler * playerCoinCollisionHandler;
+    MageCollisionHandler * mageWallCollisionHandler;
     SkeletonCollisionHandler * skeletonWallCollisionHandler;
     PlayerSkeletonCollisionHandler * playerSkeletonAttackCollisionHandler;
+    PlayerMageCollisionHandler * playerMageCollisionHandler;
     EntityAI * skeletonAI;
     EntityAI * skeletonAI2;
+    EntityAI * mageAI;
     void reset();
 };
 

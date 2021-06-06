@@ -9,6 +9,8 @@
 #include "../animation/SkeletonAnimation.h"
 #include "../collision/skeleton/SkeletonWallCollisionHandler.h"
 #include "../entityai//SkeletonAI.h"
+#include "../collision/mage/MageWallCollisionHandler.h"
+#include "../entityai/MageAI.h"
 
 Game::Game(Renderer * renderer) {
     this->renderer = renderer;
@@ -22,6 +24,8 @@ void Game::update() {
     this->skeleton2->update();
     this->skeletonAI->update();
     this->skeletonAI2->update();
+    this->mage->update();
+    this->mageAI->update();
     if(InputManager::keyPressed(SDL_SCANCODE_R)) {
         reset();
     }
@@ -35,6 +39,7 @@ void Game::draw(Renderer renderer) {
     this->coins->draw(renderer);
     this->skeleton->draw(renderer);
     this->skeleton2->draw(renderer);
+    this->mage->draw(renderer);
     this->player->draw(renderer);
 }
 
@@ -54,7 +59,8 @@ void Game::handleCollisions() {
     playerSkeletonAttackCollisionHandler->handleCollision(player, skeleton2);
     skeletonWallCollisionHandler->handleCollisions(skeleton, tileMap);
     skeletonWallCollisionHandler->handleCollisions(skeleton2, tileMap);
-
+    mageWallCollisionHandler->handleCollisions(mage, tileMap);
+    playerMageCollisionHandler->handleCollision(player, mage);
 }
 
 Game::~Game() {
@@ -99,6 +105,8 @@ void Game::load(Renderer *renderer) {
     playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
     playerCoinCollisionHandler = new PlayerCoinCollisionHandler();
     skeletonWallCollisionHandler = new SkeletonWallCollisionHandler();
+    mageWallCollisionHandler = new MageWallCollisionHandler();
+    playerMageCollisionHandler = new PlayerMageCollisionHandler();
     auto * skeletonRect = new SDL_Rect {1000, 10, 155, 149};
     Vector skeletonDirection (0, 0);
     skeleton = new Skeleton(skeletonDirection, skeletonRect);
@@ -110,5 +118,12 @@ void Game::load(Renderer *renderer) {
     this->skeletonAI2 = new SkeletonAI(skeleton2, tileMap);
     playerObservable->addObserver(skeletonAI);
     playerObservable->addObserver(skeletonAI2);
+
+    auto * mageRect = new SDL_Rect {50, 50, 165, 165};
+    Vector mageDirection (0, 0);
+    mage = new Mage(mageDirection, mageRect);
+    //mage->getSprite()->setActiveAnimation(MageAnimation::IDLE);
+    this->mageAI = new MageAI(mage, tileMap);
+    playerObservable->addObserver(mageAI);
 }
 
