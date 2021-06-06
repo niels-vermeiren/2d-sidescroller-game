@@ -8,12 +8,14 @@
 
 Skeleton::Skeleton(Vector direction, SDL_Rect *rect) : FallingEntity(direction, rect) {
     this->sprite = new SkeletonSprite();
-    isFacingLeft = false;
     this->state = new MoveLeftState();
+    isFacingLeft = false;
 }
 
 void Skeleton::draw(Renderer renderer) {
     this->sprite->draw(renderer, this->rect, NULL, isFacingLeft? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+    SDL_SetRenderDrawColor(renderer.sdlRenderer, 255, 0,0,255);
+    SDL_RenderDrawRect(renderer.sdlRenderer, getCollisionBox());
 }
 
 void Skeleton::update() {
@@ -44,9 +46,8 @@ SkeletonState *Skeleton::getState() const {
     return this->state;
 }
 
-SDL_Rect *Skeleton::getBoundingRect() {
-   return new SDL_Rect {rect->x+53, rect->y+43, 47, 106};
-
+SDL_Rect *Skeleton::getCollisionBox() {
+   return collisionBox.getCollisionBox(this->rect);
 }
 
 Skeleton::~Skeleton() {
@@ -57,10 +58,6 @@ bool Skeleton::facingLeft() const {
     return this->isFacingLeft;
 }
 
-SDL_Rect *Skeleton::getAxeAttackBoundingBox() {
-    if (isFacingLeft) {
-        return new SDL_Rect {rect->x+10,rect->y+85,30,40};
-    } else {
-        return new SDL_Rect {rect->x+113,rect->y+85,30,40};
-    }
+SDL_Rect *Skeleton::getAxeCollisionBox() {
+    axeCollisionBox.getCollisionBox(this->rect, isFacingLeft);
 }

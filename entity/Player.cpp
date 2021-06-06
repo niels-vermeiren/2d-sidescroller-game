@@ -61,7 +61,10 @@ PlayerState *Player::getState() const {
     return this->state;
 }
 
-SDL_Rect *Player::getSwordRect() {
-    if (isFacingLeft)return new SDL_Rect {rect->x-53, rect->y+78, 50, 12};
-    else return new SDL_Rect {rect->x+45, rect->y+78, 50, 12};
+SDL_Rect *Player::getKnifeCollisionBox() {
+    knifeCollisionBox.getCollisionBox(getCollisionBox(), isFacingLeft);
+}
+
+SDL_Rect *Player::getCollisionBox() {
+    return playerCollisionBox.getCollisionBox(getRect());
 }

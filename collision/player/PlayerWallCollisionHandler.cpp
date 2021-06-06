@@ -5,23 +5,29 @@
 #include "PlayerWallCollisionHandler.h"
 
 void PlayerWallCollisionHandler::handleCollision(Player *p, Entity *entity) {
-    //If player is located on top of wall and is falling in it
-    if(p->maxX() > entity->minX() && p->minX()  < entity->maxX()
-       && p->maxY() <= entity->minY()
-       && p->maxY() + p->getDirection().y > entity->minY()) {
-        p->getRect()->y = entity->minY() - p->getRect()->h;
-        if (p->getDirection().y > GRAVITY && p->getState()->getState() != HURTING
-            && p->getState()->getState() != DYING) p->setState(new OnGroundState());
-        p->getDirection().y = 0;
+    SDL_Rect * pBounds = p->getRect();
+    SDL_Rect * pCollisionBox = p->getCollisionBox();
+    Vector * pDirection = &p->getDirection();
+    PState pState = p->getState()->getState();
+
+    bool playerBetweenBoundsWall = pCollisionBox->x + pCollisionBox->w > entity->minX() && pCollisionBox->x  < entity->maxX();
+
+    //Player falls down on the wall
+    if( playerBetweenBoundsWall && pCollisionBox->y + pCollisionBox->h <= entity->minY() && pCollisionBox->y + pCollisionBox->h + pDirection->y > entity->minY()) {
+        pCollisionBox->y = entity->minY() - pCollisionBox->h;
+        if (pDirection->y > GRAVITY && pState != HURTING && pState != DYING) p->setState(new OnGroundState());
+        pDirection->y = 0;
     }
-    //If p is located on the left of the entity, and moving against it
-    if(p->minY() < entity->maxY() && p->maxY() > entity->minY() &&
-       p->maxX() - p->getDirection().x <= entity->minX() && p->maxX()  > entity->minX()) {
-        p->getRect()->x = entity->minX() - p->getRect()->w;
+
+    bool playerOnSameHeightEntity = pCollisionBox->y < entity->maxY() && pCollisionBox->y + pCollisionBox->h > entity->minY();
+
+    //Player collides with wall on the right
+    if( playerOnSameHeightEntity && pCollisionBox->x + pCollisionBox->w - pDirection->x <= entity->minX() && pCollisionBox->x + pCollisionBox->w  > entity->minX()) {
+        pBounds->x = entity->minX() - pBounds->w + ((pBounds->w - pCollisionBox->w)/2) - 1;
     }
-    //If p is located on the right of the entity, and moving against it
-    if(p->minY() < entity->maxY() && p->maxY() > entity->minY() &&
-       p->minX() - p->getDirection().x >= entity->maxX() && p->minX() < entity->maxX()) {
-        p->getRect()->x = entity->maxX();
+
+    //Player collides with wall on the left
+    if(playerOnSameHeightEntity && pCollisionBox->x - pDirection->x >= entity->maxX() && pCollisionBox->x < entity->maxX()) {
+        pBounds->x = entity->maxX() - ((pBounds->w - pCollisionBox->w)/2);
     }
 }

@@ -8,40 +8,42 @@
 #include "../../playerstate/IsHurtState.h"
 
 void PlayerSkeletonCollisionHandler::handleCollision(Player *p, Skeleton *skeleton) {
-    //Attack from player
-    SDL_Rect * swordRect = p->getSwordRect();
-    if(p->getState()->getState() == ATTACKING && CollisionDetection::rectanglesIntersect(swordRect, skeleton->getBoundingRect())
-    && skeleton->getState()->getState() != DEAD ) {
-        skeleton->getDirection() = Vector(skeleton->minX() + skeleton->getRect()->w/2, 0) - Vector(p->minX() + p->getRect()->w/2, 0);
-        skeleton->getDirection().x /= 16;
+    SDL_Rect * pCollisionBox = p->getCollisionBox();
+    SDL_Rect * pKnifeBox = p->getKnifeCollisionBox();
+    Vector * pDirection = &p->getDirection();
+    PState pState = p->getState()->getState();
+    SDL_Rect * sCollisionBox = skeleton->getCollisionBox();
+    Vector * sDirection = &skeleton->getDirection();
+    SDL_Rect * sAxeBox = skeleton->getAxeCollisionBox();
+    SState sState = skeleton->getState()->getState();
+
+    if(pState == HURTING || pState == DYING || sState == DEAD) return;
+
+    //Player hits skeleton with knife
+    if(CollisionDetection::rectanglesIntersect(pKnifeBox, sCollisionBox) && pState == ATTACKING) {
+        Vector newDirection = Vector(skeleton->minX(), 0) - Vector(p->minX(), 0);
+        sDirection = &newDirection;
+        sDirection->x /= sDirection->x * PLAYER_SKELETON_HIT_PUSH ;
         skeleton->setState(new DyingState());
     }
-    //If p is located on the left of the entity, and moving against it
-    if(p->minY() < skeleton->getBoundingRect()->y + skeleton->getBoundingRect()->h && p->maxY() > skeleton->getBoundingRect()->y &&
-       p->maxX() - p->getDirection().x <= skeleton->getBoundingRect()->x && p->maxX()  > skeleton->getBoundingRect()->x
-       && skeleton->getState()->getState() != DEAD) {
-        p->getDirection().x -= 9;
-        p->setState(new IsHurtState());
-    }
-    //If p is located on the right of the skeleton, and moving against it
-    if(p->minY() < skeleton->getBoundingRect()->y + skeleton->getBoundingRect()->h && p->maxY() > skeleton->getBoundingRect()->y &&
-       p->minX() - p->getDirection().x >= skeleton->getBoundingRect()->x + skeleton->getBoundingRect()->w &&
-       p->minX() < skeleton->getBoundingRect()->x + skeleton->getBoundingRect()->w && skeleton->getState()->getState() != DEAD) {
-        p->getDirection().x += 9;
-        p->setState(new IsHurtState());
-    }
-    //Atack from skeleton
-    if(skeleton->getState()->getState() != ATTACK || skeleton->getSprite()->getCurrentFrame() != 6 || p->getState()->getState() == HURTING
-    || p->getState()->getState() == DYING) return;
 
-    if(CollisionDetection::rectanglesIntersect(p->getRect(), skeleton->getAxeAttackBoundingBox())) {
+    //Skeleton attacks player with axe
+    if(sState == ATTACK && skeleton->getSprite()->getCurrentFrame() == 6 && CollisionDetection::rectanglesIntersect(pCollisionBox, sAxeBox)) {
         p->setState(new IsHurtState());
-        if (skeleton->facingLeft()) {
-            p->getDirection().x -= 9;
-        } else {
-            p->getDirection().x += 9;
-        }
+        pDirection->x += skeleton->facingLeft() ? -PLAYER_SKELETON_HIT_PUSH : PLAYER_SKELETON_HIT_PUSH;
     }
 
+    bool playerOnSameHeightEnemy = p->minY() + pCollisionBox->h < sCollisionBox->y + sCollisionBox->h && p->minY() + pCollisionBox->h / 2 > sCollisionBox->y;
 
+    //Player hits skeleton from the left
+    if(playerOnSameHeightEnemy && pCollisionBox->x - pDirection->x <= sCollisionBox->x && pCollisionBox->x + pCollisionBox->w > sCollisionBox->x) {
+        pDirection->x -= PLAYER_SKELETON_HIT_PUSH ;
+        p->setState(new IsHurtState());
+    }
+
+    //Player hits skeleton from the right
+    if(playerOnSameHeightEnemy && pCollisionBox->x - pDirection->x >= sCollisionBox->x + sCollisionBox->w && pCollisionBox->x < sCollisionBox->x + sCollisionBox->w) {
+        pDirection->x += PLAYER_SKELETON_HIT_PUSH ;
+        p->setState(new IsHurtState());
+    }
 }

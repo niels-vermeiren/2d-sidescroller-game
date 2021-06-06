@@ -5,11 +5,14 @@
 #include "PlayerSpikeCollisionHandler.h"
 
 void PlayerSpikeCollisionHandler::handleCollision(Player *p, Entity *entity) {
-    //If player is located on top of wall and is falling down
-    if(p->maxX() > entity->minX() && p->minX()  < entity->maxX()
-       && p->maxY() <= entity->minY() + entity->getRect()->h
-       && p->maxY() + p->getDirection().y > entity->minY() + entity->getRect()->h) {
-        p->getRect()->y = entity->minY() + entity->getRect()->h - p->getRect()->h;
+    SDL_Rect * pCollisionBox = p->getCollisionBox();
+
+    bool playerBetweenBoundsSpike = pCollisionBox->x + pCollisionBox->w > entity->minX() && pCollisionBox->x  < entity->maxX();
+    bool playerFallsOnBottomSpike = pCollisionBox->y + pCollisionBox->h <= entity->minY() + entity->getRect()->h
+                                    && pCollisionBox->y + pCollisionBox->h + p->getDirection().y > entity->minY() + entity->getRect()->h;
+
+    //Player falls on spikes
+    if(playerBetweenBoundsSpike && playerFallsOnBottomSpike) {
         if (p->getDirection().y > GRAVITY) {
             p->setState(new IsDeadState());
         }

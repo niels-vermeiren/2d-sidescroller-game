@@ -69,7 +69,7 @@ Game::~Game() {
 }
 
 void Game::load(Renderer *renderer) {
-    SDL_Rect rect = {10, 400, 44, 127};
+    SDL_Rect rect = {10, 400, 150, 150};
     this->player = new Player({0, 0}, &rect);
     auto * tilemapParser = new TileMapParser(new TilesetTextureHolder(renderer));
     this->tileMap = tilemapParser->mapToEntities();
@@ -99,16 +99,16 @@ void Game::load(Renderer *renderer) {
     playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
     playerCoinCollisionHandler = new PlayerCoinCollisionHandler();
     skeletonWallCollisionHandler = new SkeletonWallCollisionHandler();
-    SDL_Rect * skeletonRect = new SDL_Rect {2000, 10, 155, 149};
+    auto * skeletonRect = new SDL_Rect {1000, 10, 155, 149};
     Vector skeletonDirection (0, 0);
     skeleton = new Skeleton(skeletonDirection, skeletonRect);
-    this->skeletonAI = new SkeletonAI(skeleton, tileMap);playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
-
-    SDL_Rect * skeletonRect2 = new SDL_Rect {1000, 10, 155, 149};
+    this->skeletonAI = new SkeletonAI(skeleton, tileMap);
+    playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
+    auto * skeletonRect2 = new SDL_Rect {2000, 10, 155, 149};
     Vector skeletonDirection2 (0, 0);
     skeleton2 = new Skeleton(skeletonDirection2, skeletonRect2);
     this->skeletonAI2 = new SkeletonAI(skeleton2, tileMap);
-
+    playerObservable->addObserver(skeletonAI);
     playerObservable->addObserver(skeletonAI2);
 }
 

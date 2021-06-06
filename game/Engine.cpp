@@ -3,8 +3,10 @@
 //
 
 #include <thread>
+#include <future>
 #include "Engine.h"
 #include "../map/tilemap/TileMapParser.h"
+
 
 Engine::Engine(Renderer * renderer) {
     this->renderer = renderer;
@@ -14,24 +16,27 @@ Engine::~Engine() {}
 
 void Engine::run() {
     bool quit = false;
-    Game * game = new Game(renderer);
-    std::cout<<"loading" <<std::endl;
-    std::thread t1(&Game::load,game, renderer);
-
+    Game *game = new Game(renderer);
+    /*std::cout << "loading" << std::endl;
+    bool finished = false;
     SDL_Rect r;
-    r.x = SCREEN_WIDTH/2 - 175;
-    r.y = SCREEN_HEIGHT/2-116;
+    r.x = SCREEN_WIDTH / 2 - 175;
+    r.y = SCREEN_HEIGHT / 2 - 116;
     r.w = 351;
-    r.h = 233;
+    r.h = 233;*/
 
-    // Set render color to blue ( rect will be rendered in this color )
-    
-    SDL_Surface * loader = IMG_Load("../resources/loader/loading.gif");
-    SDL_Texture * loaderTexture = SDL_CreateTextureFromSurface(renderer->sdlRenderer, loader);
-    SDL_RenderCopy(renderer->sdlRenderer, loaderTexture, NULL, &r);
+    std::thread t1(&Game::load, game, renderer);
+    /*std::cout << finished;
+    SDL_Surface *loader = IMG_Load("../resources/loader/loading.jpeg");
+    SDL_Texture *loaderTexture = SDL_CreateTextureFromSurface(renderer->sdlRenderer, loader);
+    SDL_RenderCopyEx(renderer->sdlRenderer, loaderTexture, NULL, &r,0.0, new SDL_Point{0,0}, SDL_FLIP_NONE);
     // Render rect
     SDL_RenderPresent(renderer->sdlRenderer);
+    SDL_FreeSurface(loader);
+    SDL_DestroyTexture(loaderTexture);*/
+
     t1.join();
+    //std::cout << finished;
     int tick = 0;
     int fpsCount = 0;
     while(!quit) {

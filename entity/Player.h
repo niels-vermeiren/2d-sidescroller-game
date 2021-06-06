@@ -15,25 +15,30 @@
 #include "../input/InputManager.h"
 #include "../sprite/PlayerSprite.h"
 #include "../playerstate/PlayerState.h"
+#include "collisionbox/PlayerCollisionBox.h"
+#include "collisionbox/PlayerKnifeCollisionBox.h"
 
 class Player: public FallingEntity {
 public:
     Player(Vector direction, SDL_Rect * rect);
     void draw(Renderer renderer) override;
     void update() override;
-    AnimatedSprite * getSprite();
-    void setFacingLeft(bool facingLeft);
     void setState(PlayerState * state);
     PlayerState * getState() const;
+    AnimatedSprite * getSprite();
+    SDL_Rect * getCollisionBox();
+    SDL_Rect * getKnifeCollisionBox();
+    void setFacingLeft(bool facingLeft);
     void notifyObservers() override;
     void reset() override;
-    SDL_Rect * getSwordRect();
     ~Player() override;
 
 private:
+    AnimatedSprite * sprite;
     PlayerState * state;
     bool isFacingLeft;
-    AnimatedSprite * sprite;
+    PlayerCollisionBox playerCollisionBox;
+    PlayerKnifeCollisionBox knifeCollisionBox;
 };
 
 #endif //INC_2DSIDESCROLLER_PLAYER_H

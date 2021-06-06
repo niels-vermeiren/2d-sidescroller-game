@@ -36,13 +36,15 @@ void SkeletonAI::attackClosePlayer() {
     if(tick % SKELETON_TIME_BETWEEN_ATTACKS == 0) hasAttacked = false;
 
     //If player is not on same height as enemy, skeleton is not attacking or skeleton has already attacked, do nothing
-    if(skeleton->getBoundingRect()->y > playerY && skeleton->getBoundingRect()->y + skeleton->getBoundingRect()->h < playerY
-    || (skeleton->getState()->getState() == ATTACK || hasAttacked)) return;
+    if(playerY < skeleton->getCollisionBox()->y || playerY > skeleton->getCollisionBox()->y +
+                                                             skeleton->getCollisionBox()->h
+       || (skeleton->getState()->getState() == ATTACK || hasAttacked)) return;
 
-    bool playerCloseOnLeft = playerX > skeleton->getBoundingRect()->x + skeleton->getBoundingRect()->w - SKELETON_ATTACK_MIN_PLAYER_DISTANCE
-            && playerX <skeleton->getBoundingRect()->x;
+    bool playerCloseOnLeft = playerX > skeleton->getCollisionBox()->x + skeleton->getCollisionBox()->w - SKELETON_ATTACK_MIN_PLAYER_DISTANCE
+            && playerX < skeleton->getCollisionBox()->x;
 
-    bool playerCloseOnRight = playerX < skeleton->getBoundingRect()->x + SKELETON_ATTACK_MIN_PLAYER_DISTANCE &&  playerX > skeleton->getBoundingRect()->x;
+    bool playerCloseOnRight = playerX < skeleton->getCollisionBox()->x + SKELETON_ATTACK_MIN_PLAYER_DISTANCE && playerX >
+                                                                                                                skeleton->getCollisionBox()->x;
 
     if (playerCloseOnLeft || playerCloseOnRight){
         skeleton->setFacingLeft(playerCloseOnLeft);
@@ -54,9 +56,12 @@ void SkeletonAI::attackClosePlayer() {
 }
 
 void SkeletonAI::walkOnWhenPlayerIsOutOfRange() {
-    if ((playerX < skeleton->getBoundingRect()->x - SKELETON_ATTACK_MIN_PLAYER_DISTANCE && playerX < skeleton->getBoundingRect()->x
-         || playerX > skeleton->getBoundingRect()->x + SKELETON_ATTACK_MIN_PLAYER_DISTANCE && playerX > skeleton->getBoundingRect()->x
-         || skeleton->getBoundingRect()->y > playerY && skeleton->getBoundingRect()->y + skeleton->getBoundingRect()->h < playerY)
+    if ((playerX < skeleton->getCollisionBox()->x - SKELETON_ATTACK_MIN_PLAYER_DISTANCE && playerX <
+                                                                                           skeleton->getCollisionBox()->x
+         || playerX > skeleton->getCollisionBox()->x + SKELETON_ATTACK_MIN_PLAYER_DISTANCE && playerX >
+                                                                                              skeleton->getCollisionBox()->x
+         || skeleton->getCollisionBox()->y > playerY &&
+                                         skeleton->getCollisionBox()->y + skeleton->getCollisionBox()->h < playerY)
         && (skeleton->getState()->getState() == IDLE || skeleton->getState()->getState() == ATTACK)) {
         skeleton->setState(new MoveLeftState());
         hasAttacked = false;
@@ -65,10 +70,10 @@ void SkeletonAI::walkOnWhenPlayerIsOutOfRange() {
 
 void SkeletonAI::changeDirectionWhenOnEdgeWall() {
     //Don't fall off of platform, turn around
-    if(skeleton->getBoundingRect()->x + skeleton->getBoundingRect()->w + skeleton->getDirection().x > wall->maxX() ) {
+    if(skeleton->getCollisionBox()->x + skeleton->getCollisionBox()->w + skeleton->getDirection().x > wall->maxX() ) {
         skeleton->setState(new MoveLeftState());
     }
-    if(skeleton->getBoundingRect()->x - skeleton->getDirection().x < wall->minX()) {
+    if(skeleton->getCollisionBox()->x - skeleton->getDirection().x < wall->minX()) {
         skeleton->setState(new MoveRightState());
     }
 }

@@ -6,7 +6,7 @@
 #include "../CollisionDetection.h"
 
 void PlayerCoinCollisionHandler::handleCollision(Player *p, Entity *entity) {
-    if(CollisionDetection::rectangleCircleIntersect(p->getRect(), entity->getRect())) {
+    if(CollisionDetection::rectangleCircleIntersect(p->getCollisionBox(), entity->getRect())) {
         entity->setVisible(false);
     }
 

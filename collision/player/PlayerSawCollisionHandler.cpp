@@ -5,11 +5,11 @@
 #include "PlayerSawCollisionHandler.h"
 
 void PlayerSawCollisionHandler::handleCollision(Player *p, Entity *entity) {
-    if(CollisionDetection::rectangleCircleIntersect(p->getRect(), entity->getRect())) {
+    if(CollisionDetection::rectangleCircleIntersect(p->getCollisionBox(), entity->getRect())) {
         p->setState(new IsHurtState());
 
-        int pCenterX = p->minX() + p->getRect()->w/2;
-        int pCenterY = p->minY() + p->getRect()->h/2;
+        int pCenterX = p->minX() + p->getCollisionBox()->w/2;
+        int pCenterY = p->minY() + p->getCollisionBox()->h/2;
         Vector pCenter(pCenterX, pCenterY);
 
         int entityCenterX = entity->minX() + entity->getRect()->w/2;

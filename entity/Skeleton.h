@@ -11,6 +11,8 @@
 #include "FallingEntity.h"
 #include "../sprite/AnimatedSprite.h"
 #include "../skeletonstate/SkeletonState.h"
+#include "collisionbox/SkeletonCollisionBox.h"
+#include "collisionbox/SkeletonAxeCollisionBox.h"
 
 class Skeleton : public FallingEntity {
 public:
@@ -21,14 +23,16 @@ public:
     void setFacingLeft(bool facingLeft);
     bool facingLeft() const;
     void setState(SkeletonState * state);
-    SDL_Rect * getBoundingRect();
+    SDL_Rect * getCollisionBox();
     SkeletonState * getState() const;
-    SDL_Rect * getAxeAttackBoundingBox();
+    SDL_Rect * getAxeCollisionBox();
     void reset() override;
     ~Skeleton() override;
 
 private:
     SkeletonState * state;
+    SkeletonCollisionBox collisionBox;
+    SkeletonAxeCollisionBox axeCollisionBox;
     bool isFacingLeft;
     AnimatedSprite * sprite;
 };
