@@ -5,6 +5,7 @@
 #include "MageAI.h"
 #include "../magestate/MageMoveLeftState.h"
 #include "../magestate/MageMoveRightState.h"
+#include "../magestate/MageAttackState.h"
 
 MageAI::MageAI(Mage *mage, EntityManager *walls) {
     playerX = 0, playerY = 0;
@@ -18,7 +19,8 @@ MageAI::MageAI(Mage *mage, EntityManager *walls) {
             break;
         }
     }
-    mage->setState(new MageMoveLeftState());
+    mage->setState(new MageAttackState());
+    mage->setFacingLeft(false);
 }
 
 void MageAI::updatePlayerPos(int playerX, int playerY) {
@@ -31,11 +33,12 @@ void MageAI::update() {
 }
 
 void MageAI::changeDirectionWhenOnEdgeWall() {
-    //Don't fall off of platform, turn around
+    mage->setState(new MageAttackState());
+    /*//Don't fall off of platform, turn around
     if(mage->getCollisionBox()->x + mage->getCollisionBox()->w + mage->getDirection().x > wall->maxX() ) {
         mage->setState(new MageMoveLeftState());
     }
     if(mage->getCollisionBox()->x - mage->getDirection().x < wall->minX()) {
         mage->setState(new MageMoveRightState());
-    }
+    }*/
 }

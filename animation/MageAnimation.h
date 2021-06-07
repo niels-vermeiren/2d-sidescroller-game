@@ -20,6 +20,7 @@ public:
     static const int IDLE = 0;
     static const int WALK = 1;
     static const int DIE = 2;
+    static const int ATTACK = 3;
 
 private:
     std::vector<AnimationData *> animationData;

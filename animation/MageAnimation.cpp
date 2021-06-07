@@ -14,6 +14,9 @@ MageAnimation::MageAnimation() {
     //DIE
     auto * dieData = new AnimationData("../resources/mage/die/die", 12, 4, false);
     this->animationData.push_back(dieData);
+    //DIE
+    auto * attackData = new AnimationData("../resources/mage/attack/attack", 7, 100);
+    this->animationData.push_back(attackData);
 }
 
 SDL_Texture *MageAnimation::getNextAnimationImage(int animation) {
