@@ -7,16 +7,18 @@
 Player::Player(Vector direction, SDL_Rect * rect) : FallingEntity(direction, rect) {
     this->sprite = new PlayerSprite();
     this->state = new JumpState();
-    this->rect = new SDL_Rect();
-    this->rect->h = rect->h;
-    this->rect->w = rect->w;
+    this->rect = rect;
+    this->x = rect->x;
+    this->y = rect->y;
     this->isFacingLeft = false;
 }
 
 void Player::update() {
     this->state->update(this);
-    this->rect->x += (int) direction.x;
-    this->rect->y += (int) direction.y;
+    this->x += direction.x;
+    this->y += direction.y;
+    rect->x += direction.x;
+    rect->y += direction.y;
     this->applyGravity();
     notifyObservers();
 }
@@ -41,8 +43,11 @@ void Player::setFacingLeft(bool facingLeft) {
 }
 
 void Player::notifyObservers() {
+    getCollisionBox()->x  =x;
+    getCollisionBox()->y  =y;
+
     for (auto * observer : observers) {
-        observer->updatePlayerPos(minX() + rect->w / 2, minY() + rect->h / 2);
+        observer->updatePlayerPos(getCollisionBox()->x + getCollisionBox()->w / 2, getCollisionBox()->y + getCollisionBox()->h/ 2);
     }
 }
 
@@ -53,6 +58,8 @@ void Player::setState(PlayerState * state) {
 void Player::reset() {
     this->rect->x = 10;
     this->rect->y = 10;
+    x = 10;
+    y = 10;
     this->getSprite()->resetAnimation();
     this->setState(new DoubleJumpState());
 }

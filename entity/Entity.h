@@ -17,6 +17,11 @@ public:
     virtual void update() = 0;
     virtual void draw(Renderer renderer) = 0;
     SDL_Rect * getRect();
+
+    bool isShouldDraw() const;
+
+    void setShouldDraw(bool shouldDraw);
+
     int minX() const;
     int minY() const;
     int maxX() const;
@@ -26,8 +31,11 @@ public:
     virtual void reset();
 protected:
     SDL_Rect * rect;
+    float x;
+    float y;
     Vector direction;
     bool visible = true;
+    bool shouldDraw = false;
 };
 
 

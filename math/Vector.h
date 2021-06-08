@@ -14,7 +14,7 @@ public:
     Vector() {}
     Vector(float x, float y);
     float length() const;
-    Vector normalize() const;
+    void normalize();
     float dot(Vector &v) const;
     float dot(const SDL_Point &p) const;
     Vector operator+ (const Vector &v) const;

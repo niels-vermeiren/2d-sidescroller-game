@@ -19,7 +19,6 @@ void PlayerMageCollisionHandler::handleCollision(Player *p, Mage *mage) {
 
     //Player hits skeleton with knife
     if(CollisionDetection::rectanglesIntersect(pKnifeBox, mCollisionBox) && pState == ATTACKING) {
-        mDirection->x += mage->minX() < p->minX() ? -PLAYER_SKELETON_HIT_PUSH : PLAYER_SKELETON_HIT_PUSH ;
         mage->setState(new MageDeadState());
     }
 }

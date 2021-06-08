@@ -6,6 +6,7 @@
 #include "../entity/collisionbox/PlayerCollisionBox.h"
 
 void PlayerSprite::draw(Renderer renderer, SDL_Rect *pRect,SDL_Rect *clipRect, SDL_RendererFlip flip) {
+
     IMG_Init(IMG_INIT_PNG);
     SDL_Texture  * texture = animation->getNextAnimationImage(activeAnimation);
     SDL_Point p = {0,0};

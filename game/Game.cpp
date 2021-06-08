@@ -110,20 +110,22 @@ void Game::load(Renderer *renderer) {
     auto * skeletonRect = new SDL_Rect {1000, 10, 155, 149};
     Vector skeletonDirection (0, 0);
     skeleton = new Skeleton(skeletonDirection, skeletonRect);
-    this->skeletonAI = new SkeletonAI(skeleton, tileMap);
-    playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
-    auto * skeletonRect2 = new SDL_Rect {2000, 10, 155, 149};
     Vector skeletonDirection2 (0, 0);
-    skeleton2 = new Skeleton(skeletonDirection2, skeletonRect2);
+    auto * mageRect = new SDL_Rect {3000, 50, 165, 165};
+    skeleton2 = new Skeleton(skeletonDirection2, mageRect);
+    this->skeletonAI = new SkeletonAI(skeleton, tileMap);
     this->skeletonAI2 = new SkeletonAI(skeleton2, tileMap);
+    playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
     playerObservable->addObserver(skeletonAI);
     playerObservable->addObserver(skeletonAI2);
 
-    auto * mageRect = new SDL_Rect {50, 50, 165, 165};
+
+    auto * skeletonRect2 = new SDL_Rect {2000, 10, 155, 149};
     Vector mageDirection (0, 0);
-    mage = new Mage(mageDirection, mageRect);
+    mage = new Mage(mageDirection, skeletonRect2);
     //mage->getSprite()->setActiveAnimation(MageAnimation::IDLE);
     this->mageAI = new MageAI(mage, tileMap);
+    playerObservable->addObserver(mage);
     playerObservable->addObserver(mageAI);
 }
 

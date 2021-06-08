@@ -5,6 +5,8 @@
 #include <cmath>
 #include "Vector.h"
 #include <SDL2/SDL.h>
+#include <iostream>
+
 Vector::Vector(float x, float y) {
     this->x = x;
     this->y = y;
@@ -19,11 +21,13 @@ Vector Vector::operator-(const Vector &v) const {
 }
 
 float Vector::length() const {
-    return std::sqrt(x * x + y * y);
+    return std::sqrt((x * x) + (y * y));
 }
 
-Vector Vector::normalize() const {
-    return Vector(x/length(), y/length());
+void Vector::normalize()  {
+    float l = length();
+    this->x = x/l;
+    this->y = y/l;
 }
 
 float Vector::dot(Vector &v) const {

@@ -2,10 +2,10 @@
 // Created by niels on 06.06.21.
 //
 
+#include <iostream>
 #include "MageAI.h"
 #include "../magestate/MageMoveLeftState.h"
 #include "../magestate/MageMoveRightState.h"
-#include "../magestate/MageAttackState.h"
 
 MageAI::MageAI(Mage *mage, EntityManager *walls) {
     playerX = 0, playerY = 0;
@@ -19,7 +19,8 @@ MageAI::MageAI(Mage *mage, EntityManager *walls) {
             break;
         }
     }
-    mage->setState(new MageAttackState());
+    attackState = new MageAttackState();
+    mage->setState(new MageMoveRightState());
     mage->setFacingLeft(false);
 }
 
@@ -29,16 +30,49 @@ void MageAI::updatePlayerPos(int playerX, int playerY) {
 }
 
 void MageAI::update() {
+    if (mage->getState()->getState() == DOOD) return;
     changeDirectionWhenOnEdgeWall();
+    facePlayerAndAttack();
+    shoot();
 }
 
 void MageAI::changeDirectionWhenOnEdgeWall() {
-    mage->setState(new MageAttackState());
-    /*//Don't fall off of platform, turn around
+    if (mage->getState()->getState() == STAFF_ATTACK) return;
+    if (mage->getState()->getState() == STILL) return;
+    //Don't fall off of platform, turn around
     if(mage->getCollisionBox()->x + mage->getCollisionBox()->w + mage->getDirection().x > wall->maxX() ) {
         mage->setState(new MageMoveLeftState());
     }
     if(mage->getCollisionBox()->x - mage->getDirection().x < wall->minX()) {
         mage->setState(new MageMoveRightState());
-    }*/
+    }
+}
+
+void MageAI::facePlayerAndAttack() {
+    bool shouldWalkLeft = playerX < mage->getCollisionBox()->x + mage->getCollisionBox()->w/2;
+    if (mage->isShouldDraw() && mage->getRect()->x + mage->getRect()->w/2 > playerX - MAGE_ATTACK_RANGE &&
+    mage->getRect()->x  + mage->getRect()->w/2 < playerX + MAGE_ATTACK_RANGE) {
+        if (!mage->getState()->getState() != STAFF_ATTACK) mage->setState(attackState);
+        mage->setFacingLeft(playerX < mage->minX());
+    } else {
+        if(mage->getState()->getState() != RIGHT && mage->getState()->getState() != LEFT) {
+            if(shouldWalkLeft) mage->setState(new MageMoveLeftState());
+            else mage->setState(new MageMoveRightState());
+        }
+    }
+}
+
+void MageAI::shoot() {
+    if(!mage->isShouldAttack() || !mage->isShouldDraw()) return;
+
+    Vector magePosVector = Vector(mage->getStaffCollisionBox()->x-4, mage->getStaffCollisionBox()->y-4);
+    Vector playerPosVector = Vector(playerX, playerY);
+    Vector bulletVector =  playerPosVector - magePosVector;
+    bulletVector.normalize();
+    bulletVector.x *= MAGE_BULLET_SPEED;
+    bulletVector.y *= MAGE_BULLET_SPEED;
+    auto * bulletRect = new SDL_Rect {mage->getStaffCollisionBox()->x-9, mage->getStaffCollisionBox()->y-32, 40, 40};
+    auto * bullet = new MageBullet(bulletRect, bulletVector);
+    mage->addBullet(bullet);
+    mage->setShouldAttack(false);
 }

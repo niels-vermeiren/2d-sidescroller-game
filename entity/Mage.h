@@ -12,6 +12,7 @@
 #include "../magestate/MageState.h"
 #include "collisionbox/CollisionBox.h"
 #include "collisionbox/SkeletonCollisionBox.h"
+#include "MageBullet.h"
 
 class Mage : public FallingEntity {
 public:
@@ -23,15 +24,23 @@ public:
     bool facingLeft() const;
     void setState(MageState * state);
     SDL_Rect * getCollisionBox();
+    SDL_Rect *getStaffCollisionBox() const;
+    bool isShouldAttack() const;
+    void setShouldAttack(bool shouldAttack);
     MageState * getState() const;
+    void addBullet(MageBullet * bullet);
+    void updatePlayerPos(int playerX, int playerY) override;
     void reset() override;
     ~Mage() override;
 
 private:
+    std::vector<Entity *> bullets;
     CollisionBox * collisionBox;
+    CollisionBox * staffCollisionBox;
     AnimatedSprite * sprite;
     MageState * state;
     bool isFacingLeft;
+    bool shouldAttack = false;
 };
 
 

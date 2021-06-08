@@ -11,6 +11,8 @@ Entity::Entity() {
 Entity::Entity(Vector direction, SDL_Rect * rect) {
     this->direction = direction;
     this->rect = rect;
+    this->x = rect->x;
+    this->y = rect->y;
 }
 
 Vector &Entity::getDirection() {
@@ -43,4 +45,12 @@ void Entity::setVisible(const bool visible) {
 
 void Entity::reset() {
     this->visible = true;
+}
+
+bool Entity::isShouldDraw() const {
+    return shouldDraw;
+}
+
+void Entity::setShouldDraw(bool shouldDraw) {
+    Entity::shouldDraw = shouldDraw;
 }

@@ -7,6 +7,7 @@
 
 
 #include "MageState.h"
+#include "../physics/PhysicsManager.h"
 
 class MageAttackState : public MageState {
 public:
@@ -14,8 +15,9 @@ public:
     MState getState() override;
 
 private:
-    int tick = 0;
-
+    int tick = -1;
+    int countdownAttackReset = 60 * MAGE_SECONDS_BETWEEN_ATTACK;
+    bool canAttack = true;
 };
 
 

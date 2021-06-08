@@ -26,7 +26,7 @@ bool CollisionDetection::rectangleCircleIntersect(SDL_Rect * r, SDL_Rect * c) {
 }
 
 bool CollisionDetection::rotatedRectanglesIntersect(Rotated_Rect *r1, Rotated_Rect *r2) {
-    //Separating Axis Theorem
+    /*//Separating Axis Theorem
     std::vector<Vector> axis;
     //Calculate axis' parallel to edges, 2 per rectangle, because 2 sides are parallel
     //Normalize to unit vector
@@ -58,5 +58,5 @@ bool CollisionDetection::rotatedRectanglesIntersect(Rotated_Rect *r1, Rotated_Re
         if((maxR1 < minR2) || (maxR2 < minR1)) return false;
     }
     //All projected points overlap on all axis', so there must be a collision
-    return true;
+    return true;*/
 }

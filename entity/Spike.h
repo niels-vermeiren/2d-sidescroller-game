@@ -17,7 +17,6 @@ public:
     void updatePlayerPos(int playerX, int playerY) override;
 
 private:
-    bool shouldDraw = true;
     SpikesSprite * sprite;
 
 };
