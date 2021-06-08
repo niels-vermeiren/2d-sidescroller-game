@@ -5,7 +5,7 @@
 #include "Coin.h"
 #include "../defs.h"
 
-Coin::Coin(SDL_Rect * rect) {
+Coin::Coin(SDL_Rect * rect) : Entity({0,0}, rect) {
     this->sprite = new CoinSprite();
     this->rect = rect;
 }

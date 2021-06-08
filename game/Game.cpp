@@ -48,6 +48,7 @@ void Game::reset() {
     this->coins->reset();
     this->skeleton->reset();
     this->skeleton2->reset();
+    this->mage->reset();
 }
 
 void Game::handleCollisions() {
@@ -61,6 +62,7 @@ void Game::handleCollisions() {
     skeletonWallCollisionHandler->handleCollisions(skeleton2, tileMap);
     mageWallCollisionHandler->handleCollisions(mage, tileMap);
     playerMageCollisionHandler->handleCollision(player, mage);
+    playerMageBulletCollisionHandler->handleCollisions(player, mage->getBulletPool()->getParticleManager());
 }
 
 Game::~Game() {
@@ -107,6 +109,7 @@ void Game::load(Renderer *renderer) {
     skeletonWallCollisionHandler = new SkeletonWallCollisionHandler();
     mageWallCollisionHandler = new MageWallCollisionHandler();
     playerMageCollisionHandler = new PlayerMageCollisionHandler();
+    playerMageBulletCollisionHandler = new PlayerMageBulletCollisionHandler();
     auto * skeletonRect = new SDL_Rect {1000, 10, 155, 149};
     Vector skeletonDirection (0, 0);
     skeleton = new Skeleton(skeletonDirection, skeletonRect);
@@ -116,6 +119,8 @@ void Game::load(Renderer *renderer) {
     this->skeletonAI = new SkeletonAI(skeleton, tileMap);
     this->skeletonAI2 = new SkeletonAI(skeleton2, tileMap);
     playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
+    playerObservable->addObserver(skeleton);
+    playerObservable->addObserver(skeleton2);
     playerObservable->addObserver(skeletonAI);
     playerObservable->addObserver(skeletonAI2);
 
@@ -123,7 +128,6 @@ void Game::load(Renderer *renderer) {
     auto * skeletonRect2 = new SDL_Rect {2000, 10, 155, 149};
     Vector mageDirection (0, 0);
     mage = new Mage(mageDirection, skeletonRect2);
-    //mage->getSprite()->setActiveAnimation(MageAnimation::IDLE);
     this->mageAI = new MageAI(mage, tileMap);
     playerObservable->addObserver(mage);
     playerObservable->addObserver(mageAI);

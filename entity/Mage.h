@@ -13,6 +13,7 @@
 #include "collisionbox/CollisionBox.h"
 #include "collisionbox/SkeletonCollisionBox.h"
 #include "MageBullet.h"
+#include "../particles/ParticlePool.h"
 
 class Mage : public FallingEntity {
 public:
@@ -29,12 +30,13 @@ public:
     void setShouldAttack(bool shouldAttack);
     MageState * getState() const;
     void addBullet(MageBullet * bullet);
+    ParticlePool * getBulletPool();
     void updatePlayerPos(int playerX, int playerY) override;
     void reset() override;
     ~Mage() override;
 
 private:
-    std::vector<Entity *> bullets;
+    ParticlePool * particlePool;
     CollisionBox * collisionBox;
     CollisionBox * staffCollisionBox;
     AnimatedSprite * sprite;

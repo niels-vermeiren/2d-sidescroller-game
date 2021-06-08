@@ -9,7 +9,7 @@
 class AnimatedSprite : public Sprite {
 public:
     void setActiveAnimation(int animation);
-    virtual int getCurrentFrame(){};
+    virtual int getCurrentFrame();
 protected:
     int activeAnimation = 0;
     Animation * animation;

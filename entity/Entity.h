@@ -14,6 +14,7 @@ class Entity : public Observable, public EntityObserver {
 public:
     Entity();
     Entity(Vector direction, SDL_Rect * rect);
+    void clone(Vector direction, SDL_Rect * rect);
     virtual void update() = 0;
     virtual void draw(Renderer renderer) = 0;
     SDL_Rect * getRect();
@@ -31,6 +32,7 @@ public:
     virtual void reset();
 protected:
     SDL_Rect * rect;
+    SDL_Rect * initialPosition;
     float x;
     float y;
     Vector direction;

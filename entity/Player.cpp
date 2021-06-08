@@ -69,7 +69,7 @@ PlayerState *Player::getState() const {
 }
 
 SDL_Rect *Player::getKnifeCollisionBox() {
-    knifeCollisionBox.getCollisionBox(getCollisionBox(), isFacingLeft);
+   return knifeCollisionBox.getCollisionBox(getCollisionBox(), isFacingLeft);
 }
 
 SDL_Rect *Player::getCollisionBox() {

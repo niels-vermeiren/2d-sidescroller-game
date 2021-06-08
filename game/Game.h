@@ -25,6 +25,7 @@
 #include "../entity/Mage.h"
 #include "../collision/mage/MageCollisionHandler.h"
 #include "../collision/player/PlayerMageCollisionHandler.h"
+#include "../collision/player/PlayerMageBulletCollisionHandler.h"
 
 class Game {
 public:
@@ -54,6 +55,7 @@ private:
     SkeletonCollisionHandler * skeletonWallCollisionHandler;
     PlayerSkeletonCollisionHandler * playerSkeletonAttackCollisionHandler;
     PlayerMageCollisionHandler * playerMageCollisionHandler;
+    PlayerMageBulletCollisionHandler * playerMageBulletCollisionHandler;
     EntityAI * skeletonAI;
     EntityAI * skeletonAI2;
     EntityAI * mageAI;

@@ -6,25 +6,26 @@
 #include "Mage.h"
 #include "collisionbox/MageStaffCollisionBox.h"
 #include "../defs.h"
+#include "../magestate/MageMoveLeftState.h"
 
 
 Mage::Mage(Vector direction, SDL_Rect *rect) : FallingEntity(direction, rect) {
     this->direction = direction;
-    this->rect = rect;
     this->sprite = new MageSprite();
     this->collisionBox = new SkeletonCollisionBox();
     this->staffCollisionBox = new MageStaffCollisionBox();
+    this->particlePool = new ParticlePool();
 }
 
 void Mage::draw(Renderer renderer) {
+    for (Entity * entity : particlePool->getParticles()) entity->draw(renderer);
     if(this->shouldDraw)this->sprite->draw(renderer, this->rect, nullptr, isFacingLeft? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
-    for (Entity * entity : bullets) entity->draw(renderer);
 }
 
 void Mage::update() {
     this->applyGravity();
     this->state->update(this);
-    for (Entity * entity : bullets) entity->update();
+    for (Entity * entity : particlePool->getParticles()) entity->update();
     this->rect->x += (int) direction.x;
     this->rect->y += (int) direction.y;
 }
@@ -42,6 +43,8 @@ bool Mage::facingLeft() const {
 }
 
 void Mage::reset() {
+    Entity::reset();
+    this->state = new MageMoveLeftState();
     this->sprite->resetAnimation();
 }
 
@@ -66,8 +69,7 @@ SDL_Rect *Mage::getStaffCollisionBox() const {
 }
 
 void Mage::addBullet(MageBullet *bullet) {
-
-    bullets.push_back(bullet);
+    particlePool->addParticle(bullet);
 }
 
 bool Mage::isShouldAttack() const {
@@ -83,4 +85,17 @@ void Mage::updatePlayerPos(int playerX, int playerY) {
                        || playerX < SCREEN_WIDTH/2 && minX() < playerX + SCREEN_WIDTH) &&
                       (this->minY() > playerY - SCREEN_HEIGHT/2 - this->rect->h && minY()  < playerY + SCREEN_HEIGHT/2 + this->rect->h
                        || playerY > LEVEL_HEIGHT - SCREEN_WIDTH/2 && minY() > playerY -  SCREEN_HEIGHT);
+
+
+
+    for(Entity * particle : particlePool->getParticles()) {
+        particle->setShouldDraw(!(particle->minY() < playerY - SCREEN_WIDTH && particle->maxY() > playerY + SCREEN_HEIGHT ||
+        particle->maxX() < playerX - SCREEN_WIDTH || particle->minX() > playerX + SCREEN_WIDTH));
+    }
+
+    this->particlePool->clear();
  }
+
+ParticlePool *Mage::getBulletPool() {
+    return particlePool;
+}

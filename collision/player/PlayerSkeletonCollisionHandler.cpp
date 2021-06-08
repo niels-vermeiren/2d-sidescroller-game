@@ -31,7 +31,7 @@ void PlayerSkeletonCollisionHandler::handleCollision(Player *p, Skeleton *skelet
         pDirection->x += skeleton->facingLeft() ? -PLAYER_SKELETON_HIT_PUSH : PLAYER_SKELETON_HIT_PUSH;
     }
 
-    bool playerOnSameHeightEnemy = p->minY() + pCollisionBox->h < sCollisionBox->y + sCollisionBox->h && p->minY() + pCollisionBox->h / 2 > sCollisionBox->y;
+    /*bool playerOnSameHeightEnemy = p->minY() + pCollisionBox->h < sCollisionBox->y + sCollisionBox->h && p->minY() + pCollisionBox->h / 2 > sCollisionBox->y;
 
     //Player hits skeleton from the left
     if(playerOnSameHeightEnemy && pCollisionBox->x - pDirection->x <= sCollisionBox->x && pCollisionBox->x + pCollisionBox->w > sCollisionBox->x) {
@@ -43,5 +43,5 @@ void PlayerSkeletonCollisionHandler::handleCollision(Player *p, Skeleton *skelet
     if(playerOnSameHeightEnemy && pCollisionBox->x - pDirection->x >= sCollisionBox->x + sCollisionBox->w && pCollisionBox->x < sCollisionBox->x + sCollisionBox->w) {
         pDirection->x += PLAYER_SKELETON_HIT_PUSH ;
         p->setState(new IsHurtState());
-    }
+    }*/
 }

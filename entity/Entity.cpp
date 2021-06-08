@@ -5,12 +5,13 @@
 #include "Entity.h"
 
 Entity::Entity() {
-
+    initialPosition = new SDL_Rect {0,0,0,0};
 }
 
 Entity::Entity(Vector direction, SDL_Rect * rect) {
     this->direction = direction;
     this->rect = rect;
+    this->initialPosition = new SDL_Rect {rect->x, rect->y, rect->w, rect->h};;
     this->x = rect->x;
     this->y = rect->y;
 }
@@ -45,6 +46,10 @@ void Entity::setVisible(const bool visible) {
 
 void Entity::reset() {
     this->visible = true;
+    this->rect = new SDL_Rect {initialPosition->x, initialPosition->y, initialPosition->w, initialPosition->h};
+    this->x = this->rect->x;
+    this->y = this->rect->y;
+    this->direction = {0,0};
 }
 
 bool Entity::isShouldDraw() const {
@@ -53,4 +58,13 @@ bool Entity::isShouldDraw() const {
 
 void Entity::setShouldDraw(bool shouldDraw) {
     Entity::shouldDraw = shouldDraw;
+}
+
+void Entity::clone(Vector direction, SDL_Rect *rect) {
+    this->direction = direction;
+    this->rect = rect;
+    this->setShouldDraw(true);
+    this->visible = true;
+    this->x = rect->x;
+    this->y = rect->y;
 }

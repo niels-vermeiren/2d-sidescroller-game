@@ -26,6 +26,7 @@ public:
     SDL_Rect * getCollisionBox();
     SkeletonState * getState() const;
     SDL_Rect * getAxeCollisionBox();
+    void updatePlayerPos(int playerX, int playerY) override;
     void reset() override;
     ~Skeleton() override;
 

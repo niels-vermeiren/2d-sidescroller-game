@@ -29,7 +29,8 @@ int MageAnimation::getCurrentFrameNumber() {
 }
 
 void MageAnimation::reset() {
-    return this->animationData[ATTACK]->reset(0);
+    this->animationData[ATTACK]->reset(0);
+    this->animationData[DIE]->reset(0);
 }
 
 MageAnimation::~MageAnimation() {

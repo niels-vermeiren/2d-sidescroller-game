@@ -63,7 +63,9 @@ void SkeletonAI::walkOnWhenPlayerIsOutOfRange() {
          || skeleton->getCollisionBox()->y > playerY &&
                                          skeleton->getCollisionBox()->y + skeleton->getCollisionBox()->h < playerY)
         && (skeleton->getState()->getState() == IDLE || skeleton->getState()->getState() == ATTACK)) {
-        skeleton->setState(new MoveLeftState());
+        bool shouldWalkLeft = playerX < skeleton->getCollisionBox()->x + skeleton->getCollisionBox()->w/2;
+        if(shouldWalkLeft) skeleton->setState(new MoveLeftState());
+        else skeleton->setState(new MoveRightState());
         hasAttacked = false;
     }
 }

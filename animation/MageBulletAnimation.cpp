@@ -5,7 +5,7 @@
 #include "MageBulletAnimation.h"
 
 MageBulletAnimation::MageBulletAnimation() {
-    animationData = new AnimationData("../resources/mage/bullet/flame", 51, 1);
+    animationData = new AnimationData("../resources/mage/bullet/flame", 50, 1);
 }
 
 SDL_Texture *MageBulletAnimation::getNextAnimationImage(int animation) {

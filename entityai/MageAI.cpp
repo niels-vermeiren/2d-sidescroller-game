@@ -50,10 +50,12 @@ void MageAI::changeDirectionWhenOnEdgeWall() {
 
 void MageAI::facePlayerAndAttack() {
     bool shouldWalkLeft = playerX < mage->getCollisionBox()->x + mage->getCollisionBox()->w/2;
-    if (mage->isShouldDraw() && mage->getRect()->x + mage->getRect()->w/2 > playerX - MAGE_ATTACK_RANGE &&
-    mage->getRect()->x  + mage->getRect()->w/2 < playerX + MAGE_ATTACK_RANGE) {
+    Vector v = Vector(playerX, playerY) - Vector(mage->getStaffCollisionBox()->x + mage->getStaffCollisionBox()->w/2,
+                                                 mage->getStaffCollisionBox()->y + mage->getStaffCollisionBox()->h/2);
+    float  length = v.length();
+    if (mage->isShouldDraw() && length < MAGE_ATTACK_RANGE) {
         if (!mage->getState()->getState() != STAFF_ATTACK) mage->setState(attackState);
-        mage->setFacingLeft(playerX < mage->minX());
+        mage->setFacingLeft(playerX < mage->getCollisionBox()->x + mage->getCollisionBox()->w/2);
     } else {
         if(mage->getState()->getState() != RIGHT && mage->getState()->getState() != LEFT) {
             if(shouldWalkLeft) mage->setState(new MageMoveLeftState());

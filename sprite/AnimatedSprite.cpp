@@ -7,3 +7,7 @@
 void AnimatedSprite::setActiveAnimation(int animation) {
     this->activeAnimation = animation;
 }
+
+int AnimatedSprite::getCurrentFrame() {
+    return 0;
+}
