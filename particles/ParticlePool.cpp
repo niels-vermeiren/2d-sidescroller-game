@@ -5,12 +5,6 @@
 #include "ParticlePool.h"
 
 void ParticlePool::addParticle(Entity *entity) {
-    for(Entity * particle : this->particles) {
-        if (!particle->shouldBeDrawn()) {
-            particle->clone(entity->getDirection(), entity->getRect());
-            return;
-        }
-    }
     particles.push_back(entity);
 }
 
@@ -27,10 +21,11 @@ EntityManager *ParticlePool::getParticleManager() {
 }
 
 void ParticlePool::clear() {
-    for(Entity * particle : this->particles) {
-        if (particle->shouldBeDrawn()) {
-            return;
-        }
+    int i= 0;
+    while(i!=this->particles.size()) {
+        Entity *particle = this->particles[i];
+        if (!particle->shouldBeDrawn()) {
+            particles.erase(particles.begin() + i);
+        } else i++;
     }
-    particles.clear();
 }

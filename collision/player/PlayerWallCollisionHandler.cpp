@@ -15,7 +15,7 @@ void PlayerWallCollisionHandler::handleCollision(Player *p, Entity *entity) {
     //Player falls down on the wall
     if( playerBetweenBoundsWall && pCollisionBox->y + pCollisionBox->h < entity->minY() && pCollisionBox->y + pCollisionBox->h + pDirection->y >= entity->minY()) {
         pCollisionBox->y = entity->minY() - pCollisionBox->h;
-        if (pDirection->y > GRAVITY && pState != HURTING && pState != DYING) p->setState(new OnGroundState());
+        if (pDirection->y > GRAVITY && pState != HURTING && pState != DYING) p->setState(p->getPreviousState());
         pDirection->y = 0;
     }
 

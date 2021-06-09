@@ -26,6 +26,7 @@
 #include "../collision/mage/MageCollisionHandler.h"
 #include "../collision/player/PlayerMageCollisionHandler.h"
 #include "../collision/player/PlayerMageBulletCollisionHandler.h"
+#include "../entity/PlayerBullet.h"
 
 class Game {
 public:

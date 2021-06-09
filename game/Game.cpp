@@ -131,5 +131,6 @@ void Game::load(Renderer *renderer) {
     this->mageAI = new MageAI(mage, tileMap);
     playerObservable->addObserver(mage);
     playerObservable->addObserver(mageAI);
+
 }
 

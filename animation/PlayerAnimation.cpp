@@ -36,6 +36,12 @@ PlayerAnimation::PlayerAnimation() : Animation() {
     //Run with gun
     auto * gunData = new AnimationData("../resources/heroblue/runwithgun/rungun", 10, 4);
     this->animationData.push_back(gunData);
+    //Idle with gun
+    auto * idleGunData = new AnimationData("../resources/heroblue/idlegun/idlegun", 1, 1);
+    this->animationData.push_back(idleGunData);
+    //Jump
+    auto * jumpGunData = new AnimationData("../resources/heroblue/jump_gun/jump", 4, 8, false);
+    this->animationData.push_back(jumpGunData);
 }
 
 SDL_Texture * PlayerAnimation::getNextAnimationImage(int animation) {
@@ -52,8 +58,9 @@ PlayerAnimation::~PlayerAnimation() {
 void PlayerAnimation::reset() {
     this->animationData[DEAD]->reset(0);
     this->animationData[JUMPING]->reset(1);
+    this->animationData[JUMP_GUN]->reset(0);
 }
 
 int PlayerAnimation::getCurrentFrameNumber() {
-    this->animationData[currentAnimation]->getCurrentFrame();
+    return this->animationData[currentAnimation]->getCurrentFrame();
 }

@@ -7,6 +7,7 @@
 #include "../input/InputManager.h"
 
 
+
 class Player;
 
 enum PState {
@@ -16,9 +17,12 @@ enum PState {
     DYING,
     HURTING,
     JUMPING,
-    WALKING
+    WALKING,
+    GUN,
+    GUN_JUMPING,
+    GUN_DOUBLE_JUMPING
 };
-
+class OnGroundState;
 class PlayerState {
 public:
     virtual void update(Player * player) = 0;
