@@ -15,29 +15,25 @@ public:
     Entity();
     Entity(Vector direction, SDL_Rect * rect);
     void clone(Vector direction, SDL_Rect * rect);
-    virtual void update() = 0;
     virtual void draw(Renderer renderer) = 0;
+    virtual void update();
+    virtual void reset();
     SDL_Rect * getRect();
-
-    bool isShouldDraw() const;
-
-    void setShouldDraw(bool shouldDraw);
-
+    bool shouldBeDrawn() const;
+    void isVisible(bool isVisible);
+    Vector &getDirection();
+    void updatePlayerPos(int playerX, int playerY) override;
     int minX() const;
     int minY() const;
     int maxX() const;
     int maxY() const;
-    Vector &getDirection();
-    void setVisible(bool visible);
-    virtual void reset();
 protected:
+    float x,y;
     SDL_Rect * rect;
     SDL_Rect * initialPosition;
-    float x;
-    float y;
     Vector direction;
     bool visible = true;
-    bool shouldDraw = false;
+    bool shouldDraw = true;
 };
 
 

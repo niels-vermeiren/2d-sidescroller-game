@@ -24,11 +24,11 @@ public:
     void draw(Renderer renderer) override;
     void update() override;
     void setState(PlayerState * state);
+    void setFacingLeft(bool facingLeft);
     PlayerState * getState() const;
     AnimatedSprite * getSprite();
     SDL_Rect * getCollisionBox();
     SDL_Rect * getKnifeCollisionBox();
-    void setFacingLeft(bool facingLeft);
     void notifyObservers() override;
     void reset() override;
     ~Player() override;

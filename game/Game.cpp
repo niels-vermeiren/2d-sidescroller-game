@@ -83,7 +83,7 @@ void Game::load(Renderer *renderer) {
     this->tileMap = tilemapParser->mapToEntities();
     Observable * playerObservable = player;
     this->background = new Background();
-    for(auto * obs:this->tileMap->getEntities()) {
+    for(Entity * obs:this->tileMap->getEntities()) {
         playerObservable->addObserver(obs);
     }
     playerObservable->addObserver(background);

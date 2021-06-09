@@ -34,30 +34,32 @@ AnimatedSprite *Mage::getSprite() {
     return sprite;
 }
 
-void Mage::setFacingLeft(bool facingLeft) {
-    this->isFacingLeft = facingLeft;
-}
-
-bool Mage::facingLeft() const {
-    return isFacingLeft;
-}
-
-void Mage::reset() {
-    Entity::reset();
-    this->state = new MageMoveLeftState();
-    this->sprite->resetAnimation();
-}
-
-Mage::~Mage() {
-    delete sprite;
-}
-
 void Mage::setState(MageState *state) {
     this->state = state;
 }
 
 MageState *Mage::getState() const {
     return this->state;
+}
+
+bool Mage::isShouldAttack() const {
+    return canAttack;
+}
+
+void Mage::setShouldAttack(bool shouldAttack) {
+    this->canAttack = shouldAttack;
+}
+
+void Mage::setFacingLeft(bool facingLeft) {
+    this->isFacingLeft = facingLeft;
+}
+
+void Mage::addBullet(MageBullet *bullet) {
+    particlePool->addParticle(bullet);
+}
+
+ParticlePool *Mage::getBulletPool() {
+    return particlePool;
 }
 
 SDL_Rect *Mage::getCollisionBox() {
@@ -68,34 +70,18 @@ SDL_Rect *Mage::getStaffCollisionBox() const {
     return staffCollisionBox->getCollisionBox(rect, isFacingLeft);
 }
 
-void Mage::addBullet(MageBullet *bullet) {
-    particlePool->addParticle(bullet);
-}
 
-bool Mage::isShouldAttack() const {
-    return shouldAttack;
-}
-
-void Mage::setShouldAttack(bool shouldAttack) {
-   this->shouldAttack = shouldAttack;
+void Mage::reset() {
+    Entity::reset();
+    this->state = new MageMoveLeftState();
+    this->sprite->resetAnimation();
 }
 
 void Mage::updatePlayerPos(int playerX, int playerY) {
-    this->shouldDraw= (this->minX() > playerX - SCREEN_WIDTH/2 - this->rect->w && minX()  < playerX + SCREEN_WIDTH/2 + this->rect->w
-                       || playerX < SCREEN_WIDTH/2 && minX() < playerX + SCREEN_WIDTH) &&
-                      (this->minY() > playerY - SCREEN_HEIGHT/2 - this->rect->h && minY()  < playerY + SCREEN_HEIGHT/2 + this->rect->h
-                       || playerY > LEVEL_HEIGHT - SCREEN_WIDTH/2 && minY() > playerY -  SCREEN_HEIGHT);
-
-
-
-    for(Entity * particle : particlePool->getParticles()) {
-        particle->setShouldDraw(!(particle->minY() < playerY - SCREEN_WIDTH && particle->maxY() > playerY + SCREEN_HEIGHT ||
-        particle->maxX() < playerX - SCREEN_WIDTH || particle->minX() > playerX + SCREEN_WIDTH));
-    }
-
+    this->Entity::updatePlayerPos(playerX, playerY);
     this->particlePool->clear();
  }
 
-ParticlePool *Mage::getBulletPool() {
-    return particlePool;
+Mage::~Mage() {
+    delete sprite;
 }

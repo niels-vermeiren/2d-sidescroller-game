@@ -6,7 +6,7 @@
 
 void ParticlePool::addParticle(Entity *entity) {
     for(Entity * particle : this->particles) {
-        if (!particle->isShouldDraw()) {
+        if (!particle->shouldBeDrawn()) {
             particle->clone(entity->getDirection(), entity->getRect());
             return;
         }
@@ -18,19 +18,19 @@ std::vector<Entity *> ParticlePool::getParticles() {
     return particles;
 }
 
-void ParticlePool::clear() {
-    for(Entity * particle : this->particles) {
-        if (particle->isShouldDraw()) {
-            return;
-        }
-    }
-    particles.clear();
-}
-
 EntityManager *ParticlePool::getParticleManager() {
-   auto * mgr = new EntityManager();
+    auto * mgr = new EntityManager();
     for(Entity * particle : this->particles) {
         mgr->addEntity(particle);
     }
     return mgr;
+}
+
+void ParticlePool::clear() {
+    for(Entity * particle : this->particles) {
+        if (particle->shouldBeDrawn()) {
+            return;
+        }
+    }
+    particles.clear();
 }

@@ -10,10 +10,6 @@ Coin::Coin(SDL_Rect * rect) : Entity({0,0}, rect) {
     this->rect = rect;
 }
 
-void Coin::update() {
-
-}
-
 void Coin::draw(Renderer renderer) {
     if(!this->visible || !this->shouldDraw) return;
     this->sprite->draw(renderer, rect, nullptr, SDL_FLIP_NONE);
@@ -24,9 +20,3 @@ Coin::~Coin() {
     delete sprite;
 }
 
-void Coin::updatePlayerPos(int playerX, int playerY) {
-    this->shouldDraw= (this->minX() > playerX - SCREEN_WIDTH/2 - this->rect->w && minX()  < playerX + SCREEN_WIDTH/2 + this->rect->w
-                       || playerX < SCREEN_WIDTH/2 && minX() < playerX + SCREEN_WIDTH) &&
-                      (this->minY() > playerY - SCREEN_HEIGHT/2 - this->rect->h && minY()  < playerY + SCREEN_HEIGHT/2 + this->rect->h
-                       || playerY > LEVEL_HEIGHT - SCREEN_WIDTH/2 && minY() > playerY -  SCREEN_HEIGHT);
-}

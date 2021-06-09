@@ -33,6 +33,9 @@ PlayerAnimation::PlayerAnimation() : Animation() {
     //Air-attack
     auto * hurtData = new AnimationData("../resources/heroblue/hurt/hurt", 4, 8);
     this->animationData.push_back(hurtData);
+    //Run with gun
+    auto * gunData = new AnimationData("../resources/heroblue/runwithgun/rungun", 10, 4);
+    this->animationData.push_back(gunData);
 }
 
 SDL_Texture * PlayerAnimation::getNextAnimationImage(int animation) {

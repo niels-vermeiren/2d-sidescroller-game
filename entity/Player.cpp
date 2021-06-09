@@ -28,14 +28,24 @@ void Player::draw(Renderer renderer) {
 }
 
 
-Player::~Player() {
-    delete sprite;
-    delete state;
-    delete rect;
-}
-
 AnimatedSprite * Player::getSprite() {
     return sprite;
+}
+
+PlayerState *Player::getState() const {
+    return this->state;
+}
+
+void Player::setState(PlayerState * state) {
+    this->state = state;
+}
+
+SDL_Rect *Player::getKnifeCollisionBox() {
+    return knifeCollisionBox.getCollisionBox(getCollisionBox(), isFacingLeft);
+}
+
+SDL_Rect *Player::getCollisionBox() {
+    return playerCollisionBox.getCollisionBox(getRect());
 }
 
 void Player::setFacingLeft(bool facingLeft) {
@@ -45,33 +55,19 @@ void Player::setFacingLeft(bool facingLeft) {
 void Player::notifyObservers() {
     getCollisionBox()->x  =x;
     getCollisionBox()->y  =y;
-
     for (auto * observer : observers) {
         observer->updatePlayerPos(getCollisionBox()->x + getCollisionBox()->w / 2, getCollisionBox()->y + getCollisionBox()->h/ 2);
     }
 }
 
-void Player::setState(PlayerState * state) {
-    this->state = state;
-}
-
 void Player::reset() {
-    this->rect->x = 10;
-    this->rect->y = 10;
-    x = 10;
-    y = 10;
+    this->rect->x = 10, this->rect->y = 10;
+    x = 10, y = 10;
     this->getSprite()->resetAnimation();
     this->setState(new DoubleJumpState());
 }
 
-PlayerState *Player::getState() const {
-    return this->state;
-}
-
-SDL_Rect *Player::getKnifeCollisionBox() {
-   return knifeCollisionBox.getCollisionBox(getCollisionBox(), isFacingLeft);
-}
-
-SDL_Rect *Player::getCollisionBox() {
-    return playerCollisionBox.getCollisionBox(getRect());
+Player::~Player() {
+    delete sprite;
+    delete rect;
 }

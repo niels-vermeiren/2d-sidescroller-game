@@ -5,9 +5,13 @@
 #ifndef INC_2DSIDESCROLLER_ENTITYOBSERVER_H
 #define INC_2DSIDESCROLLER_ENTITYOBSERVER_H
 
+#include <iostream>
+
 class EntityObserver {
 public:
-    virtual void updatePlayerPos(int playerX, int playerY) {};
+    virtual void updatePlayerPos(int playerX, int playerY) {
+        std::cout << "super" <<std::endl;
+    };
 };
 
 #endif //INC_2DSIDESCROLLER_ENTITYOBSERVER_H

@@ -12,13 +12,9 @@ class Wall : public Entity {
 public:
     Wall();
     Wall(int x, int y, int w, int h);
-    virtual ~Wall();
-    void update() override;
     void draw(Renderer renderer) override;
-    void updatePlayerPos(int playerX, int playerY) override;
-    void setPlatforms(std::vector<Entity *> platforms);
-    void addPlatform(Entity * platform);
-
+    void setPlatforms(std::vector<Entity *> tiles);
+    ~Wall() override;
 private:
     std::vector<Entity *> platforms;
 };

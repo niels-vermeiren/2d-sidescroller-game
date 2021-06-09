@@ -24,6 +24,7 @@ public:
     static const int JUMP_ATTACK = 6;
     static const int DEAD = 7;
     static const int HURT = 8;
+    static const int RUN_GUN = 9;
 
     virtual ~PlayerAnimation();
 

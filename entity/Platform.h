@@ -14,15 +14,13 @@
 class Platform : public Entity {
 public:
     Platform(Vector direction, SDL_Rect * rect, SDL_Rect * clipRect);
-    virtual ~Platform();
     void update() override;
     void draw(Renderer renderer) override;
-    void updatePlayerPos(int playerX, int playerY) override;
+    virtual ~Platform();
 
 private:
     PlatformSprite * sprite;
     SDL_Rect * clipRect;
-    bool shouldDraw;
 };
 
 

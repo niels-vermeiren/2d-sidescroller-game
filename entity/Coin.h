@@ -11,9 +11,7 @@ class Coin : public Entity {
 public:
     Coin(SDL_Rect * rect);
     virtual ~Coin();
-    void update() override;
     void draw(Renderer renderer) override;
-    void updatePlayerPos(int playerX, int playerY) override;
 
 private:
     CoinSprite * sprite;

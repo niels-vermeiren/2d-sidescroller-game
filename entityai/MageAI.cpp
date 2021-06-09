@@ -53,7 +53,7 @@ void MageAI::facePlayerAndAttack() {
     Vector v = Vector(playerX, playerY) - Vector(mage->getStaffCollisionBox()->x + mage->getStaffCollisionBox()->w/2,
                                                  mage->getStaffCollisionBox()->y + mage->getStaffCollisionBox()->h/2);
     float  length = v.length();
-    if (mage->isShouldDraw() && length < MAGE_ATTACK_RANGE) {
+    if (mage->shouldBeDrawn() && length < MAGE_ATTACK_RANGE) {
         if (!mage->getState()->getState() != STAFF_ATTACK) mage->setState(attackState);
         mage->setFacingLeft(playerX < mage->getCollisionBox()->x + mage->getCollisionBox()->w/2);
     } else {
@@ -65,7 +65,7 @@ void MageAI::facePlayerAndAttack() {
 }
 
 void MageAI::shoot() {
-    if(!mage->isShouldAttack() || !mage->isShouldDraw()) return;
+    if(!mage->isShouldAttack() || !mage->shouldBeDrawn()) return;
 
     Vector magePosVector = Vector(mage->getStaffCollisionBox()->x-4, mage->getStaffCollisionBox()->y-4);
     Vector playerPosVector = Vector(playerX, playerY);

@@ -20,17 +20,16 @@ public:
     Mage(Vector direction, SDL_Rect * rect);
     void draw(Renderer renderer) override;
     void update() override;
-    AnimatedSprite * getSprite();
-    void setFacingLeft(bool facingLeft);
-    bool facingLeft() const;
+    void addBullet(MageBullet * bullet);
     void setState(MageState * state);
+    MageState * getState() const;
+    AnimatedSprite * getSprite();
     SDL_Rect * getCollisionBox();
-    SDL_Rect *getStaffCollisionBox() const;
+    SDL_Rect * getStaffCollisionBox() const;
+    ParticlePool * getBulletPool();
+    void setFacingLeft(bool facingLeft);
     bool isShouldAttack() const;
     void setShouldAttack(bool shouldAttack);
-    MageState * getState() const;
-    void addBullet(MageBullet * bullet);
-    ParticlePool * getBulletPool();
     void updatePlayerPos(int playerX, int playerY) override;
     void reset() override;
     ~Mage() override;
@@ -42,7 +41,7 @@ private:
     AnimatedSprite * sprite;
     MageState * state;
     bool isFacingLeft;
-    bool shouldAttack = false;
+    bool canAttack = false;
 };
 
 

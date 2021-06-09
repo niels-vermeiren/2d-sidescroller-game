@@ -3,15 +3,16 @@
 //
 
 #include "Entity.h"
+#include "../defs.h"
 
 Entity::Entity() {
     initialPosition = new SDL_Rect {0,0,0,0};
 }
 
 Entity::Entity(Vector direction, SDL_Rect * rect) {
+    this->initialPosition = new SDL_Rect {rect->x, rect->y, rect->w, rect->h};;
     this->direction = direction;
     this->rect = rect;
-    this->initialPosition = new SDL_Rect {rect->x, rect->y, rect->w, rect->h};;
     this->x = rect->x;
     this->y = rect->y;
 }
@@ -40,8 +41,8 @@ int Entity::minY() const {
     return this->rect->y;
 }
 
-void Entity::setVisible(const bool visible) {
-    this->visible = visible;
+void Entity::isVisible(const bool isVisible) {
+    this->visible = isVisible;
 }
 
 void Entity::reset() {
@@ -52,19 +53,22 @@ void Entity::reset() {
     this->direction = {0,0};
 }
 
-bool Entity::isShouldDraw() const {
+bool Entity::shouldBeDrawn() const {
     return shouldDraw;
-}
-
-void Entity::setShouldDraw(bool shouldDraw) {
-    Entity::shouldDraw = shouldDraw;
 }
 
 void Entity::clone(Vector direction, SDL_Rect *rect) {
     this->direction = direction;
     this->rect = rect;
-    this->setShouldDraw(true);
     this->visible = true;
     this->x = rect->x;
     this->y = rect->y;
 }
+
+void Entity::updatePlayerPos(int playerX, int playerY) {
+    this->shouldDraw= (this->minX() > playerX - SCREEN_WIDTH/2 - this->rect->w && minX()  < playerX + SCREEN_WIDTH/2 + this->rect->w
+                       || playerX < SCREEN_WIDTH/2 && minX() < playerX + SCREEN_WIDTH) &&
+                      (this->minY() > playerY - SCREEN_HEIGHT/2 - this->rect->h && minY()  < playerY + SCREEN_HEIGHT/2 + this->rect->h
+                       || playerY > LEVEL_HEIGHT - SCREEN_WIDTH/2 && minY() > playerY -  SCREEN_HEIGHT);}
+
+void Entity::update() {}

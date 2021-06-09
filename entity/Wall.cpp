@@ -4,6 +4,8 @@
 
 #include "Wall.h"
 
+#include <utility>
+
 Wall::Wall() {
     this->rect = new SDL_Rect();
 }
@@ -16,28 +18,15 @@ Wall::Wall(int x, int y, int w, int h) {
     this->rect->h = h;
 }
 
-void Wall::update() {
-
-}
-
 void Wall::draw(Renderer renderer) {
+    if(!shouldDraw) return;
     for(Entity * platform : platforms) {
         platform->draw(renderer);
     }
 }
 
-void Wall::addPlatform(Entity *platform) {
-    this->platforms.push_back(platform);
-}
-
-void Wall::setPlatforms(std::vector<Entity *> platforms) {
-    this->platforms = platforms;
-}
-
-void Wall::updatePlayerPos(int playerX, int playerY) {
-    for(EntityObserver * platform : platforms) {
-        platform->updatePlayerPos(playerX, playerY);
-    }
+void Wall::setPlatforms(std::vector<Entity *> tiles) {
+    this->platforms = std::move(tiles);
 }
 
 Wall::~Wall() {

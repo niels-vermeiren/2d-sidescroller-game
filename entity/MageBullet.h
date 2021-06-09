@@ -15,9 +15,8 @@ public:
     MageBullet(SDL_Rect * rect, Vector direction);
     void update() override;
     void draw(Renderer renderer) override;
-    void updatePlayerPos(int playerX, int playerY) override;
+    virtual void updatePlayerPos(int playerX, int playerY);
     SDL_Rect * getCollisionBox();
-    void drawCircle(SDL_Renderer *renderer, int32_t centreX, int32_t centreY, int32_t radius);
 
 private:
     MageBulletSprite * sprite;

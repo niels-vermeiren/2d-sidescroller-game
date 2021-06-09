@@ -9,7 +9,7 @@
 
 void DyingState::update(Skeleton * skeleton) {
     skeleton->getCollisionBox()->w = 30;
-    if (!skeleton->facingLeft()) skeleton->getCollisionBox()->x += 20;
+    if (!skeleton->isFacingLeft()) skeleton->getCollisionBox()->x += 20;
     skeleton->getSprite()->setActiveAnimation(SkeletonAnimation::DEAD);
     Command * slowDown = new SkeletonSlowDownCommand(skeleton);
     slowDown->execute();

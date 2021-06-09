@@ -20,22 +20,21 @@ public:
     void draw(Renderer renderer) override;
     void update() override;
     AnimatedSprite * getSprite();
-    void setFacingLeft(bool facingLeft);
-    bool facingLeft() const;
-    void setState(SkeletonState * state);
-    SDL_Rect * getCollisionBox();
     SkeletonState * getState() const;
+    void setState(SkeletonState * state);
+    bool isFacingLeft() const;
+    void setFacingLeft(bool facingLeft);
+    SDL_Rect * getCollisionBox();
     SDL_Rect * getAxeCollisionBox();
-    void updatePlayerPos(int playerX, int playerY) override;
     void reset() override;
     ~Skeleton() override;
 
 private:
+    AnimatedSprite * sprite;
     SkeletonState * state;
+    bool facingLeft;
     SkeletonCollisionBox collisionBox;
     SkeletonAxeCollisionBox axeCollisionBox;
-    bool isFacingLeft;
-    AnimatedSprite * sprite;
 };
 
 

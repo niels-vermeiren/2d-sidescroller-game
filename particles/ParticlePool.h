@@ -14,9 +14,9 @@ class ParticlePool {
 
 public:
     void addParticle(Entity * entity);
-    void clear();
     std::vector<Entity *> getParticles();
     EntityManager * getParticleManager();
+    void clear();
 
 private:
     std::vector<Entity *> particles;

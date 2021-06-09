@@ -8,17 +8,18 @@
 
 #include "Platform.h"
 #include <list>
+#include "../entity/EntityManager.h"
 
 class EntityManager {
 public:
+    EntityManager(){};
     explicit EntityManager(std::list<Entity *> entities);
-    EntityManager();
-    ~EntityManager();
-    void addEntity(Entity * entity);
-    void update();
-    void reset();
     void draw(Renderer renderer);
+    void update();
+    void addEntity(Entity * entity);
     std::list<Entity *> getEntities() const;
+    void reset();
+    ~EntityManager();
 
 private:
     std::list<Entity *> entities;
