@@ -6,6 +6,7 @@
 #include "../../collision/CollisionDetection.h"
 #include "../../skeletonstate/DyingState.h"
 #include "../../playerstate/IsHurtState.h"
+#include "../../stats/PlayerStats.h"
 
 void PlayerSkeletonCollisionHandler::handleCollision(Player *p, Skeleton *skeleton) {
     SDL_Rect * pCollisionBox = p->getCollisionBox();
@@ -28,6 +29,7 @@ void PlayerSkeletonCollisionHandler::handleCollision(Player *p, Skeleton *skelet
     //Skeleton attacks player with axe
     if(sState == ATTACK && skeleton->getSprite()->getCurrentFrame() == 6 && CollisionDetection::rectanglesIntersect(pCollisionBox, sAxeBox)) {
         p->setState(new IsHurtState());
+        PlayerStats::getInstance().takeDamage(SKELETON_ATTACK_DAMAGE);
         pDirection->x += skeleton->isFacingLeft() ? -PLAYER_SKELETON_HIT_PUSH : PLAYER_SKELETON_HIT_PUSH;
     }
 }

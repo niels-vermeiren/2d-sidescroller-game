@@ -3,6 +3,7 @@
 //
 
 #include "PlayerSpikeCollisionHandler.h"
+#include "../../stats/PlayerStats.h"
 
 void PlayerSpikeCollisionHandler::handleCollision(Player *p, Entity *entity) {
     SDL_Rect * pCollisionBox = p->getCollisionBox();
@@ -14,6 +15,7 @@ void PlayerSpikeCollisionHandler::handleCollision(Player *p, Entity *entity) {
     //Player falls on spikes
     if(playerBetweenBoundsSpike && playerFallsOnBottomSpike) {
         if (p->getDirection().y > GRAVITY) {
+            PlayerStats::getInstance().takeDamage(SPIKE_ATTACK_DAMAGE);
             p->setState(new IsDeadState());
         }
         p->getDirection().y = 0;

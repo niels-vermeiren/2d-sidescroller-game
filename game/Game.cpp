@@ -16,6 +16,7 @@
 #include "../map/tilemap/SkeletonMapParser.h"
 #include "../map/tilemap/MageMapParser.h"
 #include "../map/tilemap/DecoMapParser.h"
+#include "../stats/CoinMenu.h"
 
 Player * Game::player;
 EntityManager * Game::coins;
@@ -47,6 +48,7 @@ void Game::update() {
         player->getRect()->y -= 2000;
     }
     healthBar->update();
+    coinMenu->update();
 }
 
 void Game::draw(Renderer renderer) {
@@ -64,6 +66,7 @@ void Game::draw(Renderer renderer) {
     }
     this->player->draw(renderer);
     this->healthBar->draw(renderer);
+    this->coinMenu->draw(renderer);
 }
 
 void Game::reset() {
@@ -179,5 +182,6 @@ void Game::load(Renderer *renderer) {
         playerObservable->addObserver(obs);
     }
     healthBar = new HealthBar();
+    coinMenu =new CoinMenu();
 }
 

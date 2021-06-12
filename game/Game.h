@@ -30,6 +30,7 @@
 #include "../collision/playerbullet/PlayerBulletCollisionHandler.h"
 #include "../collision/playerbullet/PlayerBulletTilesetCollisionHandler.h"
 #include "../stats/HealthBar.h"
+#include "../stats/CoinMenu.h"
 
 class Game {
 public:
@@ -52,6 +53,7 @@ private:
     EntityManager * tileMap;
     EntityManager * deco;
     HealthBar * healthBar;
+    CoinMenu * coinMenu;
     PlayerCollisionHandler * playerWallCollisionHandler;
     PlayerCollisionHandler * playerSawCollisionHandler;
     PlayerCollisionHandler * playerSpikeCollisionHandler;

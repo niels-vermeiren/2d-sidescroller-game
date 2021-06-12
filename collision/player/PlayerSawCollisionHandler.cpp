@@ -3,6 +3,7 @@
 //
 
 #include "PlayerSawCollisionHandler.h"
+#include "../../stats/PlayerStats.h"
 
 void PlayerSawCollisionHandler::handleCollision(Player *p, Entity *entity) {
     if(CollisionDetection::rectangleCircleIntersect(p->getCollisionBox(), entity->getRect())) {
@@ -27,7 +28,7 @@ void PlayerSawCollisionHandler::handleCollision(Player *p, Entity *entity) {
         if(outwardForce.y < MIN_OUTWARD_FORCE_SAW && outwardForce.y > -MIN_OUTWARD_FORCE_SAW) {
             outwardForce.y *= EXTRA_SAW_Y_FORCE_IF_UNDER_MIN;
         }
-
+        PlayerStats::getInstance().takeDamage(SAW_ATTACK_DAMAGE);
         p->getDirection() = p->getDirection() + outwardForce;
     }
 }

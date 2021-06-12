@@ -16,7 +16,6 @@ public:
     PState getState() override;
 private:
     int tick = 0;
-    bool hasTakenDamage = false;
 };
 
 
