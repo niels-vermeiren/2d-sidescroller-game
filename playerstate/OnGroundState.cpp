@@ -27,6 +27,7 @@ void OnGroundState::update(Player *player) {
     }
 
     if(InputManager::keyDown(SDL_SCANCODE_DOWN)) {
+        player->setPreviousState(this);
         player->setState(new CrouchState());
     }
 

@@ -40,7 +40,6 @@ SDL_Texture * AnimationData::getNextFrame() {
 AnimationData::~AnimationData() {
     for(SDL_Texture * texture : images) {
         SDL_DestroyTexture(texture);
-        delete texture;
     }
 }
 

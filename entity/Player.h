@@ -26,33 +26,29 @@ public:
     Player(Vector direction, SDL_Rect * rect);
     void draw(Renderer renderer) override;
     void update() override;
-    void setState(PlayerState * state);
-    void setFacingLeft(bool facingLeft);
+    void setState(PlayerState * playerState);
     PlayerState * getState() const;
     AnimatedSprite * getSprite();
-
     PlayerState *getPreviousState() const;
-
-    void setPreviousState(PlayerState *previousState);
-
+    void setPreviousState(PlayerState *lastState);
+    ParticlePool<PlayerBullet*> * getBulletPool() const;
     SDL_Rect * getCollisionBox();
     SDL_Rect * getKnifeCollisionBox();
-    SDL_Rect * getGunCollisionBox();
-    void addBullet();
+    void shootBullet();
     void notifyObservers() override;
     void reset() override;
-    ~Player() override;
 
+    ~Player() override;
 private:
+    bool canShoot = true;
+    int tick = 0;
+    Vector rewind;
     AnimatedSprite * sprite;
-    Sprite * bulletSprite;
     PlayerState * previousState;
     PlayerState * state;
-    ParticlePool * shots;
-    bool isFacingLeft;
+    EntityObserver * bullets;
     PlayerCollisionBox playerCollisionBox;
     PlayerKnifeCollisionBox knifeCollisionBox;
-    PlayerGunCollisionBox gunCollisionBox;
 };
 
 #endif //INC_2DSIDESCROLLER_PLAYER_H

@@ -26,8 +26,7 @@ public:
     AnimatedSprite * getSprite();
     SDL_Rect * getCollisionBox();
     SDL_Rect * getStaffCollisionBox() const;
-    ParticlePool * getBulletPool();
-    void setFacingLeft(bool facingLeft);
+    ParticlePool<MageBullet *> getBulletPool();
     bool isShouldAttack() const;
     void setShouldAttack(bool shouldAttack);
     void updatePlayerPos(int playerX, int playerY) override;
@@ -35,12 +34,11 @@ public:
     ~Mage() override;
 
 private:
-    ParticlePool * particlePool;
+    ParticlePool<MageBullet *> particlePool;
     CollisionBox * collisionBox;
     CollisionBox * staffCollisionBox;
     AnimatedSprite * sprite;
     MageState * state;
-    bool isFacingLeft;
     bool canAttack = false;
 };
 

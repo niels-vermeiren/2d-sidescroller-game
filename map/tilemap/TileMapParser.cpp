@@ -9,7 +9,7 @@
 TileMapParser::TileMapParser(TilesetTextureHolder * holder) : MapParser(holder) {}
 
 std::string TileMapParser::getMapFilePath() {
-    return std::string("../resources/tilemap/level1.txt");
+    return std::string("../resources/tilemap/testlevel.txt");
 }
 
 Entity * TileMapParser::createPlatform(int row, int col, int index) {

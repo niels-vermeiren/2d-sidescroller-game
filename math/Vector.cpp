@@ -38,4 +38,14 @@ float Vector::dot(const SDL_Point &p) const {
     return x * p.x + y * p.y;
 }
 
+void Vector::scalarMultiplication(float factor) {
+    this->x *= factor;
+    this->y *= factor;
+}
+
+void Vector::multiply(float factorX, float factorY) {
+    this->x *= factorX;
+    this->y *= factorY;
+}
+
 

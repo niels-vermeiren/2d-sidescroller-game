@@ -7,14 +7,18 @@
 
 Entity::Entity() {
     initialPosition = new SDL_Rect {0,0,0,0};
+    visible = true;
 }
 
-Entity::Entity(Vector direction, SDL_Rect * rect) {
+Entity::Entity(Vector direction, SDL_Rect * rect, bool isFacingLeft) {
     this->initialPosition = new SDL_Rect {rect->x, rect->y, rect->w, rect->h};;
     this->direction = direction;
     this->rect = rect;
     this->x = rect->x;
     this->y = rect->y;
+    this->facingLeft = isFacingLeft;
+    visible = true;
+    shouldDraw = true;
 }
 
 Vector &Entity::getDirection() {
@@ -41,7 +45,7 @@ int Entity::minY() const {
     return this->rect->y;
 }
 
-void Entity::isVisible(const bool isVisible) {
+void Entity::setVisibility(const bool isVisible) {
     this->visible = isVisible;
 }
 
@@ -57,18 +61,38 @@ bool Entity::shouldBeDrawn() const {
     return shouldDraw;
 }
 
-void Entity::clone(Vector direction, SDL_Rect *rect) {
+void Entity::clone(Vector direction, SDL_Rect *rect, bool isFacingLeft) {
     this->direction = direction;
     this->rect = rect;
     this->visible = true;
+    this->shouldDraw = true;
     this->x = rect->x;
     this->y = rect->y;
+    this->facingLeft = isFacingLeft;
 }
 
 void Entity::updatePlayerPos(int playerX, int playerY) {
-    this->shouldDraw= (this->minX() > playerX - SCREEN_WIDTH/2 - this->rect->w && minX()  < playerX + SCREEN_WIDTH/2 + this->rect->w
+    this->shouldDraw= ((this->minX() > playerX - SCREEN_WIDTH/2 - this->rect->w && minX()  < playerX + SCREEN_WIDTH/2 + this->rect->w
                        || playerX < SCREEN_WIDTH/2 && minX() < playerX + SCREEN_WIDTH) &&
                       (this->minY() > playerY - SCREEN_HEIGHT/2 - this->rect->h && minY()  < playerY + SCREEN_HEIGHT/2 + this->rect->h
-                       || playerY > LEVEL_HEIGHT - SCREEN_WIDTH/2 && minY() > playerY -  SCREEN_HEIGHT);}
+                       || playerY > LEVEL_HEIGHT - SCREEN_WIDTH/2 && minY() > playerY -  SCREEN_HEIGHT)) ||
+            (playerY > LEVEL_HEIGHT && ((this->minX() > playerX - SCREEN_WIDTH/2 - this->rect->w && minX()  < playerX + SCREEN_WIDTH/2 + this->rect->w
+                                         || playerX < SCREEN_WIDTH/2 && minX() < playerX + SCREEN_WIDTH)));}
 
 void Entity::update() {}
+
+bool Entity::isVisible() const {
+    return visible;
+}
+
+void Entity::setFacingLeft(bool facingLeft) {
+    this->facingLeft = facingLeft;
+}
+
+bool Entity::isFacingLeft() const {
+    return facingLeft;
+}
+
+void Entity::setShouldDraw(bool shouldDraw) {
+    this->shouldDraw = shouldDraw;
+}

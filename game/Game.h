@@ -27,6 +27,9 @@
 #include "../collision/player/PlayerMageCollisionHandler.h"
 #include "../collision/player/PlayerMageBulletCollisionHandler.h"
 #include "../entity/PlayerBullet.h"
+#include "../collision/playerbullet/PlayerBulletCollisionHandler.h"
+#include "../collision/playerbullet/PlayerBulletTilesetCollisionHandler.h"
+#include "../stats/HealthBar.h"
 
 class Game {
 public:
@@ -36,18 +39,19 @@ public:
     void update();
     void draw(Renderer renderer);
     void handleCollisions();
-
+    static void reset();
 private:
     Renderer * renderer;
     Background * background;
-    Player * player;
-    Skeleton * skeleton;
-    Skeleton * skeleton2;
-    Mage * mage;
+    static Player * player;
+    static EntityManager * coins;
+    static EntityManager * skeletons;
+    static EntityManager * mages;
     EntityManager * saws;
     EntityManager * spikes;
     EntityManager * tileMap;
-    EntityManager * coins;
+    EntityManager * deco;
+    HealthBar * healthBar;
     PlayerCollisionHandler * playerWallCollisionHandler;
     PlayerCollisionHandler * playerSawCollisionHandler;
     PlayerCollisionHandler * playerSpikeCollisionHandler;
@@ -57,10 +61,11 @@ private:
     PlayerSkeletonCollisionHandler * playerSkeletonAttackCollisionHandler;
     PlayerMageCollisionHandler * playerMageCollisionHandler;
     PlayerMageBulletCollisionHandler * playerMageBulletCollisionHandler;
-    EntityAI * skeletonAI;
-    EntityAI * skeletonAI2;
-    EntityAI * mageAI;
-    void reset();
+    PlayerBulletCollisionHandler * bulletCollisionHandler;
+    PlayerBulletCollisionHandler * bulletMageCollisionHandler;
+    PlayerBulletTilesetCollisionHandler * bulletTilesetCollisionHandler;
+    std::vector<EntityAI*> enemieAIs;
+
 };
 
 

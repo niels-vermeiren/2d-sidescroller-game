@@ -4,94 +4,115 @@
 #include "Player.h"
 #include "../playerstate/JumpState.h"
 #include "../playerstate/OnGroundState.h"
+#include "../command/player/ShootBulletCommand.h"
+#include "../game/Game.h"
 
 Player::Player(Vector direction, SDL_Rect * rect) : FallingEntity(direction, rect) {
+    this->x = (float) rect->x, this->y = (float) rect->y;
     this->sprite = new PlayerSprite();
-    this->bulletSprite = new PlayerBulletSprite();
     this->state = new JumpState();
     this->previousState = new OnGroundState();
+    this->facingLeft = false;
     this->rect = rect;
-    this->x = rect->x;
-    this->y = rect->y;
-    this->isFacingLeft = false;
-    this->shots = new ParticlePool();
+    bullets = new ParticlePool<PlayerBullet*>();
+    addObserver(bullets);
 }
 
 void Player::update() {
-    this->state->update(this);
-    for(Entity * entity: shots->getParticles()) {
-        entity->update();
+    tick++;
+    if(tick % MIN_TIME_BETWEEN_PLAYER_BULLETS == 0) canShoot = true;
+    for(PlayerBullet * entity: getBulletPool()->getParticles()) entity->update();
+    getBulletPool()->clear();
+    if(rect->y > LEVEL_HEIGHT) this->shouldDraw = false;
+    if(!shouldDraw && rect->x>0) {
+        if(rewind.x == 0) {
+            x=rect->x;y=rect->y;
+            rewind.x = x / (60 * PLAYER_DEAD_REWIND_SPEED);
+            rewind.y =  (y-LEVEL_HEIGHT) /   (60 * PLAYER_DEAD_REWIND_SPEED);
+        }
+        direction.x = 0;
+        x -= rewind.x;
+        rect->x =x;
+        if (rect->y < LEVEL_HEIGHT) {
+            direction.y=0;
+            y -= rewind.y;
+            rect->y = y;
+        }
     }
-    this->x += direction.x;
-    this->y += direction.y;
-    rect->x += direction.x;
-    rect->y += direction.y;
-    this->applyGravity();
-    notifyObservers();
-    shots->clear();
+    if(rewind.x==0){
+        this->state->update(this);
+        this->x += direction.x, this->y += direction.y;
+        rect->x += (int)direction.x, rect->y += (int)direction.y;
+        this->applyGravity();
+    }
 
-    std::cout << shots->getParticles().size() << " => particle size" << std::endl;
+    if(rect->x<=0 && !shouldDraw) Game::reset();
+
+    notifyObservers();
 }
 
 void Player::draw(Renderer renderer) {
-    for(Entity * bullet : this->shots->getParticles()) {
-        bullet->draw(renderer);
-    }
-    this->sprite->draw(renderer, rect, NULL, isFacingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+    if(shouldDraw) this->sprite->draw(renderer, rect, nullptr, facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+    for(PlayerBullet * bullet : getBulletPool()->getParticles()) bullet->draw(renderer);
 
-}
-
-
-AnimatedSprite * Player::getSprite() {
-    return sprite;
 }
 
 PlayerState *Player::getState() const {
     return this->state;
 }
 
-void Player::setState(PlayerState * state) {
-    this->state = state;
+void Player::setState(PlayerState * playerState) {
+    this->state = playerState;
+}
+
+PlayerState * Player::getPreviousState() const {
+    return previousState;
+}
+
+void Player::setPreviousState(PlayerState * lastState) {
+    this->previousState = lastState;
 }
 
 SDL_Rect *Player::getKnifeCollisionBox() {
-    return knifeCollisionBox.getCollisionBox(getCollisionBox(), isFacingLeft);
+    return knifeCollisionBox.getCollisionBox(getCollisionBox(), facingLeft);
 }
 
 SDL_Rect *Player::getCollisionBox() {
     return playerCollisionBox.getCollisionBox(getRect());
 }
 
-SDL_Rect *Player::getGunCollisionBox() {
-    return gunCollisionBox.getCollisionBox(getRect(), isFacingLeft);
+AnimatedSprite * Player::getSprite() {
+    return sprite;
 }
 
-void Player::setFacingLeft(bool facingLeft) {
-    this->isFacingLeft = facingLeft;
-}
-
-void Player::addBullet() {
-    SDL_Rect * bulletRect = new SDL_Rect {getCollisionBox()->x + (isFacingLeft? -40:40), getCollisionBox()->y + 60, 47, 19};
-    Vector direction(isFacingLeft ? -6: 6, 0);
-    PlayerBullet *pBullet = new PlayerBullet(bulletRect, direction);
-    //this->addObserver(pBullet);
-    pBullet->setFacingLeft(isFacingLeft);
-    shots->addParticle(pBullet);
+void Player::shootBullet() {
+    if(!canShoot) return;
+    ShootBulletCommand cmd(this);
+    cmd.execute();
+    canShoot = false;
+    tick = 0;
 }
 
 void Player::notifyObservers() {
-    getCollisionBox()->x  =x;
-    getCollisionBox()->y  =y;
+    getCollisionBox()->x = (int) x;
+    getCollisionBox()->y = (int) y;
     for (auto * observer : observers) {
-        observer->updatePlayerPos(getCollisionBox()->x + getCollisionBox()->w / 2, getCollisionBox()->y + getCollisionBox()->h/ 2);
+        observer->updatePlayerPos( getCollisionBox()->x + getCollisionBox()->w / 2, getCollisionBox()->y + getCollisionBox()->h/ 2);
     }
 }
 
-void Player::reset() {
-    this->rect->x = 10, this->rect->y = 10;
-    x = 10, y = 10;
+void Player::reset(){
+    *this->rect = *initialPosition;
+    this->shouldDraw = true;
+    this->visible = true;
     this->getSprite()->resetAnimation();
     this->setState(new DoubleJumpState());
+    rewind = {0,0};
+    PlayerStats::getInstance().setHealth(100);
+}
+
+ParticlePool<PlayerBullet *> * Player::getBulletPool() const {
+    return dynamic_cast<ParticlePool<PlayerBullet *>*>(bullets);
 }
 
 Player::~Player() {
@@ -99,10 +120,3 @@ Player::~Player() {
     delete rect;
 }
 
-PlayerState *Player::getPreviousState() const {
-    return previousState;
-}
-
-void Player::setPreviousState(PlayerState *previousState) {
-    Player::previousState = previousState;
-}

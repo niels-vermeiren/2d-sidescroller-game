@@ -13,11 +13,16 @@ class Background : public EntityObserver {
 public:
     Background();
     ~Background();
+    static Background &getInstance();
     void draw(Renderer renderer);
-    void updatePlayerPos(int playerX, int playerY) override;
+    virtual void updatePlayerPos(int playerX, int playerY) override;
+
+    SDL_Rect *getVpRect() const;
 
 private:
     SDL_Rect * playerPos;
+    SDL_Rect * bgRect;
+    SDL_Rect * vp;
     SDL_Surface * surface;
     SDL_Texture * bgTexture;
 };

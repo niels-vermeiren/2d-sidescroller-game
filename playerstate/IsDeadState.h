@@ -15,6 +15,9 @@ class IsDeadState : public PlayerState {
 public:
     void update(Player * player) override;
     PState getState() override;
+
+private:
+    int tick = 0;
 };
 
 

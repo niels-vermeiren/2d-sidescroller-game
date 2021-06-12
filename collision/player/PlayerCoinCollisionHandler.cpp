@@ -7,7 +7,7 @@
 
 void PlayerCoinCollisionHandler::handleCollision(Player *p, Entity *entity) {
     if(CollisionDetection::rectangleCircleIntersect(p->getCollisionBox(), entity->getRect())) {
-        entity->isVisible(false);
+        entity->setVisibility(false);
     }
 
 }

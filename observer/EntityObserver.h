@@ -6,7 +6,6 @@
 #define INC_2DSIDESCROLLER_ENTITYOBSERVER_H
 
 #include <iostream>
-
 class EntityObserver {
 public:
     virtual void updatePlayerPos(int playerX, int playerY) {

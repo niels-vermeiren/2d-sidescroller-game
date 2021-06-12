@@ -15,6 +15,8 @@ public:
     Vector(float x, float y);
     float length() const;
     void normalize();
+    void scalarMultiplication(float factor);
+    void multiply(float factorX, float factorY);
     float dot(Vector &v) const;
     float dot(const SDL_Point &p) const;
     Vector operator+ (const Vector &v) const;

@@ -8,6 +8,7 @@
 #include "../command/player/StandStillCommand.h"
 #include "../command/player/DoubleJumpCommand.h"
 #include "DoubleJumpGunState.h"
+#include "OnGroundState.h"
 
 void JumpGunState::update(Player *player) {
     player->getSprite()->setActiveAnimation(PlayerAnimation::JUMP_GUN);
@@ -32,6 +33,15 @@ void JumpGunState::update(Player *player) {
         player->setState(new DoubleJumpGunState());
         DoubleJumpCommand doubleJumpCmd(player);
         doubleJumpCmd.execute();
+    }
+
+    if(InputManager::keyPressed(SDL_SCANCODE_SPACE)) {
+        player->shootBullet();
+    }
+
+    if(InputManager::keyPressed(SDL_SCANCODE_TAB)) {
+        player->setPreviousState(new OnGroundState());
+        player->setState(new JumpState());
     }
 }
 

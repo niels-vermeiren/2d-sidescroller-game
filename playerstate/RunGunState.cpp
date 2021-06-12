@@ -31,6 +31,7 @@ void RunGunState::update(Player *player) {
     }
 
     if(InputManager::keyDown(SDL_SCANCODE_DOWN)) {
+        player->setPreviousState(this);
         player->setState(new CrouchState());
     }
 
@@ -46,7 +47,7 @@ void RunGunState::update(Player *player) {
     }
 
     if(InputManager::keyPressed(SDL_SCANCODE_SPACE)) {
-       player->addBullet();
+        player->shootBullet();
     }
 }
 

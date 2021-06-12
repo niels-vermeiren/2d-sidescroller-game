@@ -37,14 +37,6 @@ void Skeleton::setState(SkeletonState *state) {
     this->state = state;
 }
 
-bool Skeleton::isFacingLeft() const {
-    return this->facingLeft;
-}
-
-void Skeleton::setFacingLeft(bool facingLeft) {
-    this->facingLeft = facingLeft;
-}
-
 SDL_Rect *Skeleton::getCollisionBox() {
     return collisionBox.getCollisionBox(this->rect);
 }

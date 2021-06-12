@@ -22,5 +22,5 @@ void CoinAnimation::reset() {
 }
 
 int CoinAnimation::getCurrentFrameNumber() {
-    this->animationData[currentAnimation].getCurrentFrame();
+    return this->animationData[currentAnimation].getCurrentFrame();
 }

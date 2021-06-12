@@ -30,4 +30,16 @@ void PlayerWallCollisionHandler::handleCollision(Player *p, Entity *entity) {
     if(playerOnSameHeightEntity && pCollisionBox->x - pDirection->x >= entity->maxX() && pCollisionBox->x < entity->maxX()) {
         pBounds->x = entity->maxX() - ((pBounds->w - pCollisionBox->w)/2);
     }
+
+    //Player collides with level boundary on the left
+    if(pCollisionBox->x - pDirection->x > 0 && pCollisionBox->x <=0) {
+        pBounds->x = pCollisionBox->x - pDirection->x - (pCollisionBox->x-pBounds->x);
+        pDirection->x = 0;
+    }
+
+    //Player collides with level boundary on the right
+    if(pCollisionBox->x + pCollisionBox->w - pDirection->x <= LEVEL_WIDTH && pCollisionBox->x + pCollisionBox->w  > LEVEL_WIDTH) {
+        pBounds->x =  LEVEL_WIDTH-pBounds->w+(pBounds->w - pCollisionBox->w) - (pCollisionBox->x-pBounds->x);
+        pDirection->x = 0;
+    }
 }

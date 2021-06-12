@@ -14,18 +14,17 @@ Mage::Mage(Vector direction, SDL_Rect *rect) : FallingEntity(direction, rect) {
     this->sprite = new MageSprite();
     this->collisionBox = new SkeletonCollisionBox();
     this->staffCollisionBox = new MageStaffCollisionBox();
-    this->particlePool = new ParticlePool();
 }
 
 void Mage::draw(Renderer renderer) {
-    for (Entity * entity : particlePool->getParticles()) entity->draw(renderer);
-    if(this->shouldDraw)this->sprite->draw(renderer, this->rect, nullptr, isFacingLeft? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
+    for (Entity * entity : particlePool.getParticles()) entity->draw(renderer);
+    if(this->shouldDraw)this->sprite->draw(renderer, this->rect, nullptr, facingLeft? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
 }
 
 void Mage::update() {
     this->applyGravity();
     this->state->update(this);
-    for (Entity * entity : particlePool->getParticles()) entity->update();
+    for (Entity * entity : particlePool.getParticles()) entity->update();
     this->rect->x += (int) direction.x;
     this->rect->y += (int) direction.y;
 }
@@ -50,15 +49,11 @@ void Mage::setShouldAttack(bool shouldAttack) {
     this->canAttack = shouldAttack;
 }
 
-void Mage::setFacingLeft(bool facingLeft) {
-    this->isFacingLeft = facingLeft;
-}
-
 void Mage::addBullet(MageBullet *bullet) {
-    particlePool->addParticle(bullet);
+    particlePool.addParticle(bullet);
 }
 
-ParticlePool *Mage::getBulletPool() {
+ParticlePool<MageBullet *> Mage::getBulletPool() {
     return particlePool;
 }
 
@@ -67,7 +62,7 @@ SDL_Rect *Mage::getCollisionBox() {
 }
 
 SDL_Rect *Mage::getStaffCollisionBox() const {
-    return staffCollisionBox->getCollisionBox(rect, isFacingLeft);
+    return staffCollisionBox->getCollisionBox(rect, facingLeft);
 }
 
 
@@ -79,7 +74,7 @@ void Mage::reset() {
 
 void Mage::updatePlayerPos(int playerX, int playerY) {
     this->Entity::updatePlayerPos(playerX, playerY);
-    this->particlePool->clear();
+    this->particlePool.clear();
  }
 
 Mage::~Mage() {

@@ -11,6 +11,16 @@
 #include "../entityai//SkeletonAI.h"
 #include "../collision/mage/MageWallCollisionHandler.h"
 #include "../entityai/MageAI.h"
+#include "../collision/playerbullet/PlayerBulletSkeletonCollisionHandler.h"
+#include "../collision/playerbullet/PlayerBulletMageCollisionHandler.h"
+#include "../map/tilemap/SkeletonMapParser.h"
+#include "../map/tilemap/MageMapParser.h"
+#include "../map/tilemap/DecoMapParser.h"
+
+Player * Game::player;
+EntityManager * Game::coins;
+EntityManager * Game::skeletons;
+EntityManager * Game::mages;
 
 Game::Game(Renderer * renderer) {
     this->renderer = renderer;
@@ -20,15 +30,23 @@ void Game::update() {
     this->player->update();
     this->spikes->update();
     this->saws->update();
-    this->skeleton->update();
-    this->skeleton2->update();
-    this->skeletonAI->update();
-    this->skeletonAI2->update();
-    this->mage->update();
-    this->mageAI->update();
+    for(auto * skeleton : skeletons->getEntities()) {
+        skeleton->update();
+    }
+    for(auto * mage : mages->getEntities()) {
+        mage->update();
+    }
+    for(auto * ai : enemieAIs) {
+        ai->update();
+    }
     if(InputManager::keyPressed(SDL_SCANCODE_R)) {
         reset();
     }
+    if(InputManager::keyPressed(SDL_SCANCODE_N)) {
+        player->getRect()->x += 12000;
+        player->getRect()->y -= 2000;
+    }
+    healthBar->update();
 }
 
 void Game::draw(Renderer renderer) {
@@ -36,19 +54,27 @@ void Game::draw(Renderer renderer) {
     this->spikes->draw(renderer);
     this->saws->draw(renderer);
     this->tileMap->draw(renderer);
+    this->deco->draw(renderer);
     this->coins->draw(renderer);
-    this->skeleton->draw(renderer);
-    this->skeleton2->draw(renderer);
-    this->mage->draw(renderer);
+    for(auto * skeleton : skeletons->getEntities()) {
+        skeleton->draw(renderer);
+    }
+    for(auto * mage : mages->getEntities()) {
+        mage->draw(renderer);
+    }
     this->player->draw(renderer);
+    this->healthBar->draw(renderer);
 }
 
 void Game::reset() {
-    this->player->reset();
-    this->coins->reset();
-    this->skeleton->reset();
-    this->skeleton2->reset();
-    this->mage->reset();
+    player->reset();
+    coins->reset();
+    for(auto * skeleton : skeletons->getEntities()) {
+        skeleton->reset();
+    }
+    for(auto * mage : mages->getEntities()) {
+        mage->reset();
+    }
 }
 
 void Game::handleCollisions() {
@@ -56,13 +82,20 @@ void Game::handleCollisions() {
     playerSpikeCollisionHandler->handleCollisions(player, spikes);
     playerWallCollisionHandler->handleCollisions(player, tileMap);
     playerCoinCollisionHandler->handleCollisions(player, coins);
-    playerSkeletonAttackCollisionHandler->handleCollision(player, skeleton);
-    playerSkeletonAttackCollisionHandler->handleCollision(player, skeleton2);
-    skeletonWallCollisionHandler->handleCollisions(skeleton, tileMap);
-    skeletonWallCollisionHandler->handleCollisions(skeleton2, tileMap);
-    mageWallCollisionHandler->handleCollisions(mage, tileMap);
-    playerMageCollisionHandler->handleCollision(player, mage);
-    playerMageBulletCollisionHandler->handleCollisions(player, mage->getBulletPool()->getParticleManager());
+    for(auto * skeleton : skeletons->getEntities()) {
+        Skeleton *pSkeleton = dynamic_cast<Skeleton *>(skeleton);
+        playerSkeletonAttackCollisionHandler->handleCollision(player, pSkeleton);
+        skeletonWallCollisionHandler->handleCollisions(pSkeleton, tileMap);
+        bulletCollisionHandler->handleCollisions(pSkeleton, player->getBulletPool()->getParticleManager());
+    }
+    for(auto * mage : mages->getEntities()) {
+        Mage *pMage = dynamic_cast<Mage *>(mage);
+        mageWallCollisionHandler->handleCollisions(pMage, tileMap);
+        playerMageCollisionHandler->handleCollision(player, pMage);
+        playerMageBulletCollisionHandler->handleCollisions(player, pMage->getBulletPool().getParticleManager());
+        bulletMageCollisionHandler->handleCollisions(pMage, player->getBulletPool()->getParticleManager());
+    }
+    this->bulletTilesetCollisionHandler->handleCollisions(tileMap, player);
 }
 
 Game::~Game() {
@@ -74,15 +107,23 @@ Game::~Game() {
     delete playerSawCollisionHandler;
     delete playerSpikeCollisionHandler;
     delete playerCoinCollisionHandler;
+    delete bulletTilesetCollisionHandler;
+    delete skeletons;
+    delete spikes;
+    delete skeletonWallCollisionHandler;
+    delete bulletMageCollisionHandler;
+    delete playerMageCollisionHandler;
+    delete playerSkeletonAttackCollisionHandler;
+    delete bulletCollisionHandler;
 }
 
 void Game::load(Renderer *renderer) {
-    SDL_Rect rect = {10, 400, 150, 150};
+    SDL_Rect rect = {10, 60*64, 150, 150};
     this->player = new Player({0, 0}, &rect);
     auto * tilemapParser = new TileMapParser(new TilesetTextureHolder(renderer));
     this->tileMap = tilemapParser->mapToEntities();
     Observable * playerObservable = player;
-    this->background = new Background();
+    this->background = &Background::getInstance();
     for(Entity * obs:this->tileMap->getEntities()) {
         playerObservable->addObserver(obs);
     }
@@ -110,27 +151,33 @@ void Game::load(Renderer *renderer) {
     mageWallCollisionHandler = new MageWallCollisionHandler();
     playerMageCollisionHandler = new PlayerMageCollisionHandler();
     playerMageBulletCollisionHandler = new PlayerMageBulletCollisionHandler();
-    auto * skeletonRect = new SDL_Rect {1000, 10, 155, 149};
-    Vector skeletonDirection (0, 0);
-    skeleton = new Skeleton(skeletonDirection, skeletonRect);
-    Vector skeletonDirection2 (0, 0);
-    auto * mageRect = new SDL_Rect {3000, 50, 165, 165};
-    skeleton2 = new Skeleton(skeletonDirection2, mageRect);
-    this->skeletonAI = new SkeletonAI(skeleton, tileMap);
-    this->skeletonAI2 = new SkeletonAI(skeleton2, tileMap);
+    auto * skeletonMap = new SkeletonMapParser();
+     skeletons = skeletonMap->mapToEntities();
+    for(auto * obs:this->skeletons->getEntities()) {
+        playerObservable->addObserver(obs);
+        SkeletonAI *skeletonAI = new SkeletonAI(dynamic_cast<Skeleton *>(obs), tileMap);
+        playerObservable->addObserver(skeletonAI);
+        this->enemieAIs.push_back(skeletonAI);
+    }
+
+    auto * mageMap = new MageMapParser();
+   mages = mageMap->mapToEntities();
+     for(auto * obs:this->mages->getEntities()) {
+        playerObservable->addObserver(obs);
+        MageAI *mageAI = new MageAI(dynamic_cast<Mage *>(obs), tileMap);
+        playerObservable->addObserver(mageAI);
+        this->enemieAIs.push_back(mageAI);
+    }
     playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
-    playerObservable->addObserver(skeleton);
-    playerObservable->addObserver(skeleton2);
-    playerObservable->addObserver(skeletonAI);
-    playerObservable->addObserver(skeletonAI2);
+    bulletCollisionHandler = new PlayerBulletSkeletonCollisionHandler();
+    bulletMageCollisionHandler = new PlayerBulletMageCollisionHandler();
+    bulletTilesetCollisionHandler = new PlayerBulletTilesetCollisionHandler();
 
-
-    auto * skeletonRect2 = new SDL_Rect {2000, 10, 155, 149};
-    Vector mageDirection (0, 0);
-    mage = new Mage(mageDirection, skeletonRect2);
-    this->mageAI = new MageAI(mage, tileMap);
-    playerObservable->addObserver(mage);
-    playerObservable->addObserver(mageAI);
-
+    auto * decoMap = new DecoMapParser();
+    this->deco = decoMap->mapToEntities();
+    for(auto * obs:this->deco->getEntities()) {
+        playerObservable->addObserver(obs);
+    }
+    healthBar = new HealthBar();
 }
 

@@ -13,16 +13,22 @@
 class Entity : public Observable, public EntityObserver {
 public:
     Entity();
-    Entity(Vector direction, SDL_Rect * rect);
-    void clone(Vector direction, SDL_Rect * rect);
+    Entity(Vector direction, SDL_Rect * rect, bool isFacingLeft = false);
+    void clone(Vector direction, SDL_Rect * rect, bool isFacingLeft = false);
     virtual void draw(Renderer renderer) = 0;
     virtual void update();
     virtual void reset();
     SDL_Rect * getRect();
     bool shouldBeDrawn() const;
-    void isVisible(bool isVisible);
+
+    void setShouldDraw(bool shouldDraw);
+
+    void setVisibility(bool isVisible);
+    bool isVisible() const;
     Vector &getDirection();
-    void updatePlayerPos(int playerX, int playerY) override;
+    virtual void updatePlayerPos(int playerX, int playerY) override;
+    void setFacingLeft(bool facingLeft);
+    bool isFacingLeft() const;
     int minX() const;
     int minY() const;
     int maxX() const;
@@ -34,6 +40,7 @@ protected:
     Vector direction;
     bool visible = true;
     bool shouldDraw = true;
+    bool facingLeft = false;
 };
 
 

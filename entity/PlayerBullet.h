@@ -8,20 +8,20 @@
 
 #include "Entity.h"
 #include "../sprite/PlayerBulletSprite.h"
+#include "collisionbox/PlayerBulletCollisionBox.h"
 
 class PlayerBullet : public Entity {
 public:
-    PlayerBullet(SDL_Rect * rect, Vector direction);
+    PlayerBullet(SDL_Rect * rect, Vector direction, bool isFacingLeft=false);
     void draw(Renderer renderer) override;
     void update() override;
-    bool isFacingLeft() const;
-    void setFacingLeft(bool facingLeft);
-    //  SDL_Rect * getCollisionBox();
+    void updatePlayerPos(int playerX, int playerY) override;
+    void drawCircle(SDL_Renderer *renderer, int32_t centreX, int32_t centreY, int32_t radius);
+    SDL_Rect * getCollisionBox();
 
 private:
     PlayerBulletSprite * sprite;
-    bool facingLeft;
-   // PlayerBulletCollisionBox collisionBox;
+    PlayerBulletCollisionBox collisionBox;
 
 };
 

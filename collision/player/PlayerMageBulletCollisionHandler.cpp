@@ -10,6 +10,6 @@ void PlayerMageBulletCollisionHandler::handleCollision(Player *p, Entity *entity
     auto * bullet = dynamic_cast<MageBullet *>(entity);
     if(CollisionDetection::rectangleCircleIntersect(p->getCollisionBox(), bullet->getCollisionBox())) {
         if(p->getState()->getState() != HURTING && p->getState()->getState() != DYING) p->setState(new IsHurtState());
-        entity->isVisible(false);
+        entity->setVisibility(false);
     }
 }

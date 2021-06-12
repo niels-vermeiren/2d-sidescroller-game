@@ -22,8 +22,6 @@ void MageBullet::update() {
 }
 
 void MageBullet::draw(Renderer renderer) {
-    this->shouldDraw = true;
-    this->visible = true;
     this->rect->x = this->x;
     this->rect->y = this->y;
     if(!this->shouldDraw  || !this->visible) return;;

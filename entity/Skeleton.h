@@ -22,8 +22,6 @@ public:
     AnimatedSprite * getSprite();
     SkeletonState * getState() const;
     void setState(SkeletonState * state);
-    bool isFacingLeft() const;
-    void setFacingLeft(bool facingLeft);
     SDL_Rect * getCollisionBox();
     SDL_Rect * getAxeCollisionBox();
     void reset() override;
@@ -32,7 +30,6 @@ public:
 private:
     AnimatedSprite * sprite;
     SkeletonState * state;
-    bool facingLeft;
     SkeletonCollisionBox collisionBox;
     SkeletonAxeCollisionBox axeCollisionBox;
 };

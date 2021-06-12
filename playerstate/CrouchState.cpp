@@ -10,7 +10,7 @@ void CrouchState::update(Player *player) {
     SlowDownCommand command(player);
     command.execute();
     if(InputManager::keyUp(SDL_SCANCODE_DOWN)) {
-        player->setState(new OnGroundState());
+        player->setState(player->getPreviousState());
     }
 }
 

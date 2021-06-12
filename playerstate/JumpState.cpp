@@ -3,6 +3,8 @@
 //
 
 #include "JumpState.h"
+#include "JumpGunState.h"
+#include "RunGunState.h"
 
 void JumpState::update(Player *player) {
     player->getSprite()->setActiveAnimation(PlayerAnimation::JUMPING);
@@ -27,6 +29,11 @@ void JumpState::update(Player *player) {
         player->setState(new DoubleJumpState());
         DoubleJumpCommand doubleJumpCmd(player);
         doubleJumpCmd.execute();
+    }
+
+    if(InputManager::keyPressed(SDL_SCANCODE_TAB)) {
+        player->setPreviousState(new RunGunState());
+        player->setState(new JumpGunState());
     }
 }
 
