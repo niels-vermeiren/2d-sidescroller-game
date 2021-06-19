@@ -6,11 +6,11 @@
 #include "../CollisionDetection.h"
 #include "../../magestate/MageDeadState.h"
 
-void PlayerBulletMageCollisionHandler::handleCollision(Mage *skeleton, PlayerBullet *bullet) {
-    if(CollisionDetection::rectangleCircleIntersect(skeleton->getCollisionBox(), bullet->getCollisionBox()))  {
+void PlayerBulletMageCollisionHandler::handleCollision(Mage *mage, PlayerBullet *bullet) {
+    if(CollisionDetection::rectangleCircleIntersect(mage->getCollisionBox(), bullet->getCollisionBox()))  {
         if(bullet->isVisible()) {
-            skeleton->setState(new MageDeadState());
-            skeleton->getRect()->x += bullet->isFacingLeft() ? -12 : 12;
+            mage->getRect()->x += bullet->isFacingLeft() ? -ENEMY_FLYAWAY_WHEN_HIT_BY_BULLET : ENEMY_FLYAWAY_WHEN_HIT_BY_BULLET;
+            mage->setState(new MageDeadState());
         }
         bullet->setVisibility(false);
     }

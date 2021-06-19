@@ -19,19 +19,26 @@
 
 class SkeletonAI : public EntityAI {
 public:
-    SkeletonAI(Skeleton * skeleton, EntityManager * walls);
+    SkeletonAI(Skeleton * skeleton, EntityManager * walls, Player * player);
     void update() override;
     void updatePlayerPos(int playerX, int playerY) override;
 private:
     void attackClosePlayer();
-    void walkOnWhenPlayerIsOutOfRange();
+    void walkTowardsPlayerInRange();
     void changeDirectionWhenOnEdgeWall();
+    void attack();
     Skeleton * skeleton;
     Entity * wall;
+    Player * player;
     int playerX{};
     int playerY{};
     int tick = 0;
     bool hasAttacked = false;
+    bool playerWithinAttackingRange();
+
+    bool onBoundsRightSide();
+
+    bool onBoundsLeftSide();
 };
 
 

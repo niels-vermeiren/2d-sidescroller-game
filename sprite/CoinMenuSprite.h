@@ -7,6 +7,7 @@
 
 
 #include "StaticSprite.h"
+#include "../game/LTexture.h"
 
 class CoinMenuSprite : public StaticSprite {
 public:
@@ -16,7 +17,7 @@ public:
 
 private:
     SDL_Texture * holder;
-
+    LTexture * lTexture;
 };
 
 

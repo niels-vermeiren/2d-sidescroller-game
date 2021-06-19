@@ -10,7 +10,7 @@ float PlayerStats::getHealth() const {
 }
 
 int PlayerStats::getCoins() const {
-    return coins;
+    return this->coins;
 }
 
 PlayerStats  &PlayerStats::getInstance() {
@@ -36,4 +36,5 @@ void PlayerStats::setCoins(int coins) {
 
 PlayerStats::PlayerStats() {
     this->health = 100;
+    this->coins = 0;
 }

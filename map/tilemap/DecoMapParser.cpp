@@ -18,6 +18,7 @@ EntityManager *DecoMapParser::mapToEntities() {
             if (index == -1) continue;
             auto * enemyRect = new SDL_Rect {j*64 , i*64, 0, 0};
             if(index == 10 || index == 13) enemyRect->x -= 18;
+            if(index == 4 || index == 6 || index == 11 || index == 15 ) enemyRect->y += 1   ;
             Entity * enemy = new Deco(enemyRect, index);
             entities.push_back(enemy);
         }

@@ -66,7 +66,7 @@ void MageAI::facePlayerAndAttack() {
 
 void MageAI::shoot() {
     if(!mage->isShouldAttack() || !mage->shouldBeDrawn()) return;
-
+    mage->setShouldAttack(false);
     Vector magePosVector = Vector(mage->getStaffCollisionBox()->x-4, mage->getStaffCollisionBox()->y-4);
     Vector playerPosVector = Vector(playerX, playerY);
     Vector bulletVector =  playerPosVector - magePosVector;
@@ -76,5 +76,4 @@ void MageAI::shoot() {
     auto * bulletRect = new SDL_Rect {mage->getStaffCollisionBox()->x-9, mage->getStaffCollisionBox()->y-32, 40, 40};
     auto * bullet = new MageBullet(bulletRect, bulletVector);
     mage->addBullet(bullet);
-    mage->setShouldAttack(false);
 }

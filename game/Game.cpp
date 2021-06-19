@@ -3,20 +3,7 @@
 //
 
 #include "Game.h"
-#include "../map/tilemap/SawMapParser.h"
-#include "../collision/player/PlayerCoinCollisionHandler.h"
-#include "../map/tilemap/CoinMapParser.h"
-#include "../animation/SkeletonAnimation.h"
-#include "../collision/skeleton/SkeletonWallCollisionHandler.h"
-#include "../entityai//SkeletonAI.h"
-#include "../collision/mage/MageWallCollisionHandler.h"
-#include "../entityai/MageAI.h"
-#include "../collision/playerbullet/PlayerBulletSkeletonCollisionHandler.h"
-#include "../collision/playerbullet/PlayerBulletMageCollisionHandler.h"
-#include "../map/tilemap/SkeletonMapParser.h"
-#include "../map/tilemap/MageMapParser.h"
-#include "../map/tilemap/DecoMapParser.h"
-#include "../stats/CoinMenu.h"
+
 
 Player * Game::player;
 EntityManager * Game::coins;
@@ -31,14 +18,15 @@ void Game::update() {
     this->player->update();
     this->spikes->update();
     this->saws->update();
+    this->coins->update();
     for(auto * skeleton : skeletons->getEntities()) {
         skeleton->update();
     }
-    for(auto * mage : mages->getEntities()) {
-        mage->update();
-    }
     for(auto * ai : enemieAIs) {
         ai->update();
+    }
+    for(auto * mage : mages->getEntities()) {
+        mage->update();
     }
     if(InputManager::keyPressed(SDL_SCANCODE_R)) {
         reset();
@@ -52,7 +40,7 @@ void Game::update() {
 }
 
 void Game::draw(Renderer renderer) {
-    this->background->draw(renderer);
+   this->background->draw(renderer);
     this->spikes->draw(renderer);
     this->saws->draw(renderer);
     this->tileMap->draw(renderer);
@@ -158,7 +146,7 @@ void Game::load(Renderer *renderer) {
      skeletons = skeletonMap->mapToEntities();
     for(auto * obs:this->skeletons->getEntities()) {
         playerObservable->addObserver(obs);
-        SkeletonAI *skeletonAI = new SkeletonAI(dynamic_cast<Skeleton *>(obs), tileMap);
+        SkeletonAI *skeletonAI = new SkeletonAI(dynamic_cast<Skeleton *>(obs), tileMap, player);
         playerObservable->addObserver(skeletonAI);
         this->enemieAIs.push_back(skeletonAI);
     }

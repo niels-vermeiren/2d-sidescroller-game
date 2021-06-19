@@ -51,6 +51,7 @@ void Mage::setShouldAttack(bool shouldAttack) {
 
 void Mage::addBullet(MageBullet *bullet) {
     particlePool.addParticle(bullet);
+    getSprite()->setActiveAnimation(MageAnimation::IDLE);
 }
 
 ParticlePool<MageBullet *> Mage::getBulletPool() {

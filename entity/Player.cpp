@@ -109,6 +109,7 @@ void Player::reset(){
     this->setState(new DoubleJumpState());
     rewind = {0,0};
     PlayerStats::getInstance().setHealth(100);
+    PlayerStats::getInstance().setCoins(0);
 }
 
 ParticlePool<PlayerBullet *> * Player::getBulletPool() const {

@@ -31,7 +31,23 @@
 #include "../collision/playerbullet/PlayerBulletTilesetCollisionHandler.h"
 #include "../stats/HealthBar.h"
 #include "../stats/CoinMenu.h"
-
+#include "LTexture.h"
+#include <SDL2/SDL_ttf.h>
+#include "../map/tilemap/SawMapParser.h"
+#include "../collision/player/PlayerCoinCollisionHandler.h"
+#include "../map/tilemap/CoinMapParser.h"
+#include "../animation/SkeletonAnimation.h"
+#include "../collision/skeleton/SkeletonWallCollisionHandler.h"
+#include "../entityai//SkeletonAI.h"
+#include "../collision/mage/MageWallCollisionHandler.h"
+#include "../entityai/MageAI.h"
+#include "../collision/playerbullet/PlayerBulletSkeletonCollisionHandler.h"
+#include "../collision/playerbullet/PlayerBulletMageCollisionHandler.h"
+#include "../map/tilemap/SkeletonMapParser.h"
+#include "../map/tilemap/MageMapParser.h"
+#include "../map/tilemap/DecoMapParser.h"
+#include "../stats/CoinMenu.h"
+#include "LTexture.h"
 class Game {
 public:
     explicit Game(Renderer * renderer);
@@ -42,6 +58,7 @@ public:
     void handleCollisions();
     static void reset();
 private:
+    TTF_Font * gFont;
     Renderer * renderer;
     Background * background;
     static Player * player;
@@ -54,6 +71,7 @@ private:
     EntityManager * deco;
     HealthBar * healthBar;
     CoinMenu * coinMenu;
+    LTexture * lTexture;
     PlayerCollisionHandler * playerWallCollisionHandler;
     PlayerCollisionHandler * playerSawCollisionHandler;
     PlayerCollisionHandler * playerSpikeCollisionHandler;

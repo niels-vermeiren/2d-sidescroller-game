@@ -21,7 +21,7 @@ public:
 
 private:
     float health;
-    int coins = 0;
+    int coins;
 };
 
 

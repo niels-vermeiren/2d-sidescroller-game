@@ -19,7 +19,7 @@ void PlayerWallCollisionHandler::handleCollision(Player *p, Entity *entity) {
         pDirection->y = 0;
     }
 
-    bool playerOnSameHeightEntity = pCollisionBox->y < entity->maxY() && pCollisionBox->y + pCollisionBox->h > entity->minY();
+    bool playerOnSameHeightEntity = pCollisionBox->y <= entity->maxY() && pCollisionBox->y + pCollisionBox->h >= entity->minY();
 
     //Player collides with wall on the right
     if( playerOnSameHeightEntity && pCollisionBox->x + pCollisionBox->w - pDirection->x <= entity->minX() && pCollisionBox->x + pCollisionBox->w  > entity->minX()) {

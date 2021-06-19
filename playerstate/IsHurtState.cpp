@@ -12,7 +12,7 @@ void IsHurtState::update(Player *player) {
     cmd.execute();
     tick++;
     if(tick % HURT_DURATION == 0) {
-        if(PlayerStats::getInstance().getHealth() < 0) {
+        if(PlayerStats::getInstance().getHealth() <= 0) {
             player->setState(new IsDeadState());
             return;
         }

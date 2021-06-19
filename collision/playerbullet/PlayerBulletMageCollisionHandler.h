@@ -11,7 +11,7 @@
 
 class PlayerBulletMageCollisionHandler : public PlayerBulletCollisionHandler {
 public:
-    void handleCollision(Mage * skeleton, PlayerBullet * bullet) override;
+    void handleCollision(Mage * mage, PlayerBullet * bullet) override;
 
 };
 

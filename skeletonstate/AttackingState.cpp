@@ -5,8 +5,9 @@
 #include "AttackingState.h"
 #include "../entity/Skeleton.h"
 #include "../animation/SkeletonAnimation.h"
-#include "IdleState.h"
+#include "IdleState.h"300
 #include "../command/skeleton/SkeletonStandStillCommand.h"
+#include "MoveLeftState.h"
 
 SState AttackingState::getState() {
     return ATTACK;
@@ -17,7 +18,7 @@ void AttackingState::update(Skeleton *skeleton) {
     cmd->execute();
     tick++;
     if (tick % SKELETON_ATTACK_DURATION == 0) {
-        skeleton->setState(new IdleState());
+        skeleton->setState(new MoveLeftState());
     }
     skeleton->getSprite()->setActiveAnimation(SkeletonAnimation::ATTACK);
 }

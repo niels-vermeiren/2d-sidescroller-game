@@ -16,10 +16,6 @@ template<typename T>
 class ParticlePool : public EntityObserver {
 
 public:
-    ParticlePool(){
-
-    }
-
     void updatePlayerPos(int playerX, int playerY) override {
         for(auto * particle:this->particles) {
             Entity * entity = dynamic_cast<Entity *>(particle);
