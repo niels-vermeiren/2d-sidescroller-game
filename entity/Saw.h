@@ -11,12 +11,17 @@
 
 class Saw : public Entity {
 public:
-    explicit Saw(SDL_Rect * rect);
+    explicit Saw(SDL_Rect * rect, bool movingSaw);
     void update() override;
     void draw(Renderer renderer) override;
+    bool isMovingLeft() const;
+    void setMovingLeft(bool movingLeft);
+    bool movingSaw() const;
 
 private:
+    bool movingLeft;
     SawSprite * sprite;
+    bool isMovingSaw;
 };
 
 

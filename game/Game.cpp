@@ -3,6 +3,7 @@
 //
 
 #include "Game.h"
+#include "../entityai/MovingSawAI.h"
 
 
 Player * Game::player;
@@ -128,6 +129,11 @@ void Game::load(Renderer *renderer) {
     saws = sawMap->mapToEntities();
     for(auto * obs:this->saws->getEntities()) {
         playerObservable->addObserver(obs);
+        Saw * saw = dynamic_cast<Saw*>(obs);
+        if(saw->movingSaw()) {
+            auto * sawAI = new MovingSawAI(saw, this->tileMap);
+            enemieAIs.push_back(sawAI);
+        }
     }
     auto * coinMap = new CoinMapParser();
     coins = coinMap->mapToEntities();

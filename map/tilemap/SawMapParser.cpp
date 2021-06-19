@@ -21,16 +21,16 @@ EntityManager *SawMapParser::mapToEntities() {
             int index = map[i][j];
             if (index == -1) continue;
             int sawX, sawY;
-            if(index == 0) {
+            if(index == 0 || index == 2) {
                 sawX = (64 * j) + 32 - 76;
                 sawY = (64 * i) + 32 - 76;
             }
-            if(index == 1) {
+            if(index == 1 || index == 3) {
                 sawX = (64 * j) + 32 - 76;
                 sawY = (64 * i) + 13 - 76;
             }
             auto * sawRect = new SDL_Rect {sawX, sawY, 152, 152};
-            auto * saw = new Saw(sawRect);
+            auto * saw = new Saw(sawRect, index == 2 || index == 3);
             entities.push_back(saw);
         }
     }
