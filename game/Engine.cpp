@@ -6,6 +6,7 @@
 #include <future>
 #include "Engine.h"
 #include "../map/tilemap/TileMapParser.h"
+#include "../sound/JukeBox.h"
 #include <chrono>
 
 Engine::Engine(Renderer * renderer) {
@@ -23,7 +24,13 @@ typedef struct {
 int threadFunction(void *game) {
     ThreadData  * data = static_cast<ThreadData *>(game);
     data->game->load(data->pMutex);
-
+    SDL_mutexP(data->pMutex);
+    data->game->loadToTextures();
+    SDL_mutexV(data->pMutex);
+    JukeBox::getInstance()->loadSounds();
+    JukeBox::getInstance()->playMusic(JukeBox::BACKGROUND);
+    data->game->update();
+    data->game->draw(Renderer::getInstance());
     data->p->set_value(true);
 }
 
@@ -51,40 +58,31 @@ void Engine::run() {
     data->p = &p;
     data->pMutex = renderMutex;
     SDL_Thread  * thread = SDL_CreateThread(threadFunction, "thread1", data);
+    lTexture->loadFromRenderedText("Loading game assets, loading level..." , {255,255,255}, renderer);
 
-    auto status = future.wait_for(std::chrono::milliseconds (0));
-    while(status != std::future_status::ready) {
+    while(future.wait_for(std::chrono::milliseconds (0)) != std::future_status::ready) {
         Window::wait();
-        angle+=1;
+        angle+=2.5;
         Window::clearScreen(renderer);
-        SDL_SetRenderDrawColor( renderer->sdlRenderer, 0, 0, 255, 255 );
-        //SDL_RenderFillRect( renderer->sdlRenderer, loadingRect );
-        SDL_mutexP(renderMutex);
         SDL_RenderCopyEx(renderer->sdlRenderer, loaderTexture, NULL, loadingRect, angle, center, SDL_FLIP_NONE);
-        SDL_mutexV(renderMutex);
-        lTexture->loadFromRenderedText("Loading game assets, loading level..." , {255,255,255}, renderer);
         SDL_mutexP(renderMutex);
         lTexture->render( SCREEN_WIDTH - SCREEN_WIDTH/2 - lTexture->getWidth()/2, SCREEN_HEIGHT-SCREEN_HEIGHT/2-lTexture->getHeight()/2 + 200);
         SDL_mutexV(renderMutex);
         SDL_RenderPresent(renderer->sdlRenderer);
         Window::setLastUpdatedTime();
-        status = future.wait_for(std::chrono::milliseconds (0));
     }
-    SDL_WaitThread(thread, &returnValue);
-    SDL_DestroyTexture(loaderTexture);
-    SDL_DestroyMutex(renderMutex);
-    game->loadToTextures();
+    game->reset();
     int tick = 0;
     int fpsCount = 0;
     while(!quit) {
-        Uint64 start = SDL_GetPerformanceCounter();
         Window::setLastUpdatedTime();
+        Uint64 start = SDL_GetPerformanceCounter();
         tick ++;
-        quit = Window::handleInput();
         game->handleCollisions();
         game->update();
         Window::clearScreen(renderer);
         game->draw(*renderer);
+        quit = Window::handleInput();
         SDL_RenderPresent(renderer->sdlRenderer);
         Window::wait();
         Uint64 end = SDL_GetPerformanceCounter();
@@ -95,6 +93,8 @@ void Engine::run() {
             fpsCount = 0;
         }
     }
+    SDL_DestroyTexture(loaderTexture);
+    SDL_DestroyMutex(renderMutex);
     SDL_DestroyWindow(renderer->sdlWindow);
     SDL_Quit();
 }

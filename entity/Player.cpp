@@ -14,6 +14,7 @@ Player::Player(Vector direction, SDL_Rect * rect) : FallingEntity(direction, rec
     this->previousState = new OnGroundState();
     this->facingLeft = false;
     this->rect = rect;
+    this->shouldDraw = true;
     bullets = new ParticlePool<PlayerBullet*>();
     addObserver(bullets);
 }

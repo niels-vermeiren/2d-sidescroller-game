@@ -112,20 +112,21 @@ Game::~Game() {
 }
 
 void Game::load(SDL_mutex * mutex) {
-    SDL_Rect rect = {10, 40*64, 150, 150};
+    SDL_Rect rect = {10, 63*64-175, 150, 150};
 
     SDL_mutexP(mutex);
     this->player = new Player({0, 0}, &rect);
     this->player->getSprite()->load();
     player->load();
-
+    SDL_mutexV(mutex);
     auto * tilemapParser = new TileMapParser(new TilesetTextureHolder());
+    SDL_mutexP(mutex);
     this->tileMap = tilemapParser->mapToEntities();
-
+    SDL_mutexV(mutex);
     Observable * playerObservable = player;
     this->background = &Background::getInstance();
     this->background->load();
-    SDL_mutexV(mutex);
+
 
     for(auto * obs:this->tileMap->getEntities()) {
         Wall * w = dynamic_cast<Wall *>(obs);
@@ -176,8 +177,8 @@ void Game::load(SDL_mutex * mutex) {
     mageWallCollisionHandler = new MageWallCollisionHandler();
     playerMageCollisionHandler = new PlayerMageCollisionHandler();
     playerMageBulletCollisionHandler = new PlayerMageBulletCollisionHandler();
-    SDL_mutexP(mutex);
     auto * skeletonMap = new SkeletonMapParser();
+    SDL_mutexP(mutex);
     skeletons = skeletonMap->mapToEntities();
     SDL_mutexV(mutex);
     for(auto * obs:this->skeletons->getEntities()) {
@@ -206,8 +207,8 @@ void Game::load(SDL_mutex * mutex) {
     bulletMageCollisionHandler = new PlayerBulletMageCollisionHandler();
     bulletTilesetCollisionHandler = new PlayerBulletTilesetCollisionHandler();
 
-    SDL_mutexP(mutex);
     auto * decoMap = new DecoMapParser();
+    SDL_mutexP(mutex);
     this->deco = decoMap->mapToEntities();
     SDL_mutexV(mutex);
     for(auto * obs:this->deco->getEntities()) {
@@ -223,12 +224,12 @@ void Game::load(SDL_mutex * mutex) {
     coinMenu =new CoinMenu();
     coinMenu->getCoinMenu()->load();
 
-    JukeBox::getInstance()->loadSounds();
-    JukeBox::getInstance()->playMusic(JukeBox::BACKGROUND);
+
 
 }
 
 void Game::loadToTextures() {
+
     this->player->loadToTexture();
     this->player->getSprite()->loadToTexture();
     this->background->loadToTexture();
