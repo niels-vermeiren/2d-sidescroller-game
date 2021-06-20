@@ -5,8 +5,7 @@
 #include "SpikesSprite.h"
 
 SpikesSprite::SpikesSprite() {
-    this->surface = IMG_Load("../resources/spikes/spike.png");
-    texture = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer,surface);
+
 }
 
 void SpikesSprite::draw(Renderer renderer, SDL_Rect *eRect, SDL_Rect * clipRect, SDL_RendererFlip flip) {
@@ -16,4 +15,12 @@ void SpikesSprite::draw(Renderer renderer, SDL_Rect *eRect, SDL_Rect * clipRect,
 
 SpikesSprite::~SpikesSprite() {
     SDL_DestroyTexture(texture);
+}
+
+void SpikesSprite::load() {
+    this->surface = IMG_Load("../resources/spikes/spike.png");
+}
+
+void SpikesSprite::loadToTexture() {
+    this->texture = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer,this->surface);
 }

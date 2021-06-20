@@ -15,6 +15,8 @@ public:
     SDL_Texture * getNextAnimationImage(int animation = 0) override;
     int getCurrentFrameNumber() override;
     void reset() override;
+    void load() override;
+    void loadToTexture() override;
     static const int IDLE = 0;
     static const int WALKING = 1;
     static const int JUMPING = 2;

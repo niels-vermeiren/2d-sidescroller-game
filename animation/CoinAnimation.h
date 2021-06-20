@@ -14,6 +14,8 @@ public:
     CoinAnimation();
     virtual ~CoinAnimation();
     SDL_Texture * getNextAnimationImage(int animation = 0) override;
+    void load() override;
+    void loadToTexture() override;
     int getCurrentFrameNumber() override;
     void reset() override;
 private:

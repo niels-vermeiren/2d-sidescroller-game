@@ -24,3 +24,11 @@ int MageBulletAnimation::getCurrentFrameNumber() {
 MageBulletAnimation::~MageBulletAnimation() {
     delete animationData;
 }
+
+void MageBulletAnimation::load() {
+    this->animationData->load();
+}
+
+void MageBulletAnimation::loadToTexture() {
+    this->animationData->loadTextures();
+}

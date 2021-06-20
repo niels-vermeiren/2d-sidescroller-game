@@ -4,6 +4,7 @@
 #include "game/Renderer.h"
 #include "game/Engine.h"
 #include "defs.h"
+#include "SDL2/SDL_mixer.h"
 
 int main() {
 
@@ -23,8 +24,7 @@ int main() {
             );
 
 
-    SDL_Surface *pSurface = SDL_GetWindowSurface(window);
-    // Setup renderer
+
     SDL_Renderer* sdlRenderer = nullptr;
     sdlRenderer =  SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
 

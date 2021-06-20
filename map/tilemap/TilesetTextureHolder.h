@@ -14,10 +14,13 @@
 
 class TilesetTextureHolder {
 public:
-    explicit TilesetTextureHolder(Renderer * renderer);
-    static TilesetTextureHolder& getInstance(Renderer * renderer);
+    explicit TilesetTextureHolder();
+    static TilesetTextureHolder& getInstance();
     SDL_Texture * getTilesetTexture();
+    void load();
+    void loadToTexture();
 private:
+    SDL_Surface * tilesetSurface;
     SDL_Texture * tilesetTexture;
 };
 

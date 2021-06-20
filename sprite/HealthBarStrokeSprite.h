@@ -11,6 +11,8 @@
 class HealthBarStrokeSprite : public StaticSprite {
 public:
     HealthBarStrokeSprite();
+    void load() override;
+    void loadToTexture() override;
     ~HealthBarStrokeSprite() override;
     void draw(Renderer renderer, SDL_Rect * pRect, SDL_Rect * clipRect, SDL_RendererFlip flip) override;
 

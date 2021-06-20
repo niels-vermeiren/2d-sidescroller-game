@@ -18,3 +18,7 @@ void Spike::draw(Renderer renderer) {
 void Spike::update() {
 
 }
+
+SpikesSprite *Spike::getSprite() const {
+    return sprite;
+}

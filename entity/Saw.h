@@ -18,6 +18,8 @@ public:
     void setMovingLeft(bool movingLeft);
     bool movingSaw() const;
 
+    SawSprite *getSprite() const;
+
 private:
     bool movingLeft;
     SawSprite * sprite;

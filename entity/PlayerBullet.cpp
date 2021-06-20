@@ -60,4 +60,8 @@ void PlayerBullet::drawCircle(SDL_Renderer *renderer, int32_t centreX, int32_t c
     }
 }
 
+PlayerBulletSprite *PlayerBullet::getSprite() const {
+    return sprite;
+}
+
 

@@ -4,6 +4,8 @@
 
 #include "Game.h"
 #include "../entityai/MovingSawAI.h"
+#include "../sound/JukeBox.h"
+#include "../entity/Deco.h"
 
 
 Player * Game::player;
@@ -16,7 +18,7 @@ Game::Game(Renderer * renderer) {
 }
 
 void Game::update() {
-    this->player->update();
+   this->player->update();
     this->spikes->update();
     this->saws->update();
     this->coins->update();
@@ -109,35 +111,61 @@ Game::~Game() {
     delete bulletCollisionHandler;
 }
 
-void Game::load(Renderer *renderer) {
-    SDL_Rect rect = {10, 60*64, 150, 150};
+void Game::load(SDL_mutex * mutex) {
+    SDL_Rect rect = {10, 40*64, 150, 150};
+
+    SDL_mutexP(mutex);
     this->player = new Player({0, 0}, &rect);
-    auto * tilemapParser = new TileMapParser(new TilesetTextureHolder(renderer));
+    this->player->getSprite()->load();
+    player->load();
+
+    auto * tilemapParser = new TileMapParser(new TilesetTextureHolder());
     this->tileMap = tilemapParser->mapToEntities();
+
     Observable * playerObservable = player;
     this->background = &Background::getInstance();
-    for(Entity * obs:this->tileMap->getEntities()) {
+    this->background->load();
+    SDL_mutexV(mutex);
+
+    for(auto * obs:this->tileMap->getEntities()) {
+        Wall * w = dynamic_cast<Wall *>(obs);
+        for (auto * pl:w->getPlatforms()) {
+            Platform * plat = dynamic_cast<Platform *>(pl);
+            plat->getSprite()->load();
+        }
+
         playerObservable->addObserver(obs);
     }
     playerObservable->addObserver(background);
     auto * spikesMap = new SpikeMapParser();
+    SDL_mutexP(mutex);
     spikes = spikesMap->mapToEntities();
+    SDL_mutexV(mutex);
     for(auto * obs:this->spikes->getEntities()) {
+        Spike * spike = dynamic_cast<Spike *>(obs);
+        spike->getSprite()->load();
         playerObservable->addObserver(obs);
     }
     auto * sawMap = new SawMapParser();
+    SDL_mutexP(mutex);
     saws = sawMap->mapToEntities();
+    SDL_mutexV(mutex);
     for(auto * obs:this->saws->getEntities()) {
         playerObservable->addObserver(obs);
         Saw * saw = dynamic_cast<Saw*>(obs);
+        saw->getSprite()->load();
         if(saw->movingSaw()) {
             auto * sawAI = new MovingSawAI(saw, this->tileMap);
             enemieAIs.push_back(sawAI);
         }
     }
     auto * coinMap = new CoinMapParser();
+    SDL_mutexP(mutex);
     coins = coinMap->mapToEntities();
+    SDL_mutexV(mutex);
     for(auto * obs:this->coins->getEntities()) {
+        Coin * coin = dynamic_cast<Coin *>(obs);
+        coin->getSprite()->load();
         playerObservable->addObserver(obs);
     }
     playerWallCollisionHandler = new PlayerWallCollisionHandler();
@@ -148,18 +176,26 @@ void Game::load(Renderer *renderer) {
     mageWallCollisionHandler = new MageWallCollisionHandler();
     playerMageCollisionHandler = new PlayerMageCollisionHandler();
     playerMageBulletCollisionHandler = new PlayerMageBulletCollisionHandler();
+    SDL_mutexP(mutex);
     auto * skeletonMap = new SkeletonMapParser();
-     skeletons = skeletonMap->mapToEntities();
+    skeletons = skeletonMap->mapToEntities();
+    SDL_mutexV(mutex);
     for(auto * obs:this->skeletons->getEntities()) {
         playerObservable->addObserver(obs);
+        Skeleton * skeleton  = dynamic_cast<Skeleton*>(obs);
+        skeleton->getSprite()->load();
         SkeletonAI *skeletonAI = new SkeletonAI(dynamic_cast<Skeleton *>(obs), tileMap, player);
         playerObservable->addObserver(skeletonAI);
         this->enemieAIs.push_back(skeletonAI);
     }
 
     auto * mageMap = new MageMapParser();
-   mages = mageMap->mapToEntities();
-     for(auto * obs:this->mages->getEntities()) {
+    SDL_mutexP(mutex);
+    mages = mageMap->mapToEntities();
+    SDL_mutexV(mutex);
+    for(auto * obs:this->mages->getEntities()) {
+        Mage * mage  = dynamic_cast<Mage*>(obs);
+        mage->getSprite()->load();
         playerObservable->addObserver(obs);
         MageAI *mageAI = new MageAI(dynamic_cast<Mage *>(obs), tileMap);
         playerObservable->addObserver(mageAI);
@@ -170,12 +206,70 @@ void Game::load(Renderer *renderer) {
     bulletMageCollisionHandler = new PlayerBulletMageCollisionHandler();
     bulletTilesetCollisionHandler = new PlayerBulletTilesetCollisionHandler();
 
+    SDL_mutexP(mutex);
     auto * decoMap = new DecoMapParser();
     this->deco = decoMap->mapToEntities();
+    SDL_mutexV(mutex);
     for(auto * obs:this->deco->getEntities()) {
+        Deco * deco = dynamic_cast<Deco *>(obs);
+        deco->getSprite()->load();
         playerObservable->addObserver(obs);
     }
+
     healthBar = new HealthBar();
+    healthBar->getHealthBarHolder()->load();
+    healthBar->getHealthBarStroke()->load();
+    healthBar->getHealthBackground()->load();
     coinMenu =new CoinMenu();
+    coinMenu->getCoinMenu()->load();
+
+    JukeBox::getInstance()->loadSounds();
+    JukeBox::getInstance()->playMusic(JukeBox::BACKGROUND);
+
+}
+
+void Game::loadToTextures() {
+    this->player->loadToTexture();
+    this->player->getSprite()->loadToTexture();
+    this->background->loadToTexture();
+    for(auto * obs:this->tileMap->getEntities()) {
+        Wall * w = dynamic_cast<Wall *>(obs);
+        for (auto * pl:w->getPlatforms()) {
+            Platform * plat = dynamic_cast<Platform *>(pl);
+            plat->getSprite()->loadToTexture();
+        }
+    }
+    for(auto * obs:this->spikes->getEntities()) {
+        Spike * spike = dynamic_cast<Spike *>(obs);
+        spike->getSprite()->loadToTexture();
+    }
+    for(auto * obs:this->saws->getEntities()) {
+        Saw * saw = dynamic_cast<Saw*>(obs);
+        saw->getSprite()->loadToTexture();
+    }
+    for(auto * obs:this->coins->getEntities()) {
+        Coin * coin = dynamic_cast<Coin *>(obs);
+        coin->getSprite()->loadToTexture();
+    }
+
+    for(auto * obs:this->skeletons->getEntities()) {
+        Skeleton * skeleton  = dynamic_cast<Skeleton*>(obs);
+        skeleton->getSprite()->loadToTexture();
+    }
+
+    for(auto * obs:this->mages->getEntities()) {
+        Mage * mage  = dynamic_cast<Mage*>(obs);
+        mage->getSprite()->loadToTexture();
+    }
+
+    for(auto * obs:this->deco->getEntities()) {
+        Deco * deco = dynamic_cast<Deco *>(obs);
+        deco->getSprite()->loadToTexture();
+    }
+    healthBar->getHealthBarHolder()->loadToTexture();
+    healthBar->getHealthBarStroke()->loadToTexture();
+    healthBar->getHealthBackground()->loadToTexture();
+    coinMenu->getCoinMenu()->loadToTexture();
+
 }
 

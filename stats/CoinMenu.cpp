@@ -22,5 +22,9 @@ CoinMenu::~CoinMenu() {
 }
 
 void CoinMenu::update() {
-    holderRect = new SDL_Rect {-Background::getInstance().getVpRect()->x+37, -Background::getInstance().getVpRect()->y+30+64, 150, 56};
+    holderRect = new SDL_Rect {-Background::getInstance().getVpRect()->x+37, -Background::getInstance().getVpRect()->y+30+64, 152, 57};
+}
+
+Sprite *CoinMenu::getCoinMenu() const {
+    return coinMenu;
 }

@@ -13,11 +13,13 @@
 class DecoMapTextureHolder {
 public:
     DecoMapTextureHolder();
-
+    void load();
+    void loadToTexture();
     SDL_Texture * getTextureWithIndex(int index);
     static DecoMapTextureHolder & getInstance();
 private:
     std::vector<SDL_Texture *> decoSet;
+    std::vector<SDL_Surface *> decoSurfaces;
 };
 
 

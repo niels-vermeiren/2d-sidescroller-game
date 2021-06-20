@@ -19,3 +19,11 @@ void CoinSprite::resetAnimation() {
 CoinSprite::CoinSprite() {
     this->animation = new CoinAnimation();
 }
+
+void CoinSprite::load() {
+    this->animation->load();
+}
+
+void CoinSprite::loadToTexture() {
+    this->animation->loadToTexture();
+}

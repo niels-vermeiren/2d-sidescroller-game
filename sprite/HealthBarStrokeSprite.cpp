@@ -5,8 +5,6 @@
 #include "HealthBarStrokeSprite.h"
 
 HealthBarStrokeSprite::HealthBarStrokeSprite() {
-    this->surface = IMG_Load("../resources/stats/health/health_bar_stroke.png");
-    this->stroke = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer, surface);
     SDL_FreeSurface(surface);
 }
 
@@ -17,4 +15,12 @@ void HealthBarStrokeSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *c
 
 HealthBarStrokeSprite::~HealthBarStrokeSprite() {
     SDL_DestroyTexture(stroke);
+}
+
+void HealthBarStrokeSprite::load() {
+    this->surface = IMG_Load("../resources/stats/health/health_bar_stroke.png");
+}
+
+void HealthBarStrokeSprite::loadToTexture() {
+    this->stroke = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer, surface);
 }

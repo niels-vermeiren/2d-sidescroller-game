@@ -23,3 +23,11 @@ void SkeletonSprite::resetAnimation() {
 int SkeletonSprite::getCurrentFrame() {
     return animation->getCurrentFrameNumber();
 }
+
+void SkeletonSprite::load() {
+    this->animation->load();
+}
+
+void SkeletonSprite::loadToTexture() {
+    this->animation->loadToTexture();
+}

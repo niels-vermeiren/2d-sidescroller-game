@@ -23,6 +23,8 @@ void ShootBulletCommand::execute() {
     }
 
     auto * t = new PlayerBullet(bulletRect, {static_cast<float>(left ? -6: 6), 0}, left);
+    t->getSprite()->load();
+    t->getSprite()->loadToTexture();
     t->setVisibility(true);
     bulletPool->addParticle(t);
 }

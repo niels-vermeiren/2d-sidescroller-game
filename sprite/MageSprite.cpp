@@ -23,3 +23,11 @@ void MageSprite::resetAnimation() {
 int MageSprite::getCurrentFrame() {
     return animation->getCurrentFrameNumber();
 }
+
+void MageSprite::load() {
+    this->animation->load();
+}
+
+void MageSprite::loadToTexture() {
+    this->animation->loadToTexture();
+}

@@ -11,6 +11,8 @@
 class MageSprite : public AnimatedSprite {
 public:
     MageSprite();
+    void load() override;
+    void loadToTexture() override;
     void draw(Renderer renderer, SDL_Rect * pRect, SDL_Rect * clipRect, SDL_RendererFlip flip) override;
     void resetAnimation() override;
     int getCurrentFrame() override;

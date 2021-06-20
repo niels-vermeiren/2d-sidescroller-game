@@ -18,6 +18,8 @@ public:
     void draw(Renderer renderer) override;
     virtual ~Platform();
 
+    PlatformSprite *getSprite() const;
+
 private:
     PlatformSprite * sprite;
     SDL_Rect * clipRect;

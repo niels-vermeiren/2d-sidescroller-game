@@ -7,6 +7,10 @@
 
 void PlayerSawCollisionHandler::handleCollision(Player *p, Entity *entity) {
     if(CollisionDetection::rectangleCircleIntersect(p->getCollisionBox(), entity->getRect())) {
+        bool hurting = p->getState()->getState() == HURTING;
+        bool dying = p->getState()->getState() == DYING;
+
+
         p->setState(new IsHurtState());
 
         int pCenterX = p->getCollisionBox()->x + p->getCollisionBox()->w/2;
@@ -28,7 +32,8 @@ void PlayerSawCollisionHandler::handleCollision(Player *p, Entity *entity) {
         if(outwardForce.y < MIN_OUTWARD_FORCE_SAW && outwardForce.y > -MIN_OUTWARD_FORCE_SAW) {
             outwardForce.y *= EXTRA_SAW_Y_FORCE_IF_UNDER_MIN;
         }
-        PlayerStats::getInstance().takeDamage(SAW_ATTACK_DAMAGE);
         p->getDirection() = p->getDirection() + outwardForce;
+        if(hurting || dying) return;
+        PlayerStats::getInstance().takeDamage(SAW_ATTACK_DAMAGE);
     }
 }

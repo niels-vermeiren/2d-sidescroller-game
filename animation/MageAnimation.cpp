@@ -38,3 +38,15 @@ MageAnimation::~MageAnimation() {
         delete data;
     }
 }
+
+void MageAnimation::load() {
+    for(AnimationData * data: animationData) {
+        data->load();
+    }
+}
+
+void MageAnimation::loadToTexture() {
+    for(AnimationData * data: animationData) {
+        data->loadTextures();
+    }
+}

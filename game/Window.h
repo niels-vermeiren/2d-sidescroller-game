@@ -10,7 +10,7 @@
 class Window {
 public:
     static bool handleInput();
-    static void clearScreen(Renderer renderer);
+    static void clearScreen(Renderer * renderer);
     static void wait();
     static void setLastUpdatedTime();
     static const int FPS = 60;

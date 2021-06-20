@@ -15,6 +15,8 @@ public:
     void update() override;
     void draw(Renderer renderer) override;
 
+    SpikesSprite *getSprite() const;
+
 private:
     SpikesSprite * sprite;
 };

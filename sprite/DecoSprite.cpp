@@ -3,9 +3,10 @@
 //
 
 #include "DecoSprite.h"
+#include "../map/tilemap/DecoMapTextureHolder.h"
 
-DecoSprite::DecoSprite(SDL_Texture *texture) {
-   this->texture = texture;
+DecoSprite::DecoSprite(int index) {
+    this->index = index;
 }
 
 SDL_Point DecoSprite::getsize(SDL_Texture * sdlTexture) {
@@ -15,7 +16,6 @@ SDL_Point DecoSprite::getsize(SDL_Texture * sdlTexture) {
 }
 
 DecoSprite::~DecoSprite() {
-    SDL_DestroyTexture(texture);
 }
 
 void DecoSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *clipRect, SDL_RendererFlip flip) {
@@ -24,4 +24,13 @@ void DecoSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *clipRect, SD
     SDL_Point dimensions = getsize(texture);
     auto * position = new SDL_Rect {pRect->x, pRect->y + 64 - dimensions.y, dimensions.x, dimensions.y};
     SDL_RenderCopyEx(renderer.sdlRenderer, texture, clipRect, position, 0.0, &p, flip);
+}
+
+void DecoSprite::loadToTexture() {
+    DecoMapTextureHolder::getInstance().loadToTexture();
+    this->texture = DecoMapTextureHolder::getInstance().getTextureWithIndex(index);
+}
+
+void DecoSprite::load() {
+    DecoMapTextureHolder::getInstance().load();
 }

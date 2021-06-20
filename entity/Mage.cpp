@@ -50,6 +50,8 @@ void Mage::setShouldAttack(bool shouldAttack) {
 }
 
 void Mage::addBullet(MageBullet *bullet) {
+    bullet->getSprite()->load();
+    bullet->getSprite()->loadToTexture();
     particlePool.addParticle(bullet);
     getSprite()->setActiveAnimation(MageAnimation::IDLE);
 }

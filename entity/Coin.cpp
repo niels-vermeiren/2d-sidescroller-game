@@ -20,3 +20,7 @@ Coin::~Coin() {
     delete sprite;
 }
 
+CoinSprite *Coin::getSprite() const {
+    return sprite;
+}
+

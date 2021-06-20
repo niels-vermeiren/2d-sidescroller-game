@@ -6,7 +6,7 @@
 #include <future>
 #include "Engine.h"
 #include "../map/tilemap/TileMapParser.h"
-
+#include <chrono>
 
 Engine::Engine(Renderer * renderer) {
     this->renderer = renderer;
@@ -14,42 +14,79 @@ Engine::Engine(Renderer * renderer) {
 
 Engine::~Engine() {}
 
+typedef struct {
+    Game * game;
+    std::promise<bool> * p;
+    SDL_mutex *pMutex;
+} ThreadData;
+
+int threadFunction(void *game) {
+    ThreadData  * data = static_cast<ThreadData *>(game);
+    data->game->load(data->pMutex);
+
+    data->p->set_value(true);
+}
+
 void Engine::run() {
+
     bool quit = false;
     Game *game = new Game(renderer);
-    /*std::cout << "loading" << std::endl;
-    bool finished = false;
-    SDL_Rect r;
-    r.x = SCREEN_WIDTH / 2 - 175;
-    r.y = SCREEN_HEIGHT / 2 - 116;
-    r.w = 351;
-    r.h = 233;*/
 
-    std::thread t1(&Game::load, game, renderer);
-    /*std::cout << finished;
-    SDL_Surface *loader = IMG_Load("../resources/loader/loading.jpeg");
+    SDL_Surface *loader = IMG_Load("../resources/loader/loading1.png");
     SDL_Texture *loaderTexture = SDL_CreateTextureFromSurface(renderer->sdlRenderer, loader);
-    SDL_RenderCopyEx(renderer->sdlRenderer, loaderTexture, NULL, &r,0.0, new SDL_Point{0,0}, SDL_FLIP_NONE);
-    // Render rect
-    SDL_RenderPresent(renderer->sdlRenderer);
+    SDL_Point * center = new SDL_Point{128, 128};
+    SDL_Rect * loadingRect = new SDL_Rect{SCREEN_WIDTH / 2 - 128, SCREEN_HEIGHT / 2 - 128, 256, 256};
+    double angle = 0.0;
+    int returnValue;
     SDL_FreeSurface(loader);
-    SDL_DestroyTexture(loaderTexture);*/
+    TTF_Init();
+    TTF_Font * gFont = TTF_OpenFont( "../resources/font/trulymadly.ttf", 28 );
+    LTexture * lTexture = new LTexture(gFont);
 
-    t1.join();
-    //std::cout << finished;
+    auto * renderMutex = SDL_CreateMutex();
+    std::promise<bool> p;
+    auto future = p.get_future();
+    ThreadData * data = static_cast<ThreadData *>(malloc(sizeof(ThreadData)));
+    data->game = game;
+    data->p = &p;
+    data->pMutex = renderMutex;
+    SDL_Thread  * thread = SDL_CreateThread(threadFunction, "thread1", data);
+
+    auto status = future.wait_for(std::chrono::milliseconds (0));
+    while(status != std::future_status::ready) {
+        Window::wait();
+        angle+=1;
+        Window::clearScreen(renderer);
+        SDL_SetRenderDrawColor( renderer->sdlRenderer, 0, 0, 255, 255 );
+        //SDL_RenderFillRect( renderer->sdlRenderer, loadingRect );
+        SDL_mutexP(renderMutex);
+        SDL_RenderCopyEx(renderer->sdlRenderer, loaderTexture, NULL, loadingRect, angle, center, SDL_FLIP_NONE);
+        SDL_mutexV(renderMutex);
+        lTexture->loadFromRenderedText("Loading game assets, loading level..." , {255,255,255}, renderer);
+        SDL_mutexP(renderMutex);
+        lTexture->render( SCREEN_WIDTH - SCREEN_WIDTH/2 - lTexture->getWidth()/2, SCREEN_HEIGHT-SCREEN_HEIGHT/2-lTexture->getHeight()/2 + 200);
+        SDL_mutexV(renderMutex);
+        SDL_RenderPresent(renderer->sdlRenderer);
+        Window::setLastUpdatedTime();
+        status = future.wait_for(std::chrono::milliseconds (0));
+    }
+    SDL_WaitThread(thread, &returnValue);
+    SDL_DestroyTexture(loaderTexture);
+    SDL_DestroyMutex(renderMutex);
+    game->loadToTextures();
     int tick = 0;
     int fpsCount = 0;
     while(!quit) {
-        tick ++;
         Uint64 start = SDL_GetPerformanceCounter();
-        Window::wait();
+        Window::setLastUpdatedTime();
+        tick ++;
         quit = Window::handleInput();
         game->handleCollisions();
         game->update();
-        Window::clearScreen(*renderer);
+        Window::clearScreen(renderer);
         game->draw(*renderer);
         SDL_RenderPresent(renderer->sdlRenderer);
-        Window::setLastUpdatedTime();
+        Window::wait();
         Uint64 end = SDL_GetPerformanceCounter();
         float elapsed = (end - start) / (float)SDL_GetPerformanceFrequency();
         fpsCount += 1.0f / elapsed;

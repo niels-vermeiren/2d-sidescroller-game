@@ -64,3 +64,15 @@ void PlayerAnimation::reset() {
 int PlayerAnimation::getCurrentFrameNumber() {
     return this->animationData[currentAnimation]->getCurrentFrame();
 }
+
+void PlayerAnimation::load() {
+    for(AnimationData * data: animationData) {
+        data->load();
+    }
+}
+
+void PlayerAnimation::loadToTexture() {
+    for(AnimationData * data: animationData) {
+        data->loadTextures();
+    }
+}

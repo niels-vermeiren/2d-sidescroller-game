@@ -13,6 +13,8 @@ class CoinMenuSprite : public StaticSprite {
 public:
     CoinMenuSprite();
     ~CoinMenuSprite() override;
+    void load() override;
+    void loadToTexture() override;
     void draw(Renderer renderer, SDL_Rect * pRect, SDL_Rect * clipRect, SDL_RendererFlip flip) override;
 
 private:

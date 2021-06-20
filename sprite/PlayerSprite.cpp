@@ -12,11 +12,6 @@ void PlayerSprite::draw(Renderer renderer, SDL_Rect *pRect,SDL_Rect *clipRect, S
     SDL_Point p = {0,0};
     SDL_SetRenderDrawColor( renderer.sdlRenderer, 0, 0, 255, 255 );
     SDL_RenderCopyEx(renderer.sdlRenderer, texture, clipRect, pRect, 0.0, &p, flip);
-    /*SDL_SetRenderDrawColor(renderer.sdlRenderer, 255, 0,0,255);
-    SDL_RenderDrawRect(renderer.sdlRenderer, pRect);
-    PlayerCollisionBox box;
-    SDL_SetRenderDrawColor(renderer.sdlRenderer, 255, 0,0,255);
-    SDL_RenderDrawRect(renderer.sdlRenderer, box.getCollisionBox(pRect));*/
 }
 
 
@@ -26,4 +21,12 @@ PlayerSprite::PlayerSprite() {
 
 void PlayerSprite::resetAnimation() {
     this->animation->reset();
+}
+
+void PlayerSprite::load() {
+    this->animation->load();
+}
+
+void PlayerSprite::loadToTexture() {
+    this->animation->loadToTexture();
 }

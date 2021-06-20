@@ -51,7 +51,8 @@
 class Game {
 public:
     explicit Game(Renderer * renderer);
-    void load(Renderer * renderer);
+    void load(SDL_mutex * mutex);
+    void loadToTextures();
     virtual ~Game();
     void update();
     void draw(Renderer renderer);

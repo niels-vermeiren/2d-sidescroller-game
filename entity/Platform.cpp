@@ -26,3 +26,7 @@ void Platform::update() {
 
 }
 
+PlatformSprite *Platform::getSprite() const {
+    return sprite;
+}
+

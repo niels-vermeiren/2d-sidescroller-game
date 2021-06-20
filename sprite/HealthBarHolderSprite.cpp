@@ -4,10 +4,8 @@
 
 #include "HealthBarHolderSprite.h"
 
-HealthBarHolderSprite::HealthBarHolderSprite() {
-    this->surface = IMG_Load("../resources/stats/health/health_bar_empty.png");
-    this->holder = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer,surface);
-    SDL_FreeSurface(surface);
+HealthBarHolderSprite::HealthBarHolderSprite(bool background) {
+    this->background = background;
 }
 
 void HealthBarHolderSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *clipRect, SDL_RendererFlip flip) {
@@ -17,4 +15,16 @@ void HealthBarHolderSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *c
 
 HealthBarHolderSprite::~HealthBarHolderSprite() {
     SDL_DestroyTexture(holder);
+}
+
+void HealthBarHolderSprite::loadToTexture() {
+    this->holder = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer,surface);
+}
+
+void HealthBarHolderSprite::load() {
+    if(!background) {
+        this->surface = IMG_Load("../resources/stats/health/health_bar_empty.png");
+    } else {
+        this->surface = IMG_Load("../resources/stats/health/health_bar_holder.png");
+    }
 }

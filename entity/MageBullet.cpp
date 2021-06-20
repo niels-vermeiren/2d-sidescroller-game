@@ -31,3 +31,7 @@ void MageBullet::draw(Renderer renderer) {
 SDL_Rect *MageBullet::getCollisionBox() {
     return collisionBox.getCollisionBox(this->rect);
 }
+
+MageBulletSprite *MageBullet::getSprite() const {
+    return sprite;
+}

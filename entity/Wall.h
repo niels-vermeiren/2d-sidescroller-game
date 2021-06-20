@@ -14,6 +14,9 @@ public:
     Wall(int x, int y, int w, int h);
     void draw(Renderer renderer) override;
     void setPlatforms(std::vector<Entity *> tiles);
+
+    const std::vector<Entity *> &getPlatforms() const;
+
     ~Wall() override;
 private:
     std::vector<Entity *> platforms;

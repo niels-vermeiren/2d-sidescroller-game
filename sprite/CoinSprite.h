@@ -11,6 +11,8 @@
 class CoinSprite : AnimatedSprite {
 public:
     CoinSprite();
+    void load() override;
+    void loadToTexture() override;
     void draw(Renderer renderer, SDL_Rect * cRect, SDL_Rect * clipRect, SDL_RendererFlip flip) override;
     void resetAnimation() override;
 };

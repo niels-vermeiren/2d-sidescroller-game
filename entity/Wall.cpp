@@ -32,3 +32,7 @@ void Wall::setPlatforms(std::vector<Entity *> tiles) {
 Wall::~Wall() {
     for(Entity * entity : platforms) delete entity;
 }
+
+const std::vector<Entity *> &Wall::getPlatforms() const {
+    return platforms;
+}

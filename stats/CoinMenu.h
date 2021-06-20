@@ -16,6 +16,9 @@ public:
     void update();
     void draw(Renderer renderer);
     ~CoinMenu();
+
+    Sprite *getCoinMenu() const;
+
 private:
     SDL_Rect * holderRect;
     Sprite * coinMenu;

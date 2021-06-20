@@ -13,6 +13,8 @@ public:
     virtual ~Coin();
     void draw(Renderer renderer) override;
 
+    CoinSprite *getSprite() const;
+
 private:
     CoinSprite * sprite;
 };

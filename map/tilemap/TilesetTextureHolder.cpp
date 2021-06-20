@@ -4,16 +4,22 @@
 
 #include "TilesetTextureHolder.h"
 
-TilesetTextureHolder::TilesetTextureHolder(Renderer * renderer) {
-    this->tilesetTexture =  SDL_CreateTextureFromSurface(renderer->sdlRenderer,
-                     IMG_Load("../resources/tiles/tileset.png"));
+TilesetTextureHolder::TilesetTextureHolder() {
 }
 
 SDL_Texture * TilesetTextureHolder::getTilesetTexture() {
     return tilesetTexture;
 }
 
-TilesetTextureHolder &TilesetTextureHolder::getInstance(Renderer *renderer) {
-    static TilesetTextureHolder INSTANCE(renderer);
+TilesetTextureHolder &TilesetTextureHolder::getInstance() {
+    static TilesetTextureHolder INSTANCE;
     return INSTANCE;
+}
+
+void TilesetTextureHolder::load() {
+    tilesetSurface = IMG_Load("../resources/tiles/tileset.png");
+}
+
+void TilesetTextureHolder::loadToTexture() {
+    tilesetTexture = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer, tilesetSurface);
 }

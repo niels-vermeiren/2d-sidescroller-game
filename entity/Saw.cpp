@@ -42,3 +42,7 @@ void Saw::setMovingLeft(bool movingLeft) {
 bool Saw::movingSaw() const {
     return isMovingSaw;
 }
+
+SawSprite *Saw::getSprite() const {
+    return sprite;
+}

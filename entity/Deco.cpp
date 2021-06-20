@@ -7,8 +7,7 @@
 #include "../defs.h"
 
 Deco::Deco(SDL_Rect *rect, int index) : Entity({0,0}, rect) {
-    SDL_Texture * texture = DecoMapTextureHolder::getInstance().getTextureWithIndex(index);
-    this->sprite = new DecoSprite(texture);
+    this->sprite = new DecoSprite(index);
 }
 
 void Deco::draw(Renderer renderer) {
@@ -22,5 +21,9 @@ void Deco::updatePlayerPos(int playerX, int playerY) {
                         || playerY > LEVEL_HEIGHT - SCREEN_WIDTH/2 && minY() > playerY -  SCREEN_HEIGHT)) ||
                       (playerY > LEVEL_HEIGHT && ((this->minX() > playerX - SCREEN_WIDTH/2 - 100 && minX()  < playerX + SCREEN_WIDTH/2 + 100
                                                    || playerX < SCREEN_WIDTH/2 && minX() < playerX + SCREEN_WIDTH)));
+}
+
+DecoSprite *Deco::getSprite() const {
+    return sprite;
 }
 

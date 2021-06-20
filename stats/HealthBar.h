@@ -15,12 +15,20 @@ public:
     HealthBar();
     void update();
     void draw(Renderer renderer);
+
+    Sprite *getHealthBarHolder() const;
+
+    Sprite *getHealthBarStroke() const;
+
+    Sprite *getHealthBackground() const;
+
     ~HealthBar();
 private:
     SDL_Rect * holderRect;
     SDL_Rect * strokeRect;
     SDL_Rect * clipStrokeRect;
     Sprite * healthBarHolder;
+    Sprite * healthBackground;
     Sprite * healthBarStroke;
 };
 

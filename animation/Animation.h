@@ -12,6 +12,8 @@ public:
     virtual SDL_Texture * getNextAnimationImage(int animation = 0) = 0;
     virtual int getCurrentFrameNumber() = 0;
     virtual void reset() = 0;
+    virtual void load() = 0;
+    virtual void loadToTexture() = 0;
 
 protected:
     int currentAnimation;

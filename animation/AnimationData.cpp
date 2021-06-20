@@ -10,14 +10,10 @@ AnimationData::AnimationData() = default;
 AnimationData::AnimationData(std::string filePath, int totalFrames, int delay) {
     this->delay = delay;
     this->totalFrames = totalFrames;
+    this->filePath = filePath;
 
-    for(int i = 0; i != totalFrames ; i++) {
-        std::string filePathFrame = filePath + std::to_string(i + 1) + ".png";
-        SDL_Surface *pSurface = IMG_Load(filePathFrame.c_str());
-        Renderer &renderer = Renderer::getInstance();
-        SDL_Texture *pTexture = SDL_CreateTextureFromSurface(renderer.sdlRenderer, pSurface);
-        images.push_back(pTexture);
-    }
+    load();
+    loadTextures();
 }
 
 
@@ -49,5 +45,21 @@ void AnimationData::reset(int startFrame) {
 
 int AnimationData::getCurrentFrame() {
     return currentFrame;
+}
+
+void AnimationData::load() {
+    for(int i = 0; i != totalFrames ; i++) {
+        std::string filePathFrame = filePath + std::to_string(i + 1) + ".png";
+        SDL_Surface *pSurface = IMG_Load(filePathFrame.c_str());
+        this->surfaces.push_back(pSurface);
+    }
+}
+
+void AnimationData::loadTextures() {
+    for(int i = 0; i != totalFrames ; i++) {
+        Renderer &renderer = Renderer::getInstance();
+        SDL_Texture *pTexture = SDL_CreateTextureFromSurface(renderer.sdlRenderer, this->surfaces[i]);
+        images.push_back(pTexture);
+    }
 }
 

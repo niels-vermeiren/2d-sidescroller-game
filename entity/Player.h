@@ -37,6 +37,8 @@ public:
     void shootBullet();
     void notifyObservers() override;
     void reset() override;
+    void load();
+    void loadToTexture();
 
     ~Player() override;
 private:

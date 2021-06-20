@@ -13,6 +13,8 @@ class Sprite {
 public:
     Sprite();
     virtual ~Sprite();
+    virtual void load() = 0;
+    virtual void loadToTexture() = 0;
     virtual void draw(Renderer renderer, SDL_Rect * srcRect, SDL_Rect * clipRect, SDL_RendererFlip flip) = 0;
     virtual void resetAnimation() {};
 };

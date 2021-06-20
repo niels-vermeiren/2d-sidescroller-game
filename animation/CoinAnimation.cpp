@@ -24,3 +24,11 @@ void CoinAnimation::reset() {
 int CoinAnimation::getCurrentFrameNumber() {
     return this->animationData[currentAnimation].getCurrentFrame();
 }
+
+void CoinAnimation::load() {
+    this->animationData->load();
+}
+
+void CoinAnimation::loadToTexture() {
+    this->animationData->loadTextures();
+}

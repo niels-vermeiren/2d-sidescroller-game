@@ -38,3 +38,15 @@ void SkeletonAnimation::reset() {
 int SkeletonAnimation::getCurrentFrameNumber() {
     return this->animationData[currentAnimation]->getCurrentFrame();
 }
+
+void SkeletonAnimation::load() {
+    for(AnimationData * data: animationData) {
+        data->load();
+    }
+}
+
+void SkeletonAnimation::loadToTexture() {
+    for(AnimationData * data: animationData) {
+        data->loadTextures();
+    }
+}

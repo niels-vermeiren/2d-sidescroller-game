@@ -12,6 +12,8 @@ class SpikesSprite : public StaticSprite {
 public:
     SpikesSprite();
     ~SpikesSprite() override;
+    void load() override;
+    void loadToTexture() override;
     void draw(Renderer renderer, SDL_Rect * pRect, SDL_Rect * clipRect, SDL_RendererFlip flip) override;
 
 private:

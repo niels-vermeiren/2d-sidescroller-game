@@ -121,3 +121,15 @@ Player::~Player() {
     delete rect;
 }
 
+void Player::load() {
+    for (auto * bullet: getBulletPool()->getParticles()) {
+        bullet->getSprite()->load();
+    }
+}
+
+void Player::loadToTexture() {
+    for (auto * bullet: getBulletPool()->getParticles()) {
+        bullet->getSprite()->loadToTexture();
+    }
+}
+

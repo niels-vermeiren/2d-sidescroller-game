@@ -13,6 +13,8 @@ class Background : public EntityObserver {
 public:
     Background();
     ~Background();
+    void load() ;
+    void loadToTexture();
     static Background &getInstance();
     void draw(Renderer renderer);
     virtual void updatePlayerPos(int playerX, int playerY) override;

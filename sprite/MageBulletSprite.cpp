@@ -18,3 +18,11 @@ void MageBulletSprite::draw(Renderer renderer, SDL_Rect *eRect, SDL_Rect * clipR
 MageBulletSprite::~MageBulletSprite() {
 
 }
+
+void MageBulletSprite::load() {
+    this->animation->load();
+}
+
+void MageBulletSprite::loadToTexture() {
+    this->animation->loadToTexture();
+}

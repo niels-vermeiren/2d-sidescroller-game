@@ -14,6 +14,9 @@ public:
     Deco(SDL_Rect * rect, int index);
     void draw(Renderer renderer) override;
     void updatePlayerPos(int playerX, int playerY) override;
+
+    DecoSprite *getSprite() const;
+
 private:
     DecoSprite * sprite;
 

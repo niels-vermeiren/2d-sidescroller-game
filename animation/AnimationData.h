@@ -14,12 +14,16 @@ public:
     AnimationData();
     AnimationData(std::string filePath, int totalFrames, int delay);
     AnimationData(std::string filePath, int totalFrames, int delay, bool repeat);
+    void load();
+    void loadTextures();
     int getCurrentFrame ();
     void reset(int startFrame);
     SDL_Texture * getNextFrame();
     virtual ~AnimationData();
 
 private:
+    std::string filePath;
+    std::vector<SDL_Surface *> surfaces;
     std::vector<SDL_Texture *> images;
     int currentFrame = 0;
     int totalFrames{};

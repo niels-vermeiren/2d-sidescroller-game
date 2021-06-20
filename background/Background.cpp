@@ -6,12 +6,11 @@
 
 void Background::draw(Renderer renderer) {
     SDL_RenderSetViewport(renderer.sdlRenderer, vp);
-    if(this->bgTexture == nullptr) this->bgTexture = SDL_CreateTextureFromSurface(renderer.sdlRenderer, this->surface);
     SDL_RenderCopy(renderer.sdlRenderer, this->bgTexture, NULL, bgRect);
 }
 
 Background::Background() {
-    this->surface = IMG_Load("../resources/BG2-small.jpg");
+
     this->bgTexture = nullptr;
     this->playerPos = new SDL_Rect();
     this->bgRect = new SDL_Rect();
@@ -43,4 +42,12 @@ SDL_Rect *Background::getVpRect() const {
 Background &Background::getInstance() {
     static Background INSTANCE;
     return INSTANCE;
+}
+
+void Background::load() {
+    this->surface = IMG_Load("../resources/BG2-small.jpg");
+}
+
+void Background::loadToTexture() {
+   this->bgTexture = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer, this->surface);
 }

@@ -18,6 +18,8 @@ public:
     virtual void updatePlayerPos(int playerX, int playerY);
     SDL_Rect * getCollisionBox();
 
+    MageBulletSprite *getSprite() const;
+
 private:
     MageBulletSprite * sprite;
     MageBulletCollisionBox collisionBox;

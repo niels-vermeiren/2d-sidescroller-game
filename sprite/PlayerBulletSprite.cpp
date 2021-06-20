@@ -5,8 +5,6 @@
 #include "PlayerBulletSprite.h"
 
 PlayerBulletSprite::PlayerBulletSprite() {
-    this->surface = IMG_Load("../resources/heroblue/gunbullet/bullet.png");
-    texture = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer,surface);
 }
 
 void PlayerBulletSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *clipRect, SDL_RendererFlip flip) {
@@ -16,4 +14,12 @@ void PlayerBulletSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *clip
 }
 
 PlayerBulletSprite::~PlayerBulletSprite() {
+}
+
+void PlayerBulletSprite::load() {
+    this->surface = IMG_Load("../resources/heroblue/gunbullet/bullet.png");
+}
+
+void PlayerBulletSprite::loadToTexture() {
+    texture = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer,surface);
 }

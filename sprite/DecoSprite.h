@@ -10,14 +10,16 @@
 
 class DecoSprite : public StaticSprite {
 public:
-    DecoSprite(SDL_Texture * texture);
+    DecoSprite(int index);
     static SDL_Point getsize(SDL_Texture *sdlTexture);
+    void load() override;
+    void loadToTexture() override;
     ~DecoSprite() override;
     void draw(Renderer renderer, SDL_Rect * pRect, SDL_Rect * clipRect, SDL_RendererFlip flip) override;
 
 private:
     SDL_Texture * texture;
-
+    int index;
 };
 
 

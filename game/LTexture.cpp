@@ -67,21 +67,18 @@ bool LTexture::loadFromFile( std::string path )
 bool LTexture::loadFromRenderedText(std::string textureText, SDL_Color textColor, Renderer *pRenderer)
 {
     //Get rid of preexisting texture
-    //free();\
+    //freeChannels();\
 
     //Render text surface
     int x = textureText.compare(oldValue);
     if( textSurface == nullptr || x!=0 )
     {
-        printf("different");
         textSurface = TTF_RenderText_Solid( gFont, textureText.c_str(), textColor );
-        printf( "Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError() );
     }
 
     if( mTexture == nullptr || x!=0)
     {
         mTexture = SDL_CreateTextureFromSurface( mRenderer->sdlRenderer, textSurface );
-        printf( "Unable to create texture from rendered text! SDL Error: %s\n", SDL_GetError() );
     }
     mWidth = textSurface->w;
     mHeight = textSurface->h;

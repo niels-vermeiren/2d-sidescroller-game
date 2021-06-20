@@ -27,9 +27,9 @@ bool Window::handleInput() {
     return quit;
 }
 
-void Window::clearScreen(Renderer renderer) {
-    SDL_SetRenderDrawColor(renderer.sdlRenderer, 9, 15, 15, 255);
-    SDL_RenderClear(renderer.sdlRenderer);
+void Window::clearScreen(Renderer * renderer) {
+    SDL_SetRenderDrawColor(renderer->sdlRenderer, 9, 15, 15, 255);
+    SDL_RenderClear(renderer->sdlRenderer);
 }
 
 void Window::wait() {
