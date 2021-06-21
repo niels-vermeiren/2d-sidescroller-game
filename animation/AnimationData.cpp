@@ -34,6 +34,9 @@ SDL_Texture * AnimationData::getNextFrame() {
 }
 
 AnimationData::~AnimationData() {
+    for(SDL_Surface* surface:surfaces) {
+        SDL_FreeSurface(surface);
+    }
     for(SDL_Texture * texture : images) {
         SDL_DestroyTexture(texture);
     }
@@ -59,7 +62,9 @@ void AnimationData::loadTextures() {
     for(int i = 0; i != totalFrames ; i++) {
         Renderer &renderer = Renderer::getInstance();
         SDL_Texture *pTexture = SDL_CreateTextureFromSurface(renderer.sdlRenderer, this->surfaces[i]);
+
         images.push_back(pTexture);
     }
+
 }
 

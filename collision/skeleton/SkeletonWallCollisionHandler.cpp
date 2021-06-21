@@ -21,7 +21,7 @@ void SkeletonWallCollisionHandler::handleCollision(Skeleton * skeleton, Entity *
 
     //Skeleton collides with wall on the right
     if(skeletonOnSameHeight && collisionBox->x + collisionBox->w - direction->x <= entity->minX() && collisionBox->x + collisionBox->w > entity->minX()) {
-        boundingBox->x = entity->minX() - collisionBox->w * 2;
+        boundingBox->x = entity->minX() - boundingBox->w + collisionBox->w/2;
         if(skeleton->getState()->getState() != DEAD) skeleton->setState(new MoveLeftState());
     }
 

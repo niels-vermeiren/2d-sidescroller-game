@@ -7,6 +7,7 @@
 
 
 #include "StaticSprite.h"
+#include "../map/tilemap/DecoMapTextureHolder.h"
 
 class DecoSprite : public StaticSprite {
 public:
@@ -18,6 +19,7 @@ public:
     void draw(Renderer renderer, SDL_Rect * pRect, SDL_Rect * clipRect, SDL_RendererFlip flip) override;
 
 private:
+    DecoMapTextureHolder holder;
     SDL_Texture * texture;
     int index;
 };

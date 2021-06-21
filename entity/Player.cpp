@@ -6,6 +6,7 @@
 #include "../playerstate/OnGroundState.h"
 #include "../command/player/ShootBulletCommand.h"
 #include "../game/Game.h"
+#include "../sound/JukeBox.h"
 
 Player::Player(Vector direction, SDL_Rect * rect) : FallingEntity(direction, rect) {
     this->x = (float) rect->x, this->y = (float) rect->y;
@@ -88,6 +89,7 @@ AnimatedSprite * Player::getSprite() {
 
 void Player::shootBullet() {
     if(!canShoot) return;
+    JukeBox::getInstance()->playSound(JukeBox::LASER, true);
     ShootBulletCommand cmd(this);
     cmd.execute();
     canShoot = false;

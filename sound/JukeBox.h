@@ -24,10 +24,10 @@ public:
     static const int BACKGROUND = 0;
     //SOUND_EFFECT
     static const int COIN = 0;
+    static const int LASER = 1;
 private:
     std::vector<std::pair<Mix_Chunk *, bool>> music;
     std::vector<std::pair<Mix_Chunk *, bool>> sound_effects;
-    int currentChannel = 0;
     static Mix_Chunk * chunk;
     static void channelFinished(int channel);
 };

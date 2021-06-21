@@ -22,7 +22,7 @@ void PlayerSkeletonCollisionHandler::handleCollision(Player *p, Skeleton *skelet
 
     //Player hits skeleton with knife
     if(CollisionDetection::rectanglesIntersect(pKnifeBox, sCollisionBox) && pState == ATTACKING) {
-        sDirection->x += skeleton->minX() < p->minX() ? -PLAYER_SKELETON_HIT_PUSH : PLAYER_SKELETON_HIT_PUSH ;
+        sDirection->x += skeleton->minX() < p->minX() ? -PLAYER_BULLET_SKELETON_HIT_PUSH : PLAYER_BULLET_SKELETON_HIT_PUSH ;
         skeleton->setState(new DyingState());
     }
 
@@ -30,6 +30,6 @@ void PlayerSkeletonCollisionHandler::handleCollision(Player *p, Skeleton *skelet
     if(sState == ATTACK && (skeleton->getSprite()->getCurrentFrame() == 6 || skeleton->getSprite()->getCurrentFrame() == 5)  && CollisionDetection::rectanglesIntersect(pCollisionBox, sAxeBox)) {
         p->setState(new IsHurtState());
         PlayerStats::getInstance().takeDamage(SKELETON_ATTACK_DAMAGE);
-        pDirection->x += skeleton->isFacingLeft() ? -PLAYER_SKELETON_HIT_PUSH : PLAYER_SKELETON_HIT_PUSH;
+        pDirection->x += skeleton->isFacingLeft() ? -PLAYER_BULLET_SKELETON_HIT_PUSH : PLAYER_BULLET_SKELETON_HIT_PUSH;
     }
 }

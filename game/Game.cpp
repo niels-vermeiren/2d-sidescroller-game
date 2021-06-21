@@ -49,12 +49,12 @@ void Game::draw(Renderer renderer) {
     this->tileMap->draw(renderer);
     this->deco->draw(renderer);
     this->coins->draw(renderer);
-    for(auto * skeleton : skeletons->getEntities()) {
+    /*for(auto * skeleton : skeletons->getEntities()) {
         skeleton->draw(renderer);
     }
     for(auto * mage : mages->getEntities()) {
         mage->draw(renderer);
-    }
+    }*/
     this->player->draw(renderer);
     this->healthBar->draw(renderer);
     this->coinMenu->draw(renderer);
@@ -84,10 +84,10 @@ void Game::handleCollisions() {
     }
     for(auto * mage : mages->getEntities()) {
         Mage *pMage = dynamic_cast<Mage *>(mage);
-        mageWallCollisionHandler->handleCollisions(pMage, tileMap);
+         mageWallCollisionHandler->handleCollisions(pMage, tileMap);
         playerMageCollisionHandler->handleCollision(player, pMage);
-        playerMageBulletCollisionHandler->handleCollisions(player, pMage->getBulletPool().getParticleManager());
-        bulletMageCollisionHandler->handleCollisions(pMage, player->getBulletPool()->getParticleManager());
+          playerMageBulletCollisionHandler->handleCollisions(player, pMage->getBulletPool().getParticleManager());
+       bulletMageCollisionHandler->handleCollisions(pMage, player->getBulletPool()->getParticleManager());
     }
     this->bulletTilesetCollisionHandler->handleCollisions(tileMap, player);
 }

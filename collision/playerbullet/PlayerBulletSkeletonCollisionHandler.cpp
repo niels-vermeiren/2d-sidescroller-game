@@ -10,7 +10,7 @@
 void PlayerBulletSkeletonCollisionHandler::handleCollision(Skeleton *skeleton, PlayerBullet *bullet) {
     if(CollisionDetection::rectangleCircleIntersect(skeleton->getCollisionBox(), bullet->getCollisionBox()))  {
         if(bullet->isVisible()) {
-            skeleton->getRect()->x += bullet->isFacingLeft() ? -ENEMY_FLYAWAY_WHEN_HIT_BY_BULLET : ENEMY_FLYAWAY_WHEN_HIT_BY_BULLET;
+            skeleton->getDirection().x = bullet->isFacingLeft() ? -ENEMY_FLYAWAY_WHEN_HIT_BY_PLAYER_BULLET : ENEMY_FLYAWAY_WHEN_HIT_BY_PLAYER_BULLET;
             skeleton->setState(new DyingState());
         }
         bullet->setVisibility(false);

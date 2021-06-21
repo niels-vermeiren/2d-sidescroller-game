@@ -9,7 +9,7 @@
 void PlayerBulletMageCollisionHandler::handleCollision(Mage *mage, PlayerBullet *bullet) {
     if(CollisionDetection::rectangleCircleIntersect(mage->getCollisionBox(), bullet->getCollisionBox()))  {
         if(bullet->isVisible()) {
-            mage->getRect()->x += bullet->isFacingLeft() ? -ENEMY_FLYAWAY_WHEN_HIT_BY_BULLET : ENEMY_FLYAWAY_WHEN_HIT_BY_BULLET;
+            mage->getDirection().x = bullet->isFacingLeft() ? -ENEMY_FLYAWAY_WHEN_HIT_BY_PLAYER_BULLET : ENEMY_FLYAWAY_WHEN_HIT_BY_PLAYER_BULLET;
             mage->setState(new MageDeadState());
         }
         bullet->setVisibility(false);

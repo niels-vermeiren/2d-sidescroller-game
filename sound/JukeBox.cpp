@@ -19,9 +19,12 @@ void JukeBox::loadSounds() {
     Mix_Chunk * ee = Mix_LoadWAV("../resources/sounds/background.mp3");
     music.push_back({ee, true});
 
-
    chunk = Mix_LoadWAV("../resources/sounds/coin.wav");
-   sound_effects.push_back({chunk, false});
+    sound_effects.push_back({chunk, false});
+
+    Mix_Chunk * laser = Mix_LoadWAV("../resources/sounds/laser.wav");
+    sound_effects.push_back({laser, false});
+
     for (int i = 2; i < 10; ++i) {
         JukeBox::freeChannels.push_back(i + 1);
     }
@@ -40,11 +43,8 @@ void JukeBox::channelFinished(int channel) {
 }
 
 void JukeBox::playSound(int sound, bool isSoundEffect) {
-
-
     int &channel = JukeBox::freeChannels.front();
     JukeBox::freeChannels.remove(channel);
-
     Mix_PlayChannelTimed(channel, sound_effects[sound].first, 0, 300);
     Mix_ChannelFinished(JukeBox::channelFinished);
 }

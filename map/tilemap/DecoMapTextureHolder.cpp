@@ -4,18 +4,12 @@
 
 #include <SDL2/SDL_image.h>
 #include "DecoMapTextureHolder.h"
-
 DecoMapTextureHolder::DecoMapTextureHolder() {
 
 }
 
 SDL_Texture *DecoMapTextureHolder::getTextureWithIndex(int index) {
     return decoSet[index];
-}
-
-DecoMapTextureHolder &DecoMapTextureHolder::getInstance() {
-    static DecoMapTextureHolder INSTANCE;
-    return INSTANCE;
 }
 
 void DecoMapTextureHolder::load() {
@@ -81,7 +75,13 @@ void DecoMapTextureHolder::load() {
 }
 
 void DecoMapTextureHolder::loadToTexture() {
-    for(SDL_Surface * surface : decoSurfaces) {
-        decoSet.push_back(SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer, surface));
+   // DecoMapTextureHolder::decoSet.clear();
+    for(int i = 0 ; i!= decoSurfaces.size();i++) {
+        auto texture = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer, decoSurfaces[i]);
+        decoSet.push_back(texture);
     }
+}
+
+DecoMapTextureHolder::~DecoMapTextureHolder() {
+
 }

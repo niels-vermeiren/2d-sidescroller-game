@@ -16,10 +16,10 @@ EntityManager *DecoMapParser::mapToEntities() {
         for (int j = 0; j != row.size(); j++) {
             int index = map[i][j];
             if (index == -1) continue;
-            auto * enemyRect = new SDL_Rect {j*64 , i*64, 0, 0};
-            if(index == 10 || index == 13) enemyRect->x -= 18;
-            enemyRect->y += 1   ;
-            Entity * enemy = new Deco(enemyRect, index);
+            auto * decoRect = new SDL_Rect {j * 64 , i * 64, 0, 0};
+            if(index == 10 || index == 13) decoRect->x -= 18;
+            decoRect->y += 1   ;
+            Entity * enemy = new Deco(decoRect, index);
             entities.push_back(enemy);
         }
     }
@@ -27,5 +27,5 @@ EntityManager *DecoMapParser::mapToEntities() {
 }
 
 std::string DecoMapParser::getMapFilePath() {
-    return std::string("../resources/decomap/testlevel.txt");
+    return std::string("../resources/decomap/level2.txt");
 }

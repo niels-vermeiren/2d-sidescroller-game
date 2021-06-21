@@ -7,7 +7,7 @@
 #include "../../entity/Saw.h"
 
 std::string SawMapParser::getMapFilePath() {
-    return std::string("../resources/sawmap/testlevel.txt");
+    return std::string("../resources/sawmap/level2.txt");
 }
 
 EntityManager *SawMapParser::mapToEntities() {

@@ -8,18 +8,20 @@
 
 #include <SDL2/SDL_render.h>
 #include <vector>
+#include <memory>
 #include "../../game/Renderer.h"
 
 class DecoMapTextureHolder {
 public:
+
     DecoMapTextureHolder();
+    virtual ~DecoMapTextureHolder();
     void load();
     void loadToTexture();
     SDL_Texture * getTextureWithIndex(int index);
-    static DecoMapTextureHolder & getInstance();
 private:
-    std::vector<SDL_Texture *> decoSet;
-    std::vector<SDL_Surface *> decoSurfaces;
+     std::vector<SDL_Texture *> decoSet;
+     std::vector<SDL_Surface *> decoSurfaces;
 };
 
 
