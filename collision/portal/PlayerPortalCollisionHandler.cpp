@@ -12,5 +12,6 @@ void PlayerPortalCollisionHandler::handleCollision(Player *player, Entity *entit
     if(!CollisionDetection::rectangleCircleIntersect(player->getCollisionBox(), smallerRect)) return;
 
     Level::levelUp();
-    player->reset();
+    Level::reset();
+
 }

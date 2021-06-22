@@ -24,8 +24,9 @@
 class Player: public FallingEntity {
 public:
     Player(Vector direction, SDL_Rect * rect);
+
     void draw(Renderer renderer) override;
-    void update() override;
+    void update();
     void setState(PlayerState * playerState);
     PlayerState * getState() const;
     AnimatedSprite * getSprite();

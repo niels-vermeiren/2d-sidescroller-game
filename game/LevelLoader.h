@@ -10,7 +10,7 @@
 #include "Renderer.h"
 #include "../entity/Portal.h"
 #include "../background/Background.h"
-#include "../entity/Player.h"
+
 #include "../stats/HealthBar.h"
 #include "LTexture.h"
 #include "../stats/CoinMenu.h"
@@ -29,12 +29,13 @@ class LevelLoader {
 public:
     /*void loadCommonElements();
     void loadTexturesCommonElements();*/
+    static LevelLoader * getInstance();
     void load(std::string level, SDL_mutex * mutex);
     void loadTextures(std::string level);
     void draw();
     void update();
     void handleCollisions();
-    static void reset();
+    void reset();
     static const std::string LEVEL_1;
 
     static const std::string LEVEL_2;
@@ -44,10 +45,10 @@ private:
     Renderer * renderer;
     Background * background;
     Portal * portal;
-    static Player * player;
-    static EntityManager * coins;
-    static EntityManager * skeletons;
-    static EntityManager * mages;
+    Player * player;
+    EntityManager * coins;
+    EntityManager * skeletons;
+    EntityManager * mages;
     EntityManager * saws;
     EntityManager * spikes;
     EntityManager * tileMap;

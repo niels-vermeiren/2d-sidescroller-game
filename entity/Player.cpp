@@ -6,7 +6,7 @@
 #include "../playerstate/OnGroundState.h"
 #include "../command/player/ShootBulletCommand.h"
 #include "../sound/JukeBox.h"
-#include "../game/LevelLoader.h"
+#include "../stats/PlayerStats.h"
 
 Player::Player(Vector direction, SDL_Rect * rect) : FallingEntity(direction, rect) {
     this->x = (float) rect->x, this->y = (float) rect->y;
@@ -47,8 +47,6 @@ void Player::update() {
         rect->x += (int)direction.x, rect->y += (int)direction.y;
         this->applyGravity();
     }
-
-    if(rect->x<=0 && !shouldDraw)LevelLoader::reset();
 
     notifyObservers();
 }

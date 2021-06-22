@@ -31,5 +31,4 @@ void CoinMenuSprite::loadToTexture() {
     TTF_Init();
     TTF_Font * gFont = TTF_OpenFont( "../resources/font/trulymadly.ttf", 28 );
     lTexture = new LTexture(gFont);
-    SDL_FreeSurface(surface);
 }

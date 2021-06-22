@@ -22,6 +22,7 @@ public:
 private:
     static LevelLoader * level1;
     static LevelLoader * level2;
+    static LevelLoader * testlevel;
     static int currentLevel;
 };
 

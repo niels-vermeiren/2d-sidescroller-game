@@ -10,11 +10,11 @@ HealthBarHolderSprite::HealthBarHolderSprite(bool background) {
 
 void HealthBarHolderSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *clipRect, SDL_RendererFlip flip) {
     SDL_Point p = {0,0};
-    SDL_RenderCopyEx(renderer.sdlRenderer, holder, clipRect, pRect, 0.0, &p, flip);
+    SDL_RenderCopyEx(Renderer::getInstance().sdlRenderer, holder, clipRect, pRect, 0.0, &p, flip);
 }
 
 HealthBarHolderSprite::~HealthBarHolderSprite() {
-    SDL_DestroyTexture(holder);
+
 }
 
 void HealthBarHolderSprite::loadToTexture() {

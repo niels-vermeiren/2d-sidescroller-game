@@ -7,6 +7,7 @@
 #include "Engine.h"
 #include "../map/tilemap/TileMapParser.h"
 #include "../sound/JukeBox.h"
+
 #include "LevelLoader.h"
 #include "Level.h"
 #include <chrono>
@@ -77,6 +78,7 @@ void Engine::run() {
     game->reset();
     int tick = 0;
     int fpsCount = 0;
+
     while(!quit) {
         Window::setLastUpdatedTime();
         Uint64 start = SDL_GetPerformanceCounter();

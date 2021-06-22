@@ -30,16 +30,13 @@ const std::string LevelLoader::LEVEL_1 = "level1.txt";
 const std::string LevelLoader::LEVEL_2 = "level2.txt";
 const std::string LevelLoader::DEV_LEVEL = "testlevel.txt";
 
-Player * LevelLoader::player;
-EntityManager * LevelLoader::coins;
-EntityManager * LevelLoader::skeletons;
-EntityManager * LevelLoader::mages;
 
 void LevelLoader::load(std::string level, SDL_mutex*mutex) {
     SDL_Rect rect = {10, 40*64, 150, 150};
 
     SDL_mutexP(mutex);
-    player = new Player({0, 0}, &rect);
+    Vector direction(0,0);
+    player = new Player(direction, &rect);
     player->getSprite()->load();
     player->load();
     SDL_mutexV(mutex);
@@ -47,7 +44,7 @@ void LevelLoader::load(std::string level, SDL_mutex*mutex) {
     SDL_mutexP(mutex);
     this->tileMap = tilemapParser->mapToEntities(level);
     SDL_mutexV(mutex);
-    Observable * playerObservable = player;
+    Observable * playerObservable = dynamic_cast<Observable *>(player);
     this->background = &Background::getInstance();
     this->background->load();
 
@@ -241,8 +238,8 @@ void LevelLoader::update() {
         Level::reset();
     }
     if(InputManager::keyPressed(SDL_SCANCODE_N)) {
-        player->getRect()->x += 12000;
-        player->getRect()->y -= 2000;
+        this->player->getRect()->x += 12000;
+        this->player->getRect()->y -= 2000;
     }
     healthBar->update();
     coinMenu->update();
@@ -273,11 +270,18 @@ void LevelLoader::handleCollisions() {
 
 void LevelLoader::reset() {
     player->reset();
-    coins->reset();
+    for(auto * coin : coins->getEntities()) {
+        coin->reset();
+    }
     for(auto * skeleton : skeletons->getEntities()) {
         skeleton->reset();
     }
     for(auto * mage : mages->getEntities()) {
         mage->reset();
     }
+}
+
+LevelLoader *LevelLoader::getInstance() {
+    static LevelLoader * INSTANCE = new LevelLoader();
+    return INSTANCE;
 }

@@ -33,7 +33,7 @@ void EntityManager::reset() {
 }
 
 EntityManager::~EntityManager() {
-    for(Entity * entity : entities) {
+    /*for(Entity * entity : entities) {
         delete entity;
-    }
+    }*/
 }
