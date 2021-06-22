@@ -6,13 +6,9 @@
 #include "../MapReader.h"
 #include "../../entity/Coin.h"
 
-std::string CoinMapParser::getMapFilePath() {
-    return std::string("../resources/coinmap/level2.txt");
-}
-
-EntityManager *CoinMapParser::mapToEntities() {
+EntityManager *CoinMapParser::mapToEntities(const std::string LEVEL) {
     MapReader mapReader;
-    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath());
+    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath(LEVEL));
     std::list<Entity *> entities;
 
     for(int i = 0; i != map.size(); i++) {
@@ -75,7 +71,11 @@ SDL_Rect *CoinMapParser::getRectBottomLeftCoin(int row, int col) {
 }
 
 SDL_Rect *CoinMapParser::getRectBottomRightCoin(int row, int col) {
-    int coinX = (64 * row) + 32 + 64/4 - 12.5;
-    int coinY = (64 * col) + 32 + 64/4 - 12.5;
-    return new SDL_Rect {coinX, coinY, 25, 25};
+    int coinX = (64 * row) + 32 + 64 / 4 - 12.5;
+    int coinY = (64 * col) + 32 + 64 / 4 - 12.5;
+    return new SDL_Rect{coinX, coinY, 25, 25};
+}
+
+std::string CoinMapParser::getMapFilePath(const std::string LEVEL) {
+    return std::string("../resources/coinmap/"+LEVEL);
 }

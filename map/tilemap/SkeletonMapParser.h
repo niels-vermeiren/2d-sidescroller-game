@@ -10,9 +10,9 @@
 
 class SkeletonMapParser : public MapParser {
 public:
-    EntityManager * mapToEntities() override;
+    EntityManager * mapToEntities(std::string LEVEL) override;
 private:
-    static std::string getMapFilePath();
+    static std::string getMapFilePath(std::string LEVEL);
 
 };
 

@@ -6,9 +6,10 @@
 #include "../MapReader.h"
 #include "../../entity/Deco.h"
 
-EntityManager *DecoMapParser::mapToEntities() {
+
+EntityManager *DecoMapParser::mapToEntities(const std::string LEVEL) {
     MapReader mapReader;
-    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath());
+    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath(LEVEL));
     std::list<Entity *> entities;
 
     for(int i = 0; i != map.size(); i++) {
@@ -26,6 +27,6 @@ EntityManager *DecoMapParser::mapToEntities() {
     return new EntityManager(entities);
 }
 
-std::string DecoMapParser::getMapFilePath() {
-    return std::string("../resources/decomap/level2.txt");
+std::string DecoMapParser::getMapFilePath(const std::string LEVEL) {
+    return std::string("../resources/decomap/"+LEVEL);
 }

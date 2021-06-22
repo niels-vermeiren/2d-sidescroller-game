@@ -8,9 +8,6 @@
 
 TileMapParser::TileMapParser(TilesetTextureHolder * holder) : MapParser(holder) {}
 
-std::string TileMapParser::getMapFilePath() {
-    return std::string("../resources/tilemap/level2.txt");
-}
 
 Entity * TileMapParser::createPlatform(int row, int col, int index) {
     auto * entityRect = new SDL_Rect {col * 64, row * 64, 64, 64};
@@ -20,10 +17,14 @@ Entity * TileMapParser::createPlatform(int row, int col, int index) {
     return new Platform({0,0}, entityRect, clipRect);
 }
 
+std::string TileMapParser::getMapFilePath(const std::string LEVEL) {
+    return std::string("../resources/tilemap/"+LEVEL);
+}
 
-EntityManager * TileMapParser::mapToEntities() {
+
+EntityManager * TileMapParser::mapToEntities(const std::string LEVEL) {
     MapReader mapReader;
-    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath());
+    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath(LEVEL));
     std::list<Entity *> entities;
 
     for(int i = 0; i != map.size(); i++) {

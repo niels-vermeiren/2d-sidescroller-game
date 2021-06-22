@@ -7,13 +7,10 @@
 #include "../../entity/Skeleton.h"
 #include "../../entity/Mage.h"
 
-std::string SkeletonMapParser::getMapFilePath() {
-    return std::string("../resources/skeletonmap/testlevel.txt");
-}
 
-EntityManager *SkeletonMapParser::mapToEntities() {
+EntityManager *SkeletonMapParser::mapToEntities(const std::string LEVEL) {
     MapReader mapReader;
-    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath());
+    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath(LEVEL));
     std::list<Entity *> entities;
 
     for(int i = 0; i != map.size(); i++) {
@@ -28,4 +25,8 @@ EntityManager *SkeletonMapParser::mapToEntities() {
         }
     }
     return new EntityManager(entities);
+}
+
+std::string SkeletonMapParser::getMapFilePath(const std::string LEVEL) {
+    return std::string("../resources/skeletonmap/"+LEVEL);
 }

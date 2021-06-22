@@ -11,9 +11,9 @@
 
 class MageMapParser : public MapParser {
 public:
-    EntityManager * mapToEntities() override;
+    EntityManager * mapToEntities(const std::string LEVEL) override;
 private:
-    static std::string getMapFilePath();
+    static std::string getMapFilePath(const std::string LEVEL);
 };
 
 

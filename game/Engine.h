@@ -11,8 +11,6 @@
 #include "../entity/Platform.h"
 #include "../entity/EntityManager.h"
 #include "Window.h"
-#include "Game.h"
-
 class Engine {
 private:
     Renderer * renderer;

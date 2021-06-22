@@ -10,10 +10,10 @@ MapParser::MapParser() {
     this->tileHolder = nullptr;
 }
 
-MapParser::MapParser(TilesetTextureHolder * holder) {
-    this->tileHolder = holder;
-}
-
 MapParser::~MapParser() {
     delete tileHolder;
+}
+
+MapParser::MapParser(TilesetTextureHolder *holder) {
+    this->tileHolder = holder;
 }

@@ -4,13 +4,9 @@
 
 #include "SpikeMapParser.h"
 
-std::string SpikeMapParser::getMapFilePath() {
-    return std::string("../resources/spikemap/level2.txt");
-}
-
-EntityManager * SpikeMapParser::mapToEntities() {
+EntityManager * SpikeMapParser::mapToEntities(const std::string LEVEL) {
     MapReader mapReader;
-    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath());
+    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath(LEVEL));
     std::list<Entity *> entities;
 
     for(int i = 0; i != map.size(); i++) {
@@ -25,4 +21,8 @@ EntityManager * SpikeMapParser::mapToEntities() {
         }
     }
     return new EntityManager(entities);
+}
+
+std::string SpikeMapParser::getMapFilePath(const std::string LEVEL) {
+    return std::string("../resources/spikemap/"+LEVEL);
 }

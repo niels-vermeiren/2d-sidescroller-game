@@ -6,13 +6,10 @@
 #include "../MapReader.h"
 #include "../../entity/Mage.h"
 
-std::string MageMapParser::getMapFilePath() {
-    return std::string("../resources/magemap/testlevel.txt");
-}
 
-EntityManager *MageMapParser::mapToEntities() {
+EntityManager *MageMapParser::mapToEntities(const std::string LEVEL) {
     MapReader mapReader;
-    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath());
+    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath(LEVEL));
     std::list<Entity *> entities;
 
     for(int i = 0; i != map.size(); i++) {
@@ -26,4 +23,8 @@ EntityManager *MageMapParser::mapToEntities() {
         }
     }
     return new EntityManager(entities);
+}
+
+std::string MageMapParser::getMapFilePath(const std::string LEVEL) {
+    return std::string("../resources/magemap/"+LEVEL);
 }

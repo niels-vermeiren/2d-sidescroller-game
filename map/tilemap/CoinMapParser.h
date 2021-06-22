@@ -11,9 +11,9 @@
 
 class CoinMapParser : public MapParser {
 public:
-    EntityManager * mapToEntities() override;
+    EntityManager * mapToEntities(std::string LEVEL) override;
 private:
-    static std::string getMapFilePath();
+    static std::string getMapFilePath(const std::string LEVEL);
     SDL_Rect * getRectCenterCoin(int row, int col);
     SDL_Rect * getRectUpperLeftCoin(int row, int col);
     SDL_Rect * getRectUpperRightCoin(int row, int col);

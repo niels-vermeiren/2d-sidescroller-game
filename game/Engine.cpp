@@ -7,6 +7,8 @@
 #include "Engine.h"
 #include "../map/tilemap/TileMapParser.h"
 #include "../sound/JukeBox.h"
+#include "LevelLoader.h"
+#include "Level.h"
 #include <chrono>
 
 Engine::Engine(Renderer * renderer) {
@@ -16,7 +18,7 @@ Engine::Engine(Renderer * renderer) {
 Engine::~Engine() {}
 
 typedef struct {
-    Game * game;
+    Level * game;
     std::promise<bool> * p;
     SDL_mutex *pMutex;
 } ThreadData;
@@ -25,19 +27,20 @@ int threadFunction(void *game) {
     ThreadData  * data = static_cast<ThreadData *>(game);
     data->game->load(data->pMutex);
     SDL_mutexP(data->pMutex);
-    data->game->loadToTextures();
+    data->game->loadTextures();
     SDL_mutexV(data->pMutex);
     JukeBox::getInstance()->loadSounds();
     JukeBox::getInstance()->playMusic(JukeBox::BACKGROUND);
     data->game->update();
-    data->game->draw(Renderer::getInstance());
+    data->game->draw();
     data->p->set_value(true);
+    return 1;
 }
 
 void Engine::run() {
 
     bool quit = false;
-    Game *game = new Game(renderer);
+    Level * game = new Level();
 
     SDL_Surface *loader = IMG_Load("../resources/loader/loading1.png");
     SDL_Texture *loaderTexture = SDL_CreateTextureFromSurface(renderer->sdlRenderer, loader);
@@ -81,7 +84,7 @@ void Engine::run() {
         game->handleCollisions();
         game->update();
         Window::clearScreen(renderer);
-        game->draw(*renderer);
+        game->draw();
         quit = Window::handleInput();
         SDL_RenderPresent(renderer->sdlRenderer);
         Window::wait();

@@ -14,7 +14,7 @@ public:
     MapParser();
     explicit MapParser(TilesetTextureHolder * holder);
     virtual ~MapParser();
-    virtual EntityManager * mapToEntities() = 0;
+    virtual EntityManager * mapToEntities(const std::string LEVEL) = 0;
 
 protected:
     TilesetTextureHolder * tileHolder;

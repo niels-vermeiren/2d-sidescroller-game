@@ -6,13 +6,9 @@
 #include "../MapReader.h"
 #include "../../entity/Saw.h"
 
-std::string SawMapParser::getMapFilePath() {
-    return std::string("../resources/sawmap/level2.txt");
-}
-
-EntityManager *SawMapParser::mapToEntities() {
+EntityManager *SawMapParser::mapToEntities(const std::string LEVEL) {
     MapReader mapReader;
-    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath());
+    std::vector<std::vector<int>> map = mapReader.read(getMapFilePath(LEVEL));
     std::list<Entity *> entities;
 
     for(int i = 0; i != map.size(); i++) {
@@ -35,4 +31,8 @@ EntityManager *SawMapParser::mapToEntities() {
         }
     }
     return new EntityManager(entities);
+}
+
+std::string SawMapParser::getMapFilePath(const std::string LEVEL) {
+    return std::string("../resources/sawmap/"+LEVEL);
 }

@@ -11,9 +11,9 @@
 class TileMapParser : public MapParser {
 public:
     explicit TileMapParser(TilesetTextureHolder * holder);
-    EntityManager * mapToEntities() override;
+    EntityManager * mapToEntities(const std::string LEVEL) override;
 private:
-    static std::string getMapFilePath();
+    static std::string getMapFilePath(const std::string LEVEL);
     Entity * createPlatform(int row, int col, int index);
 };
 
