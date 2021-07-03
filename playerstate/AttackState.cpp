@@ -3,9 +3,14 @@
 //
 
 #include "AttackState.h"
+#include "../sound/JukeBox.h"
 
 void AttackState::update(Player *player) {
-    player->getSprite()->setActiveAnimation(PlayerAnimation::ATTACK);
+
+
+    if(player->getSprite()->getAnimation()->getCurrentFrameNumber() == 5) {
+        player->setState(new OnGroundState());
+    }
 
     if(InputManager::keyPressed(SDL_SCANCODE_UP)) {
         JumpCommand jump(player);

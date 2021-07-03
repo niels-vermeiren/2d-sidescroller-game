@@ -5,6 +5,7 @@
 #include "Background.h"
 
 void Background::draw(Renderer renderer) {
+    IMG_Init(IMG_INIT_PNG);
     SDL_RenderSetViewport(renderer.sdlRenderer, vp);
     SDL_RenderCopy(renderer.sdlRenderer, this->bgTexture, NULL, bgRect);
 }

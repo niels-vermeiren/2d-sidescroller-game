@@ -26,7 +26,7 @@ void DecoSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *clipRect, SD
     if(dimensions.x <= 64) {
         xVal = pRect->x-dimensions.x/2 +32;
     } else {
-        xVal = pRect->x;
+        xVal = pRect->x - dimensions.x + 32 + dimensions.x/2 + 16;
     }
     auto * position = new SDL_Rect {xVal, pRect->y + 64 - dimensions.y, dimensions.x, dimensions.y};
     SDL_RenderCopyEx(renderer.sdlRenderer, texture, clipRect, position, 0.0, &p, flip);

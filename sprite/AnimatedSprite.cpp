@@ -11,3 +11,7 @@ void AnimatedSprite::setActiveAnimation(int animation) {
 int AnimatedSprite::getCurrentFrame() {
     return 0;
 }
+
+Animation *AnimatedSprite::getAnimation() const {
+    return animation;
+}

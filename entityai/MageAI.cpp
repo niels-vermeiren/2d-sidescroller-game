@@ -6,6 +6,7 @@
 #include "MageAI.h"
 #include "../magestate/MageMoveLeftState.h"
 #include "../magestate/MageMoveRightState.h"
+#include "../sound/JukeBox.h"
 
 MageAI::MageAI(Mage *mage, EntityManager *walls) {
     playerX = 0, playerY = 0;
@@ -76,4 +77,5 @@ void MageAI::shoot() {
     auto * bulletRect = new SDL_Rect {mage->getStaffCollisionBox()->x-9, mage->getStaffCollisionBox()->y-32, 40, 40};
     auto * bullet = new MageBullet(bulletRect, bulletVector);
     mage->addBullet(bullet);
+    JukeBox::getInstance()->playSound(JukeBox::MAGE_ATTACK, true);
 }

@@ -25,6 +25,10 @@ public:
     //SOUND_EFFECT
     static const int COIN = 0;
     static const int LASER = 1;
+    static const int MAGE_ATTACK = 2;
+    static const int DAMAGE = 3;
+    static const int SLASHING = 4;
+    static const int SKELETON_HIT = 5;
 private:
     std::vector<std::pair<Mix_Chunk *, bool>> music;
     std::vector<std::pair<Mix_Chunk *, bool>> sound_effects;

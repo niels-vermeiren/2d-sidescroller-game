@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "PlayerStats.h"
+#include "../sound/JukeBox.h"
 
 float PlayerStats::getHealth() const {
     return this->health;
@@ -20,6 +21,7 @@ PlayerStats  &PlayerStats::getInstance() {
 
 void PlayerStats::takeDamage(float damage) {
     this->health -= damage;
+    JukeBox::getInstance()->playSound(JukeBox::DAMAGE, true);
 }
 
 void PlayerStats::addCoin(int amount) {

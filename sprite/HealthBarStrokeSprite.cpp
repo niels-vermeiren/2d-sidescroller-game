@@ -5,7 +5,7 @@
 #include "HealthBarStrokeSprite.h"
 
 HealthBarStrokeSprite::HealthBarStrokeSprite() {
-    SDL_FreeSurface(surface);
+
 }
 
 void HealthBarStrokeSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *clipRect, SDL_RendererFlip flip) {

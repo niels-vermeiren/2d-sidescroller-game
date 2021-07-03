@@ -52,6 +52,7 @@ void Player::update() {
 }
 
 void Player::draw(Renderer renderer) {
+
     if(shouldDraw) this->sprite->draw(renderer, rect, nullptr, facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
     for(PlayerBullet * bullet : getBulletPool()->getParticles()) bullet->draw(renderer);
 

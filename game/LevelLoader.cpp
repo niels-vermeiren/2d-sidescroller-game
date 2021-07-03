@@ -28,27 +28,48 @@
 
 const std::string LevelLoader::LEVEL_1 = "level1.txt";
 const std::string LevelLoader::LEVEL_2 = "level2.txt";
+const std::string LevelLoader::LEVEL_3 = "level3.txt";
 const std::string LevelLoader::DEV_LEVEL = "testlevel.txt";
 
 
 void LevelLoader::load(std::string level, SDL_mutex*mutex) {
     SDL_Rect rect = {10, 40*64, 150, 150};
 
-    SDL_mutexP(mutex);
+
     Vector direction(0,0);
     player = new Player(direction, &rect);
     player->getSprite()->load();
     player->load();
-    SDL_mutexV(mutex);
-    auto * tilemapParser = new TileMapParser(new TilesetTextureHolder());
-    SDL_mutexP(mutex);
-    this->tileMap = tilemapParser->mapToEntities(level);
-    SDL_mutexV(mutex);
-    Observable * playerObservable = dynamic_cast<Observable *>(player);
     this->background = &Background::getInstance();
     this->background->load();
+    playerWallCollisionHandler = new PlayerWallCollisionHandler();
+    playerSawCollisionHandler = new PlayerSawCollisionHandler();
+    playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
+    playerCoinCollisionHandler = new PlayerCoinCollisionHandler();
+    skeletonWallCollisionHandler = new SkeletonWallCollisionHandler();
+    mageWallCollisionHandler = new MageWallCollisionHandler();
+    playerMageCollisionHandler = new PlayerMageCollisionHandler();
+    playerMageBulletCollisionHandler = new PlayerMageBulletCollisionHandler();
+    playerPortalCollisionHandler = new PlayerPortalCollisionHandler();
+    playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
+    bulletCollisionHandler = new PlayerBulletSkeletonCollisionHandler();
+    bulletMageCollisionHandler = new PlayerBulletMageCollisionHandler();
+    bulletTilesetCollisionHandler = new PlayerBulletTilesetCollisionHandler();
+    healthBar = new HealthBar();
+    healthBar->getHealthBarHolder()->load();
+    healthBar->getHealthBarStroke()->load();
+    healthBar->getHealthBackground()->load();
+    coinMenu =new CoinMenu();
+    coinMenu->getCoinMenu()->load();
 
+    SDL_Rect * portalRect = new SDL_Rect {200 * 64 - 246, 64 * 64 - 500, 192, 246};
+    portal = new Portal(portalRect);
+    portal->getSprite()->load();
+    auto * tilemapParser = new TileMapParser(new TilesetTextureHolder());
 
+    this->tileMap = tilemapParser->mapToEntities(level);
+
+    Observable * playerObservable = dynamic_cast<Observable *>(player);
     for(auto * obs:this->tileMap->getEntities()) {
         Wall * w = dynamic_cast<Wall *>(obs);
         for (auto * pl:w->getPlatforms()) {
@@ -60,18 +81,18 @@ void LevelLoader::load(std::string level, SDL_mutex*mutex) {
     }
     playerObservable->addObserver(background);
     auto * spikesMap = new SpikeMapParser();
-    SDL_mutexP(mutex);
+
     spikes = spikesMap->mapToEntities(level);
-    SDL_mutexV(mutex);
+
     for(auto * obs:this->spikes->getEntities()) {
         Spike * spike = dynamic_cast<Spike *>(obs);
         spike->getSprite()->load();
         playerObservable->addObserver(obs);
     }
     auto * sawMap = new SawMapParser();
-    SDL_mutexP(mutex);
+
     saws = sawMap->mapToEntities(level);
-    SDL_mutexV(mutex);
+
     for(auto * obs:this->saws->getEntities()) {
         playerObservable->addObserver(obs);
         Saw * saw = dynamic_cast<Saw*>(obs);
@@ -82,27 +103,19 @@ void LevelLoader::load(std::string level, SDL_mutex*mutex) {
         }
     }
     auto * coinMap = new CoinMapParser();
-    SDL_mutexP(mutex);
+
     coins = coinMap->mapToEntities(level);
-    SDL_mutexV(mutex);
+
     for(auto * obs:this->coins->getEntities()) {
         Coin * coin = dynamic_cast<Coin *>(obs);
         coin->getSprite()->load();
         playerObservable->addObserver(obs);
     }
-    playerWallCollisionHandler = new PlayerWallCollisionHandler();
-    playerSawCollisionHandler = new PlayerSawCollisionHandler();
-    playerSpikeCollisionHandler = new PlayerSpikeCollisionHandler();
-    playerCoinCollisionHandler = new PlayerCoinCollisionHandler();
-    skeletonWallCollisionHandler = new SkeletonWallCollisionHandler();
-    mageWallCollisionHandler = new MageWallCollisionHandler();
-    playerMageCollisionHandler = new PlayerMageCollisionHandler();
-    playerMageBulletCollisionHandler = new PlayerMageBulletCollisionHandler();
-    playerPortalCollisionHandler = new PlayerPortalCollisionHandler();
+
     auto * skeletonMap = new SkeletonMapParser();
-    SDL_mutexP(mutex);
+
     skeletons = skeletonMap->mapToEntities(level);
-    SDL_mutexV(mutex);
+
     for(auto * obs:this->skeletons->getEntities()) {
         playerObservable->addObserver(obs);
         Skeleton * skeleton  = dynamic_cast<Skeleton*>(obs);
@@ -113,9 +126,9 @@ void LevelLoader::load(std::string level, SDL_mutex*mutex) {
     }
 
     auto * mageMap = new MageMapParser();
-    SDL_mutexP(mutex);
+
     mages = mageMap->mapToEntities(level);
-    SDL_mutexV(mutex);
+
     for(auto * obs:this->mages->getEntities()) {
         Mage * mage  = dynamic_cast<Mage*>(obs);
         mage->getSprite()->load();
@@ -124,37 +137,22 @@ void LevelLoader::load(std::string level, SDL_mutex*mutex) {
         playerObservable->addObserver(mageAI);
         this->enemieAIs.push_back(mageAI);
     }
-    playerSkeletonAttackCollisionHandler = new PlayerSkeletonCollisionHandler();
-    bulletCollisionHandler = new PlayerBulletSkeletonCollisionHandler();
-    bulletMageCollisionHandler = new PlayerBulletMageCollisionHandler();
-    bulletTilesetCollisionHandler = new PlayerBulletTilesetCollisionHandler();
 
     auto * decoMap = new DecoMapParser();
-    SDL_mutexP(mutex);
+
     this->deco = decoMap->mapToEntities(level);
-    SDL_mutexV(mutex);
+
     for(auto * obs:this->deco->getEntities()) {
         Deco * deco = dynamic_cast<Deco *>(obs);
         deco->getSprite()->load();
         playerObservable->addObserver(obs);
     }
-
-    healthBar = new HealthBar();
-    healthBar->getHealthBarHolder()->load();
-    healthBar->getHealthBarStroke()->load();
-    healthBar->getHealthBackground()->load();
-    coinMenu =new CoinMenu();
-    coinMenu->getCoinMenu()->load();
-
-    SDL_Rect * portalRect = new SDL_Rect {200 * 64 - 246, 64 * 64 - 500, 192, 246};
-    portal = new Portal(portalRect);
-    portal->getSprite()->load();
 }
 
 void LevelLoader::loadTextures(std::string level) {
+    this->background->loadToTexture();
     this->player->loadToTexture();
     this->player->getSprite()->loadToTexture();
-    this->background->loadToTexture();
     for(auto * obs:this->tileMap->getEntities()) {
         Wall * w = dynamic_cast<Wall *>(obs);
         for (auto * pl:w->getPlatforms()) {
@@ -197,23 +195,22 @@ void LevelLoader::loadTextures(std::string level) {
 }
 
 void LevelLoader::draw() {
-    Renderer renderer = Renderer::getInstance();
-    this->background->draw(renderer);
-    this->spikes->draw(renderer);
-    this->saws->draw(renderer);
-    this->tileMap->draw(renderer);
-    this->deco->draw(renderer);
-    this->coins->draw(renderer);
-    this->portal->draw(renderer);
+    this->background->draw(Renderer::getInstance());
+    this->spikes->draw(Renderer::getInstance());
+    this->deco->draw(Renderer::getInstance());
+    this->saws->draw(Renderer::getInstance());
+    this->tileMap->draw(Renderer::getInstance());
+    this->coins->draw(Renderer::getInstance());
+    this->portal->draw(Renderer::getInstance());
     for(auto * skeleton : skeletons->getEntities()) {
-        skeleton->draw(renderer);
+        skeleton->draw(Renderer::getInstance());
     }
     for(auto * mage : mages->getEntities()) {
-        mage->draw(renderer);
+        mage->draw(Renderer::getInstance());
     }
-    player->draw(renderer);
-    healthBar->draw(renderer);
-    coinMenu->draw(renderer);
+    player->draw(Renderer::getInstance());
+    healthBar->draw(Renderer::getInstance());
+    coinMenu->draw(Renderer::getInstance());
 }
 
 void LevelLoader::update() {
@@ -284,4 +281,8 @@ void LevelLoader::reset() {
 LevelLoader *LevelLoader::getInstance() {
     static LevelLoader * INSTANCE = new LevelLoader();
     return INSTANCE;
+}
+
+void LevelLoader::loadShared(SDL_mutex* mutex) {
+
 }

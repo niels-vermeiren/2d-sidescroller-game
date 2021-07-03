@@ -2,6 +2,7 @@
 // Created by niels on 4/15/21.
 //
 
+#include <iostream>
 #include "AnimationData.h"
 #include "../game/Renderer.h"
 
@@ -11,9 +12,6 @@ AnimationData::AnimationData(std::string filePath, int totalFrames, int delay) {
     this->delay = delay;
     this->totalFrames = totalFrames;
     this->filePath = filePath;
-
-    load();
-    loadTextures();
 }
 
 
@@ -60,8 +58,7 @@ void AnimationData::load() {
 
 void AnimationData::loadTextures() {
     for(int i = 0; i != totalFrames ; i++) {
-        Renderer &renderer = Renderer::getInstance();
-        SDL_Texture *pTexture = SDL_CreateTextureFromSurface(renderer.sdlRenderer, this->surfaces[i]);
+        SDL_Texture *pTexture = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer, this->surfaces[i]);
 
         images.push_back(pTexture);
     }

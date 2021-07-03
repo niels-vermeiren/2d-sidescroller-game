@@ -9,7 +9,6 @@
 class EntityObserver {
 public:
     virtual void updatePlayerPos(int playerX, int playerY) {
-        std::cout << "super" <<std::endl;
     };
 };
 

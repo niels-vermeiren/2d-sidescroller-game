@@ -20,7 +20,7 @@ public:
     void setCoins(int coins);
 
 private:
-    float health;
+    float health = 100;
     int coins;
 };
 

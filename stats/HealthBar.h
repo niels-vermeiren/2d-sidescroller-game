@@ -24,6 +24,7 @@ public:
 
     ~HealthBar();
 private:
+    int oldHealth;
     SDL_Rect * holderRect;
     SDL_Rect * strokeRect;
     SDL_Rect * clipStrokeRect;

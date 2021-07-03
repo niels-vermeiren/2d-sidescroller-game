@@ -7,6 +7,7 @@
 #include "../../skeletonstate/DyingState.h"
 #include "../../playerstate/IsHurtState.h"
 #include "../../stats/PlayerStats.h"
+#include "../../sound/JukeBox.h"
 
 void PlayerSkeletonCollisionHandler::handleCollision(Player *p, Skeleton *skeleton) {
     SDL_Rect * pCollisionBox = p->getCollisionBox();
@@ -22,7 +23,8 @@ void PlayerSkeletonCollisionHandler::handleCollision(Player *p, Skeleton *skelet
 
     //Player hits skeleton with knife
     if(CollisionDetection::rectanglesIntersect(pKnifeBox, sCollisionBox) && pState == ATTACKING) {
-        sDirection->x += skeleton->minX() < p->minX() ? -PLAYER_BULLET_SKELETON_HIT_PUSH : PLAYER_BULLET_SKELETON_HIT_PUSH ;
+        sDirection->x += skeleton->minX() < p->minX() ? -PLAYER_BULLET_SKELETON_HIT_PUSH : PLAYER_BULLET_SKELETON_HIT_PUSH;
+        JukeBox::getInstance()->playSound(JukeBox::SKELETON_HIT, true);
         skeleton->setState(new DyingState());
     }
 

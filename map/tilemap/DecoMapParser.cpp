@@ -18,6 +18,7 @@ EntityManager *DecoMapParser::mapToEntities(const std::string LEVEL) {
             int index = map[i][j];
             if (index == -1) continue;
             auto * decoRect = new SDL_Rect {j * 64 , i * 64, 0, 0};
+
             if(index == 10 || index == 13) decoRect->x -= 18;
             decoRect->y += 1   ;
             Entity * enemy = new Deco(decoRect, index);

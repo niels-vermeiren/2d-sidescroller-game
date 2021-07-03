@@ -2,6 +2,7 @@
 // Created by niels on 4/14/21.
 //
 
+#include <iostream>
 #include "PlayerAnimation.h"
 #include "AnimationData.h"
 
@@ -59,6 +60,7 @@ void PlayerAnimation::reset() {
     this->animationData[DEAD]->reset(0);
     this->animationData[JUMPING]->reset(1);
     this->animationData[JUMP_GUN]->reset(0);
+    this->animationData[ATTACK]->reset(0);
 }
 
 int PlayerAnimation::getCurrentFrameNumber() {

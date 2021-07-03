@@ -5,6 +5,7 @@
 #include "OnGroundState.h"
 #include "../command/skeleton/SkeletonStandStillCommand.h"
 #include "RunGunState.h"
+#include "../sound/JukeBox.h"
 
 void OnGroundState::update(Player *player) {
     player->getSprite()->setActiveAnimation(PlayerAnimation::IDLE);
@@ -38,10 +39,13 @@ void OnGroundState::update(Player *player) {
         player->setState(new JumpState());
     }
 
-    if(InputManager::keyDown(SDL_SCANCODE_SPACE)) {
+    if(InputManager::keyPressed(SDL_SCANCODE_SPACE)) {
         Command * attackCommand = new AttackCommand(player);
         attackCommand->execute();
         player->setState(new AttackState());
+        JukeBox::getInstance()->playSound(JukeBox::SLASHING, true);
+        player->getSprite()->getAnimation()->reset();
+        player->getSprite()->setActiveAnimation(PlayerAnimation::ATTACK);
     }
 
     if(InputManager::keyPressed(SDL_SCANCODE_TAB)) {
