@@ -17,7 +17,7 @@ void Deco::draw(Renderer renderer) {
 void Deco::updatePlayerPos(int playerX, int playerY) {
     this->shouldDraw= ((this->minX() > playerX - SCREEN_WIDTH/2 - 225 && minX()  < playerX + SCREEN_WIDTH/2 + 225
                         || playerX < SCREEN_WIDTH/2 && minX() < playerX + SCREEN_WIDTH) &&
-                       (this->minY() > playerY - SCREEN_HEIGHT/2 - 50 && minY()  < playerY + SCREEN_HEIGHT/2 + 50
+                       (this->minY() > playerY - SCREEN_HEIGHT/2 - 250 && minY()  < playerY + SCREEN_HEIGHT/2 + 250
                         || playerY > LEVEL_HEIGHT - SCREEN_WIDTH/2 && minY() > playerY -  SCREEN_HEIGHT)) ||
                       (playerY > LEVEL_HEIGHT && ((this->minX() > playerX - SCREEN_WIDTH/2 - 100 && minX()  < playerX + SCREEN_WIDTH/2 + 100
                                                    || playerX < SCREEN_WIDTH/2 && minX() < playerX + SCREEN_WIDTH)));

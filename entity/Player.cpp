@@ -27,6 +27,7 @@ void Player::update() {
     getBulletPool()->clear();
     if(rect->y > LEVEL_HEIGHT) this->shouldDraw = false;
     if(!shouldDraw && rect->x>0) {
+        PlayerStats::getInstance().setHealth(0);
         if(rewind.x == 0) {
             x=rect->x;y=rect->y;
             rewind.x = x / (60 * PLAYER_DEAD_REWIND_SPEED);
@@ -40,7 +41,10 @@ void Player::update() {
             y -= rewind.y;
             rect->y = y;
         }
+    } else if (rect->x <= 0 && !shouldDraw) {
+        this->reset();
     }
+
     if(rewind.x==0){
         this->state->update(this);
         this->x += direction.x, this->y += direction.y;
@@ -52,10 +56,8 @@ void Player::update() {
 }
 
 void Player::draw(Renderer renderer) {
-
     if(shouldDraw) this->sprite->draw(renderer, rect, nullptr, facingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE);
     for(PlayerBullet * bullet : getBulletPool()->getParticles()) bullet->draw(renderer);
-
 }
 
 PlayerState *Player::getState() const {

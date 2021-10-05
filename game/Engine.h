@@ -11,9 +11,12 @@
 #include "../entity/Platform.h"
 #include "../entity/EntityManager.h"
 #include "Window.h"
+#include "LTexture.h"
+
 class Engine {
 private:
     Renderer * renderer;
+    LTexture * lTexture;
 public:
     Engine(Renderer * renderer);
     ~Engine();

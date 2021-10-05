@@ -4,7 +4,7 @@
 
 #include "SkeletonAxeCollisionBox.h"
 
-SDL_Rect *SkeletonAxeCollisionBox::getCollisionBox(SDL_Rect *boundingBox, bool isFacingLeft) {
+SDL_Rect *SkeletonAxeCollisionBox::getCollisionBox(SDL_Rect *boundingBox, bool isFacingLeft, bool isDead) {
     if (isFacingLeft) {
         return new SDL_Rect {boundingBox->x+10,boundingBox->y+85,30,40};
     } else {

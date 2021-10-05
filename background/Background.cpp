@@ -11,7 +11,6 @@ void Background::draw(Renderer renderer) {
 }
 
 Background::Background() {
-
     this->bgTexture = nullptr;
     this->playerPos = new SDL_Rect();
     this->bgRect = new SDL_Rect();

@@ -6,7 +6,6 @@
 
 MovingSawAI::MovingSawAI(Saw *saw, EntityManager *walls) {
     this->saw = saw;
-
     //Get wall under mage
     for(Entity * entity : walls->getEntities()) {
         SDL_Point * sawCentre = new SDL_Point {saw->getRect()->x + saw->getRect()->w/2, saw->getRect()->y + saw->getRect()->h/2};

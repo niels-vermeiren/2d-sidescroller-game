@@ -34,8 +34,6 @@ const std::string LevelLoader::DEV_LEVEL = "testlevel.txt";
 
 void LevelLoader::load(std::string level, SDL_mutex*mutex) {
     SDL_Rect rect = {10, 40*64, 150, 150};
-
-
     Vector direction(0,0);
     player = new Player(direction, &rect);
     player->getSprite()->load();

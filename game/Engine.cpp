@@ -28,6 +28,7 @@ int threadFunction(void *game) {
     ThreadData  * data = static_cast<ThreadData *>(game);;
     data->game->load(data->pMutex, data->level);
     data->p->set_value(true);
+
     return 1;
 }
 
@@ -44,7 +45,8 @@ void Engine::run() {
     int returnValue;
     TTF_Init();
     TTF_Font * gFont = TTF_OpenFont( "../resources/font/trulymadly.ttf", 28 );
-    LTexture * lTexture = new LTexture(gFont);
+    lTexture = new LTexture(gFont);
+    lTexture->loadFromRenderedText("Loading 2d-SideScroller levels..." , {255,255,255}, renderer);
 
     std::promise<bool> finished1;
     auto future1 = finished1.get_future();
@@ -91,7 +93,7 @@ void Engine::run() {
         Window::wait();
         angle+=2.5;
         Window::clearScreen(renderer);
-        lTexture->loadFromRenderedText("Sidescroller v1.0 " , {255,255,255}, renderer);
+
         SDL_RenderCopyEx(renderer->sdlRenderer, loaderTexture, NULL, loadingRect, angle, center, SDL_FLIP_NONE);
         lTexture->render( SCREEN_WIDTH - SCREEN_WIDTH/2 - lTexture->getWidth()/2, SCREEN_HEIGHT-SCREEN_HEIGHT/2-lTexture->getHeight()/2 + 200);
         SDL_RenderPresent(renderer->sdlRenderer);
@@ -100,7 +102,18 @@ void Engine::run() {
         level2Finished = future2.wait_for(std::chrono::milliseconds (0)) == std::future_status::ready;
         level3Finished = future3.wait_for(std::chrono::milliseconds (0)) == std::future_status::ready;
         level4Finished = future4.wait_for(std::chrono::milliseconds (0)) == std::future_status::ready;
+        char buff[250];
+        snprintf(buff, sizeof(buff), " Levels %s%s%s%s loaded.", level1Finished?"1, ":"", level2Finished?"2, ":"", level3Finished?"3, ":"", level4Finished?"4":"");
+        std::string levelsLoaded = buff;
+        if(level4Finished) lTexture->loadFromRenderedText("Loading 2d-SideScroller.." + levelsLoaded , {255,255,255}, renderer);
+
     }
+    Window::clearScreen(renderer);
+
+    SDL_RenderCopyEx(renderer->sdlRenderer, loaderTexture, NULL, loadingRect, angle, center, SDL_FLIP_NONE);
+    lTexture->loadFromRenderedText("Loading 2d-SideScroller levels done. Finishing..." , {255,255,255}, renderer);
+    lTexture->render( SCREEN_WIDTH - SCREEN_WIDTH/2 - lTexture->getWidth()/2, SCREEN_HEIGHT-SCREEN_HEIGHT/2-lTexture->getHeight()/2 + 200);
+    SDL_RenderPresent(renderer->sdlRenderer);
     game->loadTextures(LevelLoader::LEVEL_1);
     game->loadTextures(LevelLoader::LEVEL_2);
     game->loadTextures(LevelLoader::LEVEL_3);

@@ -10,7 +10,7 @@
 
 class PlayerKnifeCollisionBox : public CollisionBox {
 public:
-    SDL_Rect * getCollisionBox(SDL_Rect * boundingBox, bool isFacingLeft = false) override;
+    SDL_Rect * getCollisionBox(SDL_Rect * boundingBox, bool isFacingLeft = false, bool isDead = false) override;
 };
 
 

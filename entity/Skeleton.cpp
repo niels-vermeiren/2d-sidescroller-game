@@ -38,7 +38,7 @@ void Skeleton::setState(SkeletonState *state) {
 }
 
 SDL_Rect *Skeleton::getCollisionBox() {
-    return collisionBox.getCollisionBox(this->rect);
+    return collisionBox.getCollisionBox(this->rect, false, this->state->getState() == DEAD);
 }
 
 SDL_Rect *Skeleton::getAxeCollisionBox() {

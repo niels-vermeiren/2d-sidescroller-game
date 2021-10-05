@@ -10,7 +10,7 @@
 
 class CollisionBox {
 public:
-    virtual SDL_Rect * getCollisionBox(SDL_Rect * boundingBox, bool isFacingLeft = false) = 0;
+    virtual SDL_Rect * getCollisionBox(SDL_Rect * boundingBox, bool isFacingLeft = false, bool isDead = false) = 0;
 };
 
 
