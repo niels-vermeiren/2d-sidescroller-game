@@ -6,8 +6,6 @@
 #include "../sound/JukeBox.h"
 
 void AttackState::update(Player *player) {
-
-
     if(player->getSprite()->getAnimation()->getCurrentFrameNumber() == 5) {
         player->setState(new OnGroundState());
     }

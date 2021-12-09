@@ -5,7 +5,8 @@
 #include <cmath>
 #include "Vector.h"
 #include <SDL2/SDL.h>
-#include <iostream>
+
+Vector::Vector() {}
 
 Vector::Vector(float x, float y) {
     this->x = x;

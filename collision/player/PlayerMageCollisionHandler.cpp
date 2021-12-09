@@ -5,6 +5,7 @@
 #include "PlayerMageCollisionHandler.h"
 #include "../CollisionDetection.h"
 #include "../../magestate/MageDeadState.h"
+#include "../../sound/JukeBox.h"
 
 void PlayerMageCollisionHandler::handleCollision(Player *p, Mage *mage) {
     SDL_Rect * pCollisionBox = p->getCollisionBox();
@@ -20,5 +21,6 @@ void PlayerMageCollisionHandler::handleCollision(Player *p, Mage *mage) {
     //Player hits skeleton with knife
     if(CollisionDetection::rectanglesIntersect(pKnifeBox, mCollisionBox) && pState == ATTACKING) {
         mage->setState(new MageDeadState());
+        JukeBox::getInstance()->playSound(JukeBox::MAGE_DYING, true);
     }
 }

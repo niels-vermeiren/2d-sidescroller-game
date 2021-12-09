@@ -59,7 +59,6 @@ void AnimationData::load() {
 void AnimationData::loadTextures() {
     for(int i = 0; i != totalFrames ; i++) {
         SDL_Texture *pTexture = SDL_CreateTextureFromSurface(Renderer::getInstance().sdlRenderer, this->surfaces[i]);
-
         images.push_back(pTexture);
     }
 

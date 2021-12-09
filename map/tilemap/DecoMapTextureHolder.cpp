@@ -3,12 +3,14 @@
 //
 
 #include <SDL2/SDL_image.h>
+#include <iostream>
 #include "DecoMapTextureHolder.h"
 DecoMapTextureHolder::DecoMapTextureHolder() {
 
 }
 
 SDL_Texture *DecoMapTextureHolder::getTextureWithIndex(int index) {
+    if (index < 0) return decoSet[0];
     return decoSet[index];
 }
 

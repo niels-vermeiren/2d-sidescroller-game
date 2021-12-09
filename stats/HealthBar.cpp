@@ -26,7 +26,7 @@ HealthBar::~HealthBar() {
 void HealthBar::update() {
     SDL_Rect *vp = Background::getInstance().getVpRect();
     holderRect = new SDL_Rect {-vp->x+35, -vp->y+30, 254, 47};
-    strokeRect = new SDL_Rect {-vp->x+83, -vp->y+33, static_cast<int>(((float)196/100)*PlayerStats::getInstance().getHealth())+5, 37};
+    strokeRect = new SDL_Rect {-vp->x+83, -vp->y+33, static_cast<int>(((float)196/100) * PlayerStats::getInstance().getHealth()) + 5, 37};
     strokeRect->w = strokeRect->w == 5 ? 0 : strokeRect->w;
 }
 

@@ -27,20 +27,20 @@
 
 class LevelLoader {
 public:
-    /*void loadCommonElements();
-    void loadTexturesCommonElements();*/
     static LevelLoader * getInstance();
-    void load(std::string level, SDL_mutex * mutex);
-    void loadShared(SDL_mutex * mutex);
+    void load(std::string level);
     void loadTextures(std::string level);
     void draw();
     void update();
     void handleCollisions();
     void reset();
+    void resetCoins();
+    void resetEnemies();
     static const std::string LEVEL_1;
 
     static const std::string LEVEL_2;
     static const std::string LEVEL_3;
+    static const std::string LEVEL_4;
     static const std::string DEV_LEVEL;
 private:
     TTF_Font * gFont;

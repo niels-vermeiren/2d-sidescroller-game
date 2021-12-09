@@ -17,7 +17,7 @@ void CoinMenuSprite::draw(Renderer renderer, SDL_Rect *pRect, SDL_Rect *clipRect
     SDL_Point p = {0,0};
     SDL_RenderCopyEx(renderer.sdlRenderer, holder, clipRect, pRect, 0.0, &p, flip);
     SDL_Color textColor = { 236, 230, 50 , 200};
-    lTexture->loadFromRenderedText(std::to_string(PlayerStats::getInstance().getCoins()) , textColor, &renderer);
+    lTexture->loadFromRenderedText(std::to_string(PlayerStats::getInstance().getCoins()) , textColor);
     lTexture->render( -Background::getInstance().getVpRect()->x+98, -Background::getInstance().getVpRect()->y + 109);
 }
 

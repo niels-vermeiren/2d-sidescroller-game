@@ -6,6 +6,7 @@
 #include "../defs.h"
 
 Entity::Entity() {
+    direction = Vector(0,0);
     initialPosition = new SDL_Rect {0,0,0,0};
     visible = true;
 }

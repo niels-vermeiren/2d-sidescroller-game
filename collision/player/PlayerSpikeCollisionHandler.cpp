@@ -4,6 +4,7 @@
 
 #include "PlayerSpikeCollisionHandler.h"
 #include "../../stats/PlayerStats.h"
+#include "../../game/GameStats.h"
 
 void PlayerSpikeCollisionHandler::handleCollision(Player *p, Entity *entity) {
     SDL_Rect * pCollisionBox = p->getCollisionBox();

@@ -25,14 +25,16 @@
 #include "../entityai/SkeletonAI.h"
 #include "../collision/skeleton/SkeletonWallCollisionHandler.h"
 #include "Level.h"
+#include "GameStats.h"
 
 const std::string LevelLoader::LEVEL_1 = "level1.txt";
-const std::string LevelLoader::LEVEL_2 = "level2.txt";
-const std::string LevelLoader::LEVEL_3 = "level3.txt";
+const std::string LevelLoader::LEVEL_2 = "level1.1.txt";
+const std::string LevelLoader::LEVEL_3 = "level2.txt";
+const std::string LevelLoader::LEVEL_4 = "level3.txt";
 const std::string LevelLoader::DEV_LEVEL = "testlevel.txt";
 
 
-void LevelLoader::load(std::string level, SDL_mutex*mutex) {
+void LevelLoader::load(std::string level) {
     SDL_Rect rect = {10, 40*64, 150, 150};
     Vector direction(0,0);
     player = new Player(direction, &rect);
@@ -61,6 +63,9 @@ void LevelLoader::load(std::string level, SDL_mutex*mutex) {
     coinMenu->getCoinMenu()->load();
 
     SDL_Rect * portalRect = new SDL_Rect {200 * 64 - 246, 64 * 64 - 500, 192, 246};
+    if(level == DEV_LEVEL) {
+        portalRect = new SDL_Rect {200 * 64 - 246, 64 * 64 - 750, 192, 246};
+    }
     portal = new Portal(portalRect);
     portal->getSprite()->load();
     auto * tilemapParser = new TileMapParser(new TilesetTextureHolder());
@@ -193,6 +198,7 @@ void LevelLoader::loadTextures(std::string level) {
 }
 
 void LevelLoader::draw() {
+
     this->background->draw(Renderer::getInstance());
     this->spikes->draw(Renderer::getInstance());
     this->deco->draw(Renderer::getInstance());
@@ -226,6 +232,7 @@ void LevelLoader::update() {
         mage->update();
     }
     if(InputManager::keyPressed(SDL_SCANCODE_R)) {
+        GameStats::getInstance().addDeath();
         reset();
     }
     if(InputManager::keyPressed(SDL_SCANCODE_W)) {
@@ -265,15 +272,8 @@ void LevelLoader::handleCollisions() {
 
 void LevelLoader::reset() {
     player->reset();
-    for(auto * coin : coins->getEntities()) {
-        coin->reset();
-    }
-    for(auto * skeleton : skeletons->getEntities()) {
-        skeleton->reset();
-    }
-    for(auto * mage : mages->getEntities()) {
-        mage->reset();
-    }
+    resetCoins();
+    resetEnemies();
 }
 
 LevelLoader *LevelLoader::getInstance() {
@@ -281,6 +281,17 @@ LevelLoader *LevelLoader::getInstance() {
     return INSTANCE;
 }
 
-void LevelLoader::loadShared(SDL_mutex* mutex) {
+void LevelLoader::resetCoins() {
+    for(auto * coin : coins->getEntities()) {
+        coin->reset();
+    }
+}
 
+void LevelLoader::resetEnemies() {
+    for(auto * skeleton : skeletons->getEntities()) {
+        skeleton->reset();
+    }
+    for(auto * mage : mages->getEntities()) {
+        mage->reset();
+    }
 }

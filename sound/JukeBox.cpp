@@ -37,6 +37,15 @@ void JukeBox::loadSounds() {
     Mix_Chunk * skeletonHit = Mix_LoadWAV("../resources/sounds/skeleton-hit.mp3");
     sound_effects.push_back({skeletonHit, false});
 
+    Mix_Chunk * portalSound = Mix_LoadWAV("../resources/sounds/portal.mp3");
+    sound_effects.push_back({portalSound, false});
+
+    Mix_Chunk * skeletonAttack = Mix_LoadWAV("../resources/sounds/skeletonAttack.mp3");
+    sound_effects.push_back({skeletonAttack, false});
+
+    Mix_Chunk * mageDying = Mix_LoadWAV("../resources/sounds/mage_dying.wav");
+    sound_effects.push_back({mageDying, false});
+
     for (int i = 1; i < 16; ++i) {
         JukeBox::freeChannels.push_back(i + 1);
     }
@@ -61,7 +70,7 @@ void JukeBox::playSound(int sound, bool isSoundEffect) {
     if(sound == 0) {
         Mix_PlayChannelTimed(channel, sound_effects[sound].first, 0, 250);
     } else {
-        Mix_PlayChannelTimed(channel, sound_effects[sound].first, 0, 700);
+        Mix_PlayChannelTimed(channel, sound_effects[sound].first, 0, 1230);
     }
     Mix_ChannelFinished(JukeBox::channelFinished);
     freeChannels.push_back(channel);

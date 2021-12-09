@@ -29,6 +29,9 @@ public:
     static const int DAMAGE = 3;
     static const int SLASHING = 4;
     static const int SKELETON_HIT = 5;
+    static const int PORTAL = 6;
+    static const int SKELETON_ATTACK = 7;
+    static const int MAGE_DYING = 8;
 private:
     std::vector<std::pair<Mix_Chunk *, bool>> music;
     std::vector<std::pair<Mix_Chunk *, bool>> sound_effects;

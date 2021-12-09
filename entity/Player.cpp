@@ -7,6 +7,9 @@
 #include "../command/player/ShootBulletCommand.h"
 #include "../sound/JukeBox.h"
 #include "../stats/PlayerStats.h"
+#include "../game/GameStats.h"
+#include "../game/LevelLoader.h"
+#include "../game/Level.h"
 
 Player::Player(Vector direction, SDL_Rect * rect) : FallingEntity(direction, rect) {
     this->x = (float) rect->x, this->y = (float) rect->y;
@@ -27,6 +30,7 @@ void Player::update() {
     getBulletPool()->clear();
     if(rect->y > LEVEL_HEIGHT) this->shouldDraw = false;
     if(!shouldDraw && rect->x>0) {
+
         PlayerStats::getInstance().setHealth(0);
         if(rewind.x == 0) {
             x=rect->x;y=rect->y;
@@ -42,6 +46,7 @@ void Player::update() {
             rect->y = y;
         }
     } else if (rect->x <= 0 && !shouldDraw) {
+        GameStats::getInstance().addDeath();
         this->reset();
     }
 
@@ -114,6 +119,8 @@ void Player::reset(){
     rewind = {0,0};
     PlayerStats::getInstance().setHealth(100);
     PlayerStats::getInstance().setCoins(0);
+    Level::getInstance()->getLevel("")->resetCoins();
+    Level::getInstance()->getLevel("")->resetEnemies();
 }
 
 ParticlePool<PlayerBullet *> * Player::getBulletPool() const {

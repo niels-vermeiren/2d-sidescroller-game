@@ -16,9 +16,7 @@ public:
     void draw(Renderer renderer) override;
     void update() override;
     void updatePlayerPos(int playerX, int playerY) override;
-    void drawCircle(SDL_Renderer *renderer, int32_t centreX, int32_t centreY, int32_t radius);
     SDL_Rect * getCollisionBox();
-
     PlayerBulletSprite *getSprite() const;
 
 private:

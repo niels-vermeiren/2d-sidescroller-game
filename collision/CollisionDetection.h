@@ -7,8 +7,8 @@
 
 #include "SDL2/SDL.h"
 #include <vector>
-#include "../math/Rotated_Rect.h"
 #include "../math/Vector.h"
+
 class CollisionDetection {
 public:
     static bool rectanglesIntersect(SDL_Rect * r1, SDL_Rect * r2);

@@ -3,6 +3,7 @@
 //
 
 #include "SkeletonAI.h"
+#include "../sound/JukeBox.h"
 
 SkeletonAI::SkeletonAI(Skeleton *skeleton, EntityManager *walls, Player * player) {
     playerX = 0, playerY = 0;
@@ -22,7 +23,6 @@ SkeletonAI::SkeletonAI(Skeleton *skeleton, EntityManager *walls, Player * player
 
 void SkeletonAI::update() {
     if(skeleton->getState()->getState() == DEAD) return;
-
     attackClosePlayer();
     changeDirectionWhenOnEdgeWall();
 }
@@ -34,15 +34,11 @@ void SkeletonAI::updatePlayerPos(int x, int y) {
 
 void SkeletonAI::attackClosePlayer() {
     tick++;
-
     if(tick % SKELETON_TIME_BETWEEN_ATTACKS == 0) hasAttacked = false;
-
     //If player is not on same height as enemy, skeleton is not attacking or skeleton has already attacked, do nothing
     if(playerY < skeleton->getCollisionBox()->y || playerY > skeleton->getCollisionBox()->y +
                                                              skeleton->getCollisionBox()->h) return;
-
     if(player->getCollisionBox()->x + player->getCollisionBox()->w < wall->minX() || player->getCollisionBox()->x > wall->maxX()) return;
-
     walkTowardsPlayerInRange();
     changeDirectionWhenOnEdgeWall();
     if(!hasAttacked) attack();
@@ -57,7 +53,6 @@ bool SkeletonAI::playerWithinAttackingRange() {
 
 
 void SkeletonAI::walkTowardsPlayerInRange() {
-
     bool withinLeftRange = player->getCollisionBox()->x + player->getCollisionBox()->w + player->getDirection().x >
                            skeleton->getCollisionBox()->x - SKELETON_CHARGE_MIN_PLAYER_DISTANCE &&
                            player->getCollisionBox()->x + player->getCollisionBox()->w < skeleton->getCollisionBox()->x;
@@ -69,7 +64,6 @@ void SkeletonAI::walkTowardsPlayerInRange() {
     if ((withinLeftRange || withinRightRange) && skeleton->getState()->getState() != ATTACK) {
         if(withinLeftRange && !onBoundsLeftSide()) skeleton->setState(new MoveLeftState());
         if(withinRightRange && !onBoundsRightSide()) skeleton->setState(new MoveRightState());
-
     }
 }
 
@@ -98,13 +92,13 @@ void SkeletonAI::attack() {
         player->setFacingLeft(playerX < skeleton->getCollisionBox()->x + skeleton->getCollisionBox()->w/2);
         skeleton->getSprite()->resetAnimation();
         skeleton->setState(new AttackingState());
-        hasAttacked = true;
+        JukeBox::getInstance()->playSound(JukeBox::SKELETON_ATTACK, true);
     } else
     if (playerX < skeleton->getCollisionBox()->x + skeleton->getCollisionBox()->w && playerX > skeleton->getCollisionBox()->x && skeleton->getState()->getState() != ATTACK) {
         player->setFacingLeft(playerX < skeleton->getCollisionBox()->x + skeleton->getCollisionBox()->w/2);
         skeleton->setState(new AttackingState());
         skeleton->getSprite()->resetAnimation();
-        hasAttacked = true;
+        JukeBox::getInstance()->playSound(JukeBox::SKELETON_ATTACK, true);
     }
 
 }

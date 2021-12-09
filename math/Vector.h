@@ -11,7 +11,7 @@ class Vector {
 public:
     float x;
     float y;
-    Vector() {}
+    Vector();
     Vector(float x, float y);
     float length() const;
     void normalize();
